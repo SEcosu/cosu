@@ -1,0 +1,39 @@
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/splash_grad"
+    >
+
+    <LinearLayout
+        android:layout_width="272dp"
+        android:layout_height="187dp"
+        android:layout_centerInParent="true"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="199dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/opensans_bold"
+            android:text=" CoSu"
+            android:textColor="#FFFFFF"
+            android:textSize="60sp"
+            android:textStyle="italic" />
+
+        <TextView
+            android:layout_width="248dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="5dp"
+            android:text="  코딩고수 모두 모여라"
+            android:textColor="#FFFFFF"
+            android:textSize="23sp"
+            android:textStyle="italic" />
+
+    </LinearLayout>
+</RelativeLayout>
