@@ -4,15 +4,13 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
-import com.example.cosu_pra.DTO.Category;
+import com.example.cosu_pra.ConnectFB.HelpChatting;
+import com.example.cosu_pra.ConnectFB.HelpPosting;
 import com.example.cosu_pra.DTO.Comment;
 import com.example.cosu_pra.DTO.ProjectPost;
-import com.example.cosu_pra.DTO.QnAPost;
-import com.example.cosu_pra.DTO.StudyPost;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.components.Component;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -24,11 +22,13 @@ import java.util.Map;
 
 public class Testing {
     HelpPosting pst;
+    HelpChatting cht;
     private Object ArrayList;
 
     Testing() {
         pst = new HelpPosting();
-        report();
+        cht = new HelpChatting();
+        waitChat();
     }
 
     // ok
@@ -266,6 +266,28 @@ public class Testing {
                 });
 
         //pst.setReportPostZero(pst.PROJECT, "mdUTbav2vLaAVCfJ34cg");
+    }
+
+
+    //-------------------------------------------------------------------------------
+
+    private void makeChatRoom() {
+        List<String> userList = new ArrayList<>();
+
+        userList.add("member1");
+        userList.add("member2");
+        userList.add("member3");
+
+        cht.makeCharRoom(userList);
+
+    }
+
+    private void addChatMSG() {
+        cht.addChat("Ij2L74mfcmWTIjDRwsBL", "member1", "welcome!");
+    }
+
+    private void waitChat() {
+        cht.waitMSG();
     }
 
 

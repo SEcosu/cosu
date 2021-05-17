@@ -29,6 +29,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        Testing testing = new Testing();
+
         memberWithdrawal = (Button) findViewById(R.id.memberWithdrawal);
         logOut = (Button) findViewById(R.id.logOut);
         progressDialog = new ProgressDialog(this); //conncect Function
