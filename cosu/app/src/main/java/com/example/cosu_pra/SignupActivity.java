@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,10 +17,15 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.regex.Pattern;
 
 public class SignupActivity extends AppCompatActivity implements View.OnClickListener {
@@ -39,6 +45,8 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
     private TextView yourAccount,create;
     ProgressDialog progressDialog;
     FirebaseAuth firebaseAuth;
+    FirebaseFirestore fStore;
+    String userID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +54,7 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
         setContentView(R.layout.activity_signup);
         //initializig firebase auth object
         firebaseAuth = FirebaseAuth.getInstance();//get instance to firebaseAuth
+        fStore = FirebaseFirestore.getInstance();
 
         /* ********if already logged in,finish this job********* */
 
@@ -55,6 +64,8 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
 
         }
         //initializing views
+        editTextSignUpName = (EditText) findViewById(R.id.editTextSignUpName);;
+        editTextSignUpNickname = (EditText) findViewById(R.id.editTextSignUpNickname);
         editTextSignUpEmail = (EditText) findViewById(R.id.editTextSignUpEmail);
         editTextSignUpPassword = (EditText) findViewById(R.id.editTextSignUpPassword);
         editTextSignUpPasswordConfirm = (EditText) findViewById(R.id.editTextSignUpPasswordConfirm);
@@ -79,6 +90,8 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
         String email = editTextSignUpEmail.getText().toString().trim();
         String password = editTextSignUpPassword.getText().toString().trim();
         String confirmPassword = editTextSignUpPasswordConfirm.getText().toString().trim();
+        String name = editTextSignUpName.getText().toString();
+        String nickName = editTextSignUpNickname.getText().toString();
 
 
         //Check whether the email and password are empty or not.
@@ -132,6 +145,21 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             finish();
+                            userID = firebaseAuth.getCurrentUser().getUid();
+                            DocumentReference documentReference = fStore.collection("users").document(userID);
+                            Map<String,Object> user = new HashMap<>();
+                            user.put("Name", name);
+                            user.put("Nickname", nickName);
+                            user.put("Email", email);
+                            user.put("Password", password);
+                            user.put("PasswordConfirm", confirmPassword);
+
+                            documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    Log.d(TAG, "onSuccess: user Profile is created for "+ userID);
+                                }
+                            });
                             startActivity(new Intent(getApplicationContext(), MainActivity.class));
                         } else {
                             //If error occured
