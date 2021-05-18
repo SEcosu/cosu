@@ -3,6 +3,7 @@ package com.example.cosu_pra;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -28,6 +29,13 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Pattern;
 
+/*
+SharedPreference에 저장된 내용
+        Name : 유저 이름
+        Password : 유저 비밀번호
+        Email : 유저 이메일
+        Nickname : 유저 닉네임
+ */
 public class SignupActivity extends AppCompatActivity implements View.OnClickListener {
 
     private static final String TAG = "MainActivity";
@@ -47,6 +55,9 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
     FirebaseAuth firebaseAuth;
     FirebaseFirestore fStore;
     String userID;
+
+    SharedPreferences sh_Pref;
+    SharedPreferences.Editor toEdit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,6 +103,19 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
         String confirmPassword = editTextSignUpPasswordConfirm.getText().toString().trim();
         String name = editTextSignUpName.getText().toString();
         String nickName = editTextSignUpNickname.getText().toString();
+
+        //SharedPreference에 입력반은 데이터 저장
+        sh_Pref = getSharedPreferences ("Login Credentials ", MODE_PRIVATE);
+        toEdit = sh_Pref.edit();
+        toEdit.putString ("Name", name);
+        toEdit.commit();
+        toEdit.putString ("Password", password);
+        toEdit.commit();
+        toEdit.putString ("Email", email);
+        toEdit.commit();
+        toEdit.putString ("Nickname", nickName);
+        toEdit.commit();
+
 
 
         //Check whether the email and password are empty or not.
