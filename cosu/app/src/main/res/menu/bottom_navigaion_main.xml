@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/project_recruit"
+        android:id="@+id/nav_project"
         android:icon="@drawable/project"
         android:title="프로젝트"/>
     <item
-        android:id="@+id/study_recruit"
+        android:id="@+id/nav_study"
         android:icon="@drawable/study"
         android:title="스터디원"/>
     <item
-        android:id="@+id/qna"
+        android:id="@+id/nav_qna"
         android:icon="@drawable/qna"
         android:title="지식인"/>
     <item
-        android:id="@+id/chat"
+        android:id="@+id/nav_chat"
         android:icon="@drawable/chat"
         android:title="채팅"/>
     <item
-        android:id="@+id/mypage"
+        android:id="@+id/nav_mypage"
         android:icon="@drawable/mypage"
         android:title="마이페이지"/>
 

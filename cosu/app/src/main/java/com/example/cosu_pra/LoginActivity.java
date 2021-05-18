@@ -100,6 +100,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             Toast.makeText(this,"Please keep the password format.",Toast.LENGTH_SHORT).show();
             return;
         }
+        if(email!=null&&password!=null) {
+            Intent intent = new Intent(this, FragmentActivity.class);
+            startActivity(intent);
+        }
+
         progressDialog.setMessage("Logging in. wait a moment please...");
         progressDialog.show();
 
@@ -123,10 +128,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     @Override
     public void onClick(View view) {
-
+        EditText uemail = (EditText)findViewById(R.id.editTextLoginEmail);
+        EditText upassword = (EditText)findViewById(R.id.editTextLoginPassword);
         /* *******if click Login button , can login ******** */
         if (view == buttonSignin) {
             userLogin();
+
         }
         /* *******if click Signup button , can Signup ******** */
 
@@ -138,5 +145,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         if (view == textviewFindPassword) {
             startActivity(new Intent(this, FindActivity.class));
         }
+
     }
+
+
 }

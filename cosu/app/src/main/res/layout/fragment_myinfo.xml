@@ -141,7 +141,7 @@
                 <ImageButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:backgroundTint="@color/white"
+                    android:backgroundTint="transparent"
                     android:scaleType="fitCenter"
                     android:src="@drawable/mypost" />
 
@@ -165,7 +165,7 @@
                 <ImageButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:backgroundTint="@color/white"
+                    android:backgroundTint="transparent"
                     android:scaleType="fitCenter"
                     android:src="@drawable/mylike" />
 
@@ -189,7 +189,7 @@
                 <ImageButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:backgroundTint="@color/white"
+                    android:backgroundTint="transparent"
                     android:scaleType="fitCenter"
                     android:src="@drawable/mycomments" />
 
