@@ -20,6 +20,9 @@ import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.regex.Pattern;
 
+import com.example.cosu_pra.Main.MainActivity;
+
+
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
     private static final String TAG = "LoginActivity";
@@ -74,6 +77,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         /* *******Validation ref:http://blog.naver.com/suda552/220813122485******** */
 
+        // 401sujung@naver.com
+        // wlwjtm1023@
 
         /* *******Validation of email(is empty& validation)******** */
         if (TextUtils.isEmpty(email)) {

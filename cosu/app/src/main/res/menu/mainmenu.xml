@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_1"
+        android:icon="@drawable/project"
+        android:title="프로젝트" />
+
+    <item
+        android:id="@+id/navigation_2"
+        android:icon="@drawable/study"
+        android:title="스터디원" />
+
+    <item
+        android:id="@+id/navigation_3"
+        android:icon="@drawable/qa_2"
+        android:title="지식인" />
+
+    <item
+        android:id="@+id/navigation_4"
+        android:icon="@drawable/chat"
+        android:title="채팅" />
+
+
+    <item
+        android:id="@+id/navigation_5"
+        android:icon="@drawable/mypage"
+        android:title="마이페이지" />
+
+</menu>

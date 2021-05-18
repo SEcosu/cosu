@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent"
+    tools:context=".Main.PlusActivity">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:textSize="20dp"
+        android:textColor="#000000"
+        android:text="프로젝트 팀원 모집 글쓰기"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="#9e9d9d"/>
+
+        <ImageView
+        android:src="@drawable/ic_baseline_camera_alt_24"
+        android:layout_width="100dp"
+        android:layout_height="100dp"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="#9e9d9d"/>
+
+    <EditText
+        android:background="@android:color/transparent"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center"
+        android:textSize="20dp"
+        android:hint="제목"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="#9e9d9d"/>
+    <LinearLayout
+        android:weightSum="2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Spinner
+            android:entries="@array/category"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="80dp"/>
+
+        <View
+            android:layout_width="2dp"
+            android:layout_height="match_parent"
+            android:background="#9e9d9d"/>
+        <Spinner
+            android:entries="@array/people"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="80dp"/>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="#9e9d9d"/>
+
+    <LinearLayout
+        android:padding="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:orientation="horizontal">
+
+
+        <Button
+            android:layout_gravity="center"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@drawable/calendar_2"/>
+
+        <TextView
+            android:textColor="#000000"
+            android:textSize="16dp"
+            android:gravity="center"
+            android:text="yyyy/mm/dd"
+            android:layout_marginLeft="20dp"
+            android:layout_gravity="center"
+            android:layout_width="100dp"
+            android:layout_height="40dp"/>
+
+
+        <TextView
+            android:textColor="#000000"
+            android:textSize="18dp"
+            android:gravity="center"
+            android:text="~"
+            android:layout_marginLeft="15dp"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"/>
+        <TextView
+            android:textColor="#000000"
+            android:textSize="16dp"
+            android:gravity="center"
+            android:text="yyyy/mm/dd"
+            android:layout_marginLeft="20dp"
+            android:layout_gravity="center"
+            android:layout_width="100dp"
+            android:layout_height="40dp"/>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="#9e9d9d"/>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <EditText
+            android:background="@android:color/transparent"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textSize="15dp"
+            android:hint="프로젝트의 내용을 자세히 작성해주세요"/>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/plus_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="20dp"
+            android:backgroundTint="#6fdcc6"
+            android:src="@drawable/ic_baseline_add_24" />
+
+    </FrameLayout>
+</LinearLayout>

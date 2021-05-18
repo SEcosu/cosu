@@ -66,7 +66,7 @@
             android:layout_height="62dp"
             android:layout_gravity="center_horizontal"
             android:layout_margin="15dp"
-            android:background="@drawable/round_button_green"
+            android:backgroundTint="@color/colorAccent"
             android:stateListAnimator="@null"
             android:text="Log in"
             android:textAllCaps="false"
@@ -98,7 +98,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginBottom="70dp"
-            android:textColor="@color/colorAccent"
+            android:textColor="@color/black"
             android:gravity="center"/>
     </LinearLayout>
 </RelativeLayout>
