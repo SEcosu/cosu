@@ -13,14 +13,13 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.cosu_pra.Main.MainActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.regex.Pattern;
-
-import com.example.cosu_pra.Main.MainActivity;
 
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
@@ -101,7 +100,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 //            return;
 //        }
         if(email!=null&&password!=null) {
-            Intent intent = new Intent(this, FragmentActivity.class);
+            Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
         }
 

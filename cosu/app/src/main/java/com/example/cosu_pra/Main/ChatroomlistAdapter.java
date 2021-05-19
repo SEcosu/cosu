@@ -1,4 +1,4 @@
-package com.example.cosu_pra.Adapter;
+package com.example.cosu_pra.Main;
 
 import android.view.LayoutInflater;
 import android.view.View;
