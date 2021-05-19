@@ -15,11 +15,11 @@
 
     <string-array name="people">
         <item>인원수</item>
-        <item>2인</item>
-        <item>3인</item>
-        <item>4인</item>
-        <item>5인</item>
-        <item>6인 이상</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
 
 
     </string-array>

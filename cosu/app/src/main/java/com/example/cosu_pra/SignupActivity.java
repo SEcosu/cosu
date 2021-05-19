@@ -139,16 +139,16 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
             editTextSignUpEmail.requestFocus();
             return;
         }
-        if (!Pattern.matches("^(?=.*\\d)(?=.*[~`!@#$%\\^&*()-])(?=.*[a-zA-Z]).{8,20}$", password)) {
-            Toast.makeText(this, "Please keep the password format.", Toast.LENGTH_SHORT).show();
-            editTextSignUpPassword.requestFocus();
-            return;
-        }
-        if (!Pattern.matches("^(?=.*\\d)(?=.*[~`!@#$%\\^&*()-])(?=.*[a-zA-Z]).{8,20}$", confirmPassword)) {
-            Toast.makeText(this, "Please keep the confirm password format.", Toast.LENGTH_SHORT).show();
-            editTextSignUpPasswordConfirm.requestFocus();
-            return;
-        }
+//        if (!Pattern.matches("^(?=.*\\d)(?=.*[~`!@#$%\\^&*()-])(?=.*[a-zA-Z]).{8,20}$", password)) {
+//            Toast.makeText(this, "Please keep the password format.", Toast.LENGTH_SHORT).show();
+//            editTextSignUpPassword.requestFocus();
+//            return;
+//        }
+//        if (!Pattern.matches("^(?=.*\\d)(?=.*[~`!@#$%\\^&*()-])(?=.*[a-zA-Z]).{8,20}$", confirmPassword)) {
+//            Toast.makeText(this, "Please keep the confirm password format.", Toast.LENGTH_SHORT).show();
+//            editTextSignUpPasswordConfirm.requestFocus();
+//            return;
+//        }
 
         if (!password.equals(confirmPassword)){
             Toast.makeText(this,"Please check password again.",Toast.LENGTH_SHORT).show();

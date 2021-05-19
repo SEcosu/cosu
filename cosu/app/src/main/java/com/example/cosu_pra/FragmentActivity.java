@@ -39,7 +39,7 @@ public class FragmentActivity extends AppCompatActivity {
         qaFragment = new QnAFragment();
         chatFragment = new ChatFragment();
         myinfoFragment = new MyinfoFramgnet();
-       BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.navigation_bar);
+        BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.navigation_bar);
         //첫화면 -->프로젝트 모집 화면
         getSupportFragmentManager().beginTransaction().add(R.id.nav_project, new ProjectFragment()).commit();
 
