@@ -5,40 +5,57 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".DTO.ChattingActivity">
+    tools:context=".ChattingActivity">
 
     <RelativeLayout
-        android:id="@+id/chatroomRV"
+        android:id="@+id/ChatRV"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         tools:ignore="MissingConstraints">
 
         <TextView
-            android:id="@+id/chatname"
+            android:id="@+id/projecttv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingLeft="10dp"
             android:paddingTop="10dp"
             android:paddingBottom="10dp"
-            android:text="채팅방 이름"
+            android:text="프로젝트명"
+            android:textColor="#000000"
             android:textSize="20sp"
             tools:ignore="MissingConstraints" />
 
-        <Spinner
-            android:id="@+id/chatroomspinner"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <ImageButton
+
+            android:id="@+id/project_end"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_alignParentRight="true"
-            android:paddingTop="10dp"/>
+            android:layout_marginRight="40dp"
+            android:backgroundTint="#FFFFFF"
+            android:scaleType="centerCrop"
+            android:src="@drawable/target" />
+
+        <ImageButton
+
+            android:id="@+id/exit"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="0dp"
+            android:backgroundTint="#FFFFFF"
+            android:scaleType="centerCrop"
+            android:src="@drawable/exit" />
+
         <View
-            android:layout_alignBottom="@id/chatname"
             android:layout_width="fill_parent"
             android:layout_height="2px"
+            android:layout_alignBottom="@id/projecttv"
             android:background="#5E5E5E" />
     </RelativeLayout>
 
     <LinearLayout
-        app:layout_constraintTop_toBottomOf="@+id/chatroomRV"
+        app:layout_constraintTop_toBottomOf="@+id/ChatRV"
         android:layout_width="match_parent"
         android:orientation="vertical"
         android:layout_height="wrap_content">

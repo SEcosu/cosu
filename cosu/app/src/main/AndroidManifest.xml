@@ -14,7 +14,7 @@
         <activity android:name=".SignupActivity" />
         <activity android:name=".LogoutActivity" />
         <activity android:name=".FindActivity" />
-        <activity android:name=".DTO.ChattingActivity" />
+        <activity android:name=".ChattingActivity" />
         <activity android:name=".Main.MainActivity" />
         <activity android:name=".Main.PlusActivity" />
         <activity android:name=".Main.DetailActivity" />

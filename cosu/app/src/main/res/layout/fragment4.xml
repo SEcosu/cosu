@@ -6,25 +6,34 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".fragment.ChatFragment">
+    android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/chatname"
-        android:layout_width="wrap_content"
+
+    <RelativeLayout
+        android:id="@+id/chatRV"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="10dp"
-        android:paddingLeft="10dp"
-        android:text="채팅"
-        android:textSize="40sp"
-        tools:ignore="MissingConstraints" />
+        tools:ignore="MissingConstraints">
 
+        <TextView
+            android:id="@+id/chatname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="10dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:text="채팅"
+            android:textColor="#000000"
+            android:textSize="20sp"
+            tools:ignore="MissingConstraints" />
+
+    </RelativeLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/chatroomList"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/chatname"
+        android:layout_below="@+id/chatRV"
         android:paddingTop="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
