@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.PopupMenu;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -19,9 +20,27 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.cosu_pra.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 
 public class Fragment5 extends Fragment {
+    FirebaseAuth firebaseAuth;
+    FirebaseFirestore firebaseFirestore;
+
+    // 회원가입시 작성한 이메일 값과 비밀번호 값을 저장할 객체 생성
+    private TextView editTextEmail;
+    private TextView editTextPassword;
+
+    // 회원가입시 작성한 이름 값과 닉네임 값을 저장할 객체 생성
+    private TextView editTextName;
+    private TextView editTextNickname;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,10 +53,7 @@ public class Fragment5 extends Fragment {
         View v = inflater.inflate(R.layout.fragment5, container, false);
         ImageButton btn = v.findViewById(R.id.mypage_btn);
         Button profilebtn = v.findViewById(R.id.look_profilebtn);
-        EditText nname;
-        EditText nemail;
-        EditText npw;
-        EditText nid;
+
         final LinearLayout[] dialogView = new LinearLayout[1];
 
         btn.setOnClickListener(new View.OnClickListener() {
@@ -97,7 +113,39 @@ public class Fragment5 extends Fragment {
         return v;
     }
 
+    //내가 쓴 글 불러오기
+    public Query getQuery(FirebaseFirestore databaseReference) {
+        firebaseAuth = FirebaseAuth.getInstance();
+        String myUserId = firebaseAuth.getCurrentUser().getUid();
 
+        return databaseReference.collection("Projects").whereEqualTo("writer", myUserId);
+    }
+
+    //회원정보를 보여주는 showInfo 메서드
+    private void showInfo(){
+        // 현재 로그인이 되어있는 사용자를 가져옴
+        final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        // firestore의 collection 경로를  "users"로 설정
+        firebaseFirestore.collection("users")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        // 파이어스토어에서 데이터를 가져오는 것을 성공했을 때
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult())
+                            {
+                                assert user != null;
+                                    // editText에 파이어스토에 저장된 값을 setText해줌
+                                    editTextEmail.setText(document.getData().get("Email").toString());
+                                    editTextName.setText(document.getData().get("Name").toString());
+                                    editTextNickname.setText(document.getData().get("Nickname").toString());
+                                    editTextPassword.setText(document.getData().get("Password").toString());
+                            }
+                        }
+                    }
+                });
+    }
 
 }
 
