@@ -6,12 +6,14 @@ import androidx.annotation.Nullable;
 
 import com.example.cosu_pra.DTO.ChatData;
 import com.example.cosu_pra.DTO.Chatroom;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -78,5 +80,9 @@ public class HelpChatting {
             }
         });
 
+    }
+
+    public Task<QuerySnapshot> getChatRooms(String userID) {
+        return db.collection(CHAT).whereArrayContains("userList", userID).get();
     }
 }
