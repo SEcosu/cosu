@@ -13,6 +13,7 @@ import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
+import com.example.cosu_pra.ConnectFB.HelpPosting;
 import com.example.cosu_pra.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -63,7 +64,9 @@ public class Fragment1 extends Fragment {
         search_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // 여기가 글 리스트 보여주는 곳
                 Intent intent = new Intent(getActivity(),SearchActivity.class);
+                intent.putExtra("collection", HelpPosting.PROJECT);
                 startActivity(intent);
             }
         });

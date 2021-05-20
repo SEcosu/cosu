@@ -65,6 +65,8 @@ public class StudyAdapter extends BaseAdapter {
         list_item.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                // TODO: 디테일로 들어가는거
                 Intent intent = new Intent(context,DetailActivity.class);
                 intent.putExtra("title",listViewItemList.get(pos).getTitle());
                 intent.putExtra("people",listViewItemList.get(pos).getPeople());

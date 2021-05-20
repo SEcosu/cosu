@@ -10,6 +10,7 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -112,7 +113,7 @@ public class HelpPosting {
      * @return Task<QuerySnapshot>: use addOnCompleteListener method instead Thread
      */
     public Task<QuerySnapshot> getAllPosts(String collection) {
-        return db.collection(collection).get();
+        return db.collection(collection).orderBy("date", Query.Direction.DESCENDING).get();
     }
 
     /**
