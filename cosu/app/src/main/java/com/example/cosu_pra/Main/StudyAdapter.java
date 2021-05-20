@@ -19,10 +19,15 @@ import java.util.ArrayList;
 public class StudyAdapter extends BaseAdapter {
 
     private ArrayList<StudyItem> listViewItemList = new ArrayList<StudyItem>() ;
+    String collection;
 
     // ListViewAdapter의 생성자
     public StudyAdapter() {
 
+    }
+
+    public StudyAdapter(String collection) {
+        this.collection = collection;
     }
 
     // Adapter에 사용되는 데이터의 개수를 리턴. : 필수 구현
@@ -62,19 +67,17 @@ public class StudyAdapter extends BaseAdapter {
         good.setText(studyItem.getGood());
         comment.setText(studyItem.getComment());
 
-        list_item.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                // TODO: 디테일로 들어가는거
-                Intent intent = new Intent(context,DetailActivity.class);
-                intent.putExtra("title",listViewItemList.get(pos).getTitle());
-                intent.putExtra("people",listViewItemList.get(pos).getPeople());
-                intent.putExtra("date",listViewItemList.get(pos).getDate());
-                intent.putExtra("good",listViewItemList.get(pos).getGood());
-                context.startActivity(intent);
-            }
-        });
+//        list_item.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//                // TODO: 디테일로 들어가는거
+//                Intent intent = new Intent(context,DetailActivity.class);
+//                intent.putExtra("postID",listViewItemList.get(pos).getPostID());
+//                intent.putExtra("collection",collection);
+//                context.startActivity(intent);
+//            }
+//        });
         return convertView;
     }
 
@@ -86,7 +89,7 @@ public class StudyAdapter extends BaseAdapter {
 
     // 지정한 위치(position)에 있는 데이터 리턴 : 필수 구현
     @Override
-    public Object getItem(int position) {
+    public StudyItem getItem(int position) {
         return listViewItemList.get(position) ;
     }
 
@@ -100,6 +103,9 @@ public class StudyAdapter extends BaseAdapter {
         item.setDate(date);
         item.setComment(comment);
         item.setGood(good);
+        listViewItemList.add(item);
+    }
+    public void addItem(StudyItem item) {
         listViewItemList.add(item);
     }
 

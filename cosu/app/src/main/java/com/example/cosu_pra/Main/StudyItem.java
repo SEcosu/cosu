@@ -11,6 +11,15 @@ public class StudyItem {
     private String date;
     private String comment;
     private String good;
+    private String postID;
+
+    public String getPostID() {
+        return postID;
+    }
+
+    public void setPostID(String postID) {
+        this.postID = postID;
+    }
 
     public String getComment() {
         return comment;

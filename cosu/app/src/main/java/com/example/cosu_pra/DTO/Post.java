@@ -15,6 +15,7 @@ public class Post {
     private String content;
     private List<String> category;
     private List<String> likes;
+    private int comment;
     private int report;
 
     public Post() {
@@ -23,6 +24,7 @@ public class Post {
         category = new ArrayList<String>();
         likes = new ArrayList<String>();
         report = 0;
+        comment = 0;
     }
 
     public Post(String writer, String content) {
@@ -49,6 +51,7 @@ public class Post {
         this.startDate = startDate;
         this.endDate = endDate;
     }
+
 
 
     // getter
@@ -86,6 +89,9 @@ public class Post {
 
     public int getReport(){ return report;}
 
+    public int getComment() {
+        return comment;
+    }
 
 
 
@@ -124,5 +130,9 @@ public class Post {
 
     public void setReport(int report){
         this.report = report;
+    }
+
+    public void setComment(int comment) {
+        this.comment = comment;
     }
 }

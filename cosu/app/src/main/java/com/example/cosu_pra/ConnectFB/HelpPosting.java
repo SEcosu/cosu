@@ -1,10 +1,16 @@
 package com.example.cosu_pra.ConnectFB;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 
 import com.example.cosu_pra.DTO.Comment;
 import com.example.cosu_pra.DTO.Post;
+import com.example.cosu_pra.DTO.ProjectPost;
+import com.example.cosu_pra.DTO.QnAPost;
+import com.example.cosu_pra.DTO.StudyPost;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -31,7 +37,7 @@ import java.util.Arrays;
  * 신고기능 -> 포스트는 완료
  * 관심 유저 등록하기 -> 유저정보에 저장하면 좋을 듯
  * 관심 글 등록하기 -> 유저정보에 저장하면 좋을 듯
- *
+ * <p>
  * 시간 남으면 -> 대댓글, 댓글 신고
  */
 public class HelpPosting {
@@ -126,8 +132,26 @@ public class HelpPosting {
      * @param comment:    comment to add
      */
     public void addComment(String collection, String postID, Comment comment) {
-        db.collection(collection).document(postID)
-                .collection(COMMENTS).add(comment);
+
+        getPost(collection, postID).addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                int numOfComment = 0;
+                if (collection.equals(HelpPosting.PROJECT)) {
+                    ProjectPost post = documentSnapshot.toObject(ProjectPost.class);
+                    numOfComment = post.getComment();
+                } else if (collection.equals(HelpPosting.STUDY)) {
+                    StudyPost post = documentSnapshot.toObject(StudyPost.class);
+                    numOfComment = post.getComment();
+                } else if (collection.equals(HelpPosting.QNA)) {
+                    QnAPost post = documentSnapshot.toObject(QnAPost.class);
+                    numOfComment = post.getComment();
+                }
+                db.collection(collection).document(postID).collection(COMMENTS).add(comment);
+                db.collection(collection).document(postID).update("comment",numOfComment+1);
+
+            }
+        });
     }
 
     /**
@@ -208,13 +232,12 @@ public class HelpPosting {
     }
 
     public Task<QuerySnapshot> getReportPost(String collection) {
-        return db.collection(collection).whereGreaterThan("report",0).get();
+        return db.collection(collection).whereGreaterThan("report", 0).get();
     }
 
-    public void setReportPostZero(String collection, String postID){
-        db.collection(collection).document(postID).update("report",0);
+    public void setReportPostZero(String collection, String postID) {
+        db.collection(collection).document(postID).update("report", 0);
     }
-
 
 
 }
