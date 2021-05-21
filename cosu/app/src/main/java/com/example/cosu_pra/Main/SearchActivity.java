@@ -65,6 +65,7 @@ public class SearchActivity extends AppCompatActivity {
                 }
                 showList();
             }
+
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
 
@@ -240,6 +241,103 @@ public class SearchActivity extends AppCompatActivity {
                             listView.setAdapter(adapter);
                         }
                     }
+                });
+            }
+        }
+    }
+
+    private void searchList(String searchWord) {
+        adapter = new PostListAdapter(collection);
+        if (collection.equals(HelpPosting.PROJECT)) { // Project
+            if (category == null) { // 전체보기인 경우
+                postHelper.getAllPosts(HelpPosting.PROJECT).addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                ProjectPost pp = document.toObject(ProjectPost.class);
+
+                                if (pp.getContent().contains(searchWord)) {
+                                    PostListItem item = new PostListItem();
+                                    item.setComment(pp.getComment() + "");
+                                    item.setDate(pp.getDate());
+                                    item.setImage(ContextCompat.getDrawable(getApplicationContext(), R.drawable.android)); //TODO: 수정필
+                                    item.setGood(pp.getLikes().size() + "");
+                                    item.setPeople(pp.getUsers().size() + ""); // TODO: max 인지 현재인지 확인필
+                                    item.setPostID(document.getId());
+                                    item.setTitle(pp.getTitle());
+
+                                    adapter.addItem(item);
+                                }
+                            }
+
+
+                        }
+                        listView.setAdapter(adapter);
+                    }
+
+                });
+            }
+        }
+        if (collection.equals(HelpPosting.STUDY)) { // Project
+            if (category == null) { // 전체보기인 경우
+                postHelper.getAllPosts(HelpPosting.PROJECT).addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                ProjectPost pp = document.toObject(ProjectPost.class);
+
+                                if (pp.getContent().contains(searchWord)) {
+                                    PostListItem item = new PostListItem();
+                                    item.setComment(pp.getComment() + "");
+                                    item.setDate(pp.getDate());
+                                    item.setImage(ContextCompat.getDrawable(getApplicationContext(), R.drawable.android)); //TODO: 수정필
+                                    item.setGood(pp.getLikes().size() + "");
+                                    item.setPeople(pp.getUsers().size() + ""); // TODO: max 인지 현재인지 확인필
+                                    item.setPostID(document.getId());
+                                    item.setTitle(pp.getTitle());
+
+                                    adapter.addItem(item);
+                                }
+                            }
+
+
+                        }
+                        listView.setAdapter(adapter);
+                    }
+
+                });
+            }
+        }
+        if (collection.equals(HelpPosting.QNA)) { // Project
+            if (category == null) { // 전체보기인 경우
+                postHelper.getAllPosts(HelpPosting.PROJECT).addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                ProjectPost pp = document.toObject(ProjectPost.class);
+
+                                if (pp.getContent().contains(searchWord)) {
+                                    PostListItem item = new PostListItem();
+                                    item.setComment(pp.getComment() + "");
+                                    item.setDate(pp.getDate());
+                                    item.setImage(ContextCompat.getDrawable(getApplicationContext(), R.drawable.android)); //TODO: 수정필
+                                    item.setGood(pp.getLikes().size() + "");
+                                    item.setPeople(pp.getUsers().size() + ""); // TODO: max 인지 현재인지 확인필
+                                    item.setPostID(document.getId());
+                                    item.setTitle(pp.getTitle());
+
+                                    adapter.addItem(item);
+                                }
+                            }
+
+
+                        }
+                        listView.setAdapter(adapter);
+                    }
+
                 });
             }
         }
