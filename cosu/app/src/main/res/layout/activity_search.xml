@@ -10,6 +10,7 @@
         android:layout_height="70dp">
 
         <Spinner
+            android:id="@+id/search_cate_spinner"
             android:entries="@array/type"
             android:layout_alignParentLeft="true"
             android:layout_width="150dp"
