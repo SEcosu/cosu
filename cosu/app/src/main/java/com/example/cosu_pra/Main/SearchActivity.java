@@ -30,8 +30,6 @@ public class SearchActivity extends AppCompatActivity {
     HelpPosting postHelper;
     ListView listView;
     PostListAdapter adapter;
-    PostListItem studyItem;
-    Map<String, ProjectPost> projectPosts = new HashMap<>();
     String collection, category;
     Spinner category_spinner;
     String[] cateList;
@@ -54,7 +52,7 @@ public class SearchActivity extends AppCompatActivity {
                 if (str.equals(category)) break;
                 i++;
             }
-        } 
+        }
 
         category_spinner.setSelection(i);
         category_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -68,7 +66,6 @@ public class SearchActivity extends AppCompatActivity {
                 }
                 showList();
             }
-
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
 
