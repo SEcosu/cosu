@@ -11,6 +11,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
+import com.example.cosu_pra.Adapter.PostListAdapter;
+import com.example.cosu_pra.Adapter.PostListItem;
 import com.example.cosu_pra.ConnectFB.HelpPosting;
 import com.example.cosu_pra.DTO.ProjectPost;
 import com.example.cosu_pra.DTO.QnAPost;
@@ -20,9 +22,6 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
-
-import java.util.HashMap;
-import java.util.Map;
 
 
 public class SearchActivity extends AppCompatActivity {

@@ -14,6 +14,7 @@ import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
+import com.example.cosu_pra.Adapter.PostCategoryAdapter;
 import com.example.cosu_pra.ConnectFB.HelpPosting;
 import com.example.cosu_pra.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;

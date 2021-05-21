@@ -1,4 +1,4 @@
-package com.example.cosu_pra.Main;
+package com.example.cosu_pra.Adapter;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
