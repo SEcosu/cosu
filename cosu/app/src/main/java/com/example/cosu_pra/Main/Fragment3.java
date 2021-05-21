@@ -36,8 +36,10 @@ public class Fragment3 extends Fragment {
         adapter = new PostCategoryAdapter();
         gridView.setAdapter(adapter);
 
+        adapter.addItem(ContextCompat.getDrawable(getActivity(), R.drawable.job),
+                "Career Counseling");
         adapter.addItem(ContextCompat.getDrawable(getActivity(), R.drawable.joystick),
-                "질문1");
+                "Game");
         // 두 번째 아이템 추가.
         adapter.addItem(ContextCompat.getDrawable(getActivity(), R.drawable.bank),
                 "Fintech");
@@ -46,12 +48,27 @@ public class Fragment3 extends Fragment {
                 "AI");
         adapter.addItem(ContextCompat.getDrawable(getActivity(), R.drawable.apps),
                 "App");
-        adapter.addItem(ContextCompat.getDrawable(getActivity(), R.drawable.united),
-                "Side Project");
+        adapter.addItem(ContextCompat.getDrawable(getActivity(), R.drawable.shield),
+                "Security");
         adapter.addItem(ContextCompat.getDrawable(getActivity(), R.drawable.www),
                 "Web");
-        adapter.addItem(ContextCompat.getDrawable(getActivity(), R.drawable.competition),
-                "Competition");
+        adapter.addItem(ContextCompat.getDrawable(getActivity(), R.drawable.cloud_iot),
+                "IoT");
+        adapter.addItem(ContextCompat.getDrawable(getActivity(), R.drawable.sql),
+                "DB");
+        adapter.addItem(ContextCompat.getDrawable(getActivity(), R.drawable.ux),
+                "Design");
+        adapter.addItem(ContextCompat.getDrawable(getActivity(), R.drawable.pm),
+                "Planner");
+        adapter.addItem(ContextCompat.getDrawable(getActivity(), R.drawable.java_cate),
+                "Java");
+        adapter.addItem(ContextCompat.getDrawable(getActivity(), R.drawable.c),
+                "C/C++/C#");
+        adapter.addItem(ContextCompat.getDrawable(getActivity(), R.drawable.python_cate),
+                "Python");
+        adapter.addItem(ContextCompat.getDrawable(getActivity(), R.drawable.php),
+                "PHP");
+
 
         plus_btn = v.findViewById(R.id.plus_btn);
         plus_btn.setOnClickListener(new View.OnClickListener() {
