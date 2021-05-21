@@ -37,35 +37,21 @@ public class Fragment2 extends Fragment {
         gridView.setAdapter(adapter);
 
         adapter.addItem(ContextCompat.getDrawable(getActivity(), R.drawable.joystick),
-                "Game");
+                "공부해요1");
         // 두 번째 아이템 추가.
         adapter.addItem(ContextCompat.getDrawable(getActivity(), R.drawable.bank),
-                "Fintech");
+                "공부해요2");
         // 세 번째 아이템 추가.
         adapter.addItem(ContextCompat.getDrawable(getActivity(), R.drawable.innovation),
-                "AI");
+                "공부");
         adapter.addItem(ContextCompat.getDrawable(getActivity(), R.drawable.apps),
                 "App");
-        adapter.addItem(ContextCompat.getDrawable(getActivity(), R.drawable.shield),
-                "Security");
+        adapter.addItem(ContextCompat.getDrawable(getActivity(), R.drawable.united),
+                "Side Project");
         adapter.addItem(ContextCompat.getDrawable(getActivity(), R.drawable.www),
                 "Web");
-        adapter.addItem(ContextCompat.getDrawable(getActivity(), R.drawable.cloud_iot),
-                "IoT");
-        adapter.addItem(ContextCompat.getDrawable(getActivity(), R.drawable.sql),
-                "DB");
-        adapter.addItem(ContextCompat.getDrawable(getActivity(), R.drawable.ux),
-                "Design");
-        adapter.addItem(ContextCompat.getDrawable(getActivity(), R.drawable.pm),
-                "Planner");
-        adapter.addItem(ContextCompat.getDrawable(getActivity(), R.drawable.java_cate),
-                "Java");
-        adapter.addItem(ContextCompat.getDrawable(getActivity(), R.drawable.c),
-                "C/C++/C#");
-        adapter.addItem(ContextCompat.getDrawable(getActivity(), R.drawable.python_cate),
-                "Python");
-        adapter.addItem(ContextCompat.getDrawable(getActivity(), R.drawable.php),
-                "PHP");
+        adapter.addItem(ContextCompat.getDrawable(getActivity(), R.drawable.competition),
+                "Competition");
 
         plus_btn = v.findViewById(R.id.plus_btn);
         plus_btn.setOnClickListener(new View.OnClickListener() {
