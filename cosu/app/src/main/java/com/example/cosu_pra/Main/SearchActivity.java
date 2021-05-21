@@ -11,6 +11,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
+import com.example.cosu_pra.Adapter.PostListAdapter;
+import com.example.cosu_pra.Adapter.PostListItem;
 import com.example.cosu_pra.ConnectFB.HelpPosting;
 import com.example.cosu_pra.DTO.ProjectPost;
 import com.example.cosu_pra.DTO.QnAPost;
@@ -21,17 +23,12 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
-import java.util.HashMap;
-import java.util.Map;
-
 
 public class SearchActivity extends AppCompatActivity {
 
     HelpPosting postHelper;
     ListView listView;
     PostListAdapter adapter;
-    PostListItem studyItem;
-    Map<String, ProjectPost> projectPosts = new HashMap<>();
     String collection, category;
     Spinner category_spinner;
     String[] cateList;
@@ -49,23 +46,14 @@ public class SearchActivity extends AppCompatActivity {
         category_spinner = findViewById(R.id.search_cate_spinner);
 
         int i = 0;
-        for(String str :getResources().getStringArray(R.array.category)){
-            if(str.equals(category)) break;
-            i++;
+        if (category != null) {
+            for (String str : getResources().getStringArray(R.array.category)) {
+                if (str.equals(category)) break;
+                i++;
+            }
         }
 
         category_spinner.setSelection(i);
-        
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(getApplicationContext(), DetailActivity.class);
-                intent.putExtra("postID", adapter.getItem(position).getPostID());
-                intent.putExtra("collection", collection);
-                startActivity(intent);
-            }
-        });
-
         category_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -83,6 +71,18 @@ public class SearchActivity extends AppCompatActivity {
 
             }
         });
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(getApplicationContext(), DetailActivity.class);
+                intent.putExtra("postID", adapter.getItem(position).getPostID());
+                intent.putExtra("collection", collection);
+                startActivity(intent);
+            }
+        });
+
+
 //        adapter.addItem(ContextCompat.getDrawable(getApplicationContext(), R.drawable.android),
 //                "안드로이드", "5", "~2021/5/31", "3", "5");
 //        adapter.addItem(ContextCompat.getDrawable(getApplicationContext(), R.drawable.java),
@@ -241,6 +241,103 @@ public class SearchActivity extends AppCompatActivity {
                             listView.setAdapter(adapter);
                         }
                     }
+                });
+            }
+        }
+    }
+
+    private void searchList(String searchWord) {
+        adapter = new PostListAdapter(collection);
+        if (collection.equals(HelpPosting.PROJECT)) { // Project
+            if (category == null) { // 전체보기인 경우
+                postHelper.getAllPosts(HelpPosting.PROJECT).addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                ProjectPost pp = document.toObject(ProjectPost.class);
+
+                                if (pp.getContent().contains(searchWord)) {
+                                    PostListItem item = new PostListItem();
+                                    item.setComment(pp.getComment() + "");
+                                    item.setDate(pp.getDate());
+                                    item.setImage(ContextCompat.getDrawable(getApplicationContext(), R.drawable.android)); //TODO: 수정필
+                                    item.setGood(pp.getLikes().size() + "");
+                                    item.setPeople(pp.getUsers().size() + ""); // TODO: max 인지 현재인지 확인필
+                                    item.setPostID(document.getId());
+                                    item.setTitle(pp.getTitle());
+
+                                    adapter.addItem(item);
+                                }
+                            }
+
+
+                        }
+                        listView.setAdapter(adapter);
+                    }
+
+                });
+            }
+        }
+        if (collection.equals(HelpPosting.STUDY)) { // Project
+            if (category == null) { // 전체보기인 경우
+                postHelper.getAllPosts(HelpPosting.PROJECT).addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                ProjectPost pp = document.toObject(ProjectPost.class);
+
+                                if (pp.getContent().contains(searchWord)) {
+                                    PostListItem item = new PostListItem();
+                                    item.setComment(pp.getComment() + "");
+                                    item.setDate(pp.getDate());
+                                    item.setImage(ContextCompat.getDrawable(getApplicationContext(), R.drawable.android)); //TODO: 수정필
+                                    item.setGood(pp.getLikes().size() + "");
+                                    item.setPeople(pp.getUsers().size() + ""); // TODO: max 인지 현재인지 확인필
+                                    item.setPostID(document.getId());
+                                    item.setTitle(pp.getTitle());
+
+                                    adapter.addItem(item);
+                                }
+                            }
+
+
+                        }
+                        listView.setAdapter(adapter);
+                    }
+
+                });
+            }
+        }
+        if (collection.equals(HelpPosting.QNA)) { // Project
+            if (category == null) { // 전체보기인 경우
+                postHelper.getAllPosts(HelpPosting.PROJECT).addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                ProjectPost pp = document.toObject(ProjectPost.class);
+
+                                if (pp.getContent().contains(searchWord)) {
+                                    PostListItem item = new PostListItem();
+                                    item.setComment(pp.getComment() + "");
+                                    item.setDate(pp.getDate());
+                                    item.setImage(ContextCompat.getDrawable(getApplicationContext(), R.drawable.android)); //TODO: 수정필
+                                    item.setGood(pp.getLikes().size() + "");
+                                    item.setPeople(pp.getUsers().size() + ""); // TODO: max 인지 현재인지 확인필
+                                    item.setPostID(document.getId());
+                                    item.setTitle(pp.getTitle());
+
+                                    adapter.addItem(item);
+                                }
+                            }
+
+
+                        }
+                        listView.setAdapter(adapter);
+                    }
+
                 });
             }
         }
