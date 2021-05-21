@@ -27,6 +27,8 @@
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/chatContent"
+        app:layout_constraintEnd_toStartOf="@+id/chatTime"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/chatImg"
         app:layout_constraintTop_toTopOf="@+id/chatImg"
         app:layout_constraintVertical_bias="0.0" />
