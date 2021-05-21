@@ -94,7 +94,7 @@ public class Fragment2 extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(getActivity(), SearchActivity.class);
                 intent.putExtra("collection", HelpPosting.STUDY);
-                String[] category = getResources().getStringArray(R.array.category);
+                String[] category = getResources().getStringArray(R.array.study_category);
                 intent.putExtra("category",category[position+1]);
 
                 startActivity(intent);

@@ -47,7 +47,7 @@ public class SearchActivity extends AppCompatActivity {
 
         int i = 0;
         if (category != null) {
-            for (String str : getResources().getStringArray(R.array.category)) {
+            for (String str : getResources().getStringArray(R.array.project_category)) {
                 if (str.equals(category)) break;
                 i++;
             }
@@ -60,7 +60,7 @@ public class SearchActivity extends AppCompatActivity {
                 if (position == 0) {
                     category = null;
                 } else {
-                    category = getResources().getStringArray(R.array.category)[position];
+                    category = getResources().getStringArray(R.array.project_category)[position];
                     cateList = new String[]{category};
                 }
                 showList();

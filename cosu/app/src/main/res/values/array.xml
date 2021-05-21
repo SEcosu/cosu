@@ -2,7 +2,7 @@
 <resources>
 
 
-    <string-array name="category">
+    <string-array name="project_category">
         <item>카테고리</item>
         <item>게임</item>
         <item>핀테크</item>
@@ -11,6 +11,43 @@
         <item>사이드 프로젝트</item>
         <item>웹</item>
         <item>공모전</item>
+    </string-array>
+
+    <string-array name="study_category">
+        <item>카테고리</item>
+        <item>게임</item>
+        <item>핀테크</item>
+        <item>AI</item>
+        <item>앱</item>
+        <item>보안</item>
+        <item>웹</item>
+        <item>IoT</item>
+        <item>DB</item>
+        <item>디자인</item>
+        <item>기획</item>
+        <item>자바</item>
+        <item>C</item>
+        <item>파이썬</item>
+        <item>PHP</item>
+    </string-array>
+
+    <string-array name="qna_category">
+        <item>카테고리</item>
+        <item>진로상담</item>
+        <item>게임</item>
+        <item>핀테크</item>
+        <item>AI</item>
+        <item>앱</item>
+        <item>보안</item>
+        <item>웹</item>
+        <item>IoT</item>
+        <item>DB</item>
+        <item>디자인</item>
+        <item>기획</item>
+        <item>자바</item>
+        <item>C</item>
+        <item>파이썬</item>
+        <item>PHP</item>
     </string-array>
 
     <string-array name="people">
