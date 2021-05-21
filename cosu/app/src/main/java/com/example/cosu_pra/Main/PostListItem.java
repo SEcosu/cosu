@@ -2,7 +2,7 @@ package com.example.cosu_pra.Main;
 
 import android.graphics.drawable.Drawable;
 
-public class StudyItem {
+public class PostListItem {
 
 
     private Drawable image;

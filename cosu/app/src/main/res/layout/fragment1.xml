@@ -29,7 +29,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <GridView
-            android:id="@+id/gridview"
+            android:id="@+id/frg1_gridview"
             android:numColumns="3"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>

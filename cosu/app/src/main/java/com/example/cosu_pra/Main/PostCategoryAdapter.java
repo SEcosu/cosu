@@ -14,12 +14,12 @@ import com.example.cosu_pra.R;
 import java.util.ArrayList;
 
 
-public class ProjectAdapter extends BaseAdapter {
+public class PostCategoryAdapter extends BaseAdapter {
 
-    private ArrayList<ProjectItem> listViewItemList = new ArrayList<ProjectItem>() ;
+    private ArrayList<PostCategoryItem> listViewItemList = new ArrayList<PostCategoryItem>() ;
 
     // ListViewAdapter의 생성자
-    public ProjectAdapter() {
+    public PostCategoryAdapter() {
 
     }
 
@@ -46,11 +46,11 @@ public class ProjectAdapter extends BaseAdapter {
         TextView text = (TextView) convertView.findViewById(R.id.project_text) ;
 
         // Data Set(listViewItemList)에서 position에 위치한 데이터 참조 획득
-        ProjectItem projectItem = listViewItemList.get(position);
+        PostCategoryItem item = listViewItemList.get(position);
 
         // 아이템 내 각 위젯에 데이터 반영
-        image.setImageDrawable(projectItem.getImage());
-        text.setText(projectItem.getText());
+        image.setImageDrawable(item.getImage());
+        text.setText(item.getText());
 
         return convertView;
     }
@@ -63,13 +63,13 @@ public class ProjectAdapter extends BaseAdapter {
 
     // 지정한 위치(position)에 있는 데이터 리턴 : 필수 구현
     @Override
-    public Object getItem(int position) {
+    public PostCategoryItem getItem(int position) {
         return listViewItemList.get(position) ;
     }
 
     // 아이템 데이터 추가를 위한 함수. 개발자가 원하는대로 작성 가능.
     public void addItem(Drawable image, String text) {
-        ProjectItem item = new ProjectItem();
+        PostCategoryItem item = new PostCategoryItem();
 
         item.setImage(image);
         item.setText(text);

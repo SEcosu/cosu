@@ -27,11 +27,13 @@ public class PlusActivity extends AppCompatActivity {
     Button plus_btn;
     HelpPosting postHelper;
     SharedPreferences sh_Pref;
+    String collection;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_plus);
+        collection = getIntent().getStringExtra("collection");
 
         postHelper = new HelpPosting();
         title = findViewById(R.id.project_plus_title);

@@ -1,7 +1,6 @@
 package com.example.cosu_pra.Main;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,17 +15,17 @@ import com.example.cosu_pra.R;
 import java.util.ArrayList;
 
 
-public class StudyAdapter extends BaseAdapter {
+public class PostListAdapter extends BaseAdapter {
 
-    private ArrayList<StudyItem> listViewItemList = new ArrayList<StudyItem>() ;
+    private ArrayList<PostListItem> listViewItemList = new ArrayList<PostListItem>() ;
     String collection;
 
     // ListViewAdapter의 생성자
-    public StudyAdapter() {
+    public PostListAdapter() {
 
     }
 
-    public StudyAdapter(String collection) {
+    public PostListAdapter(String collection) {
         this.collection = collection;
     }
 
@@ -57,7 +56,7 @@ public class StudyAdapter extends BaseAdapter {
         TextView comment = (TextView) convertView.findViewById(R.id.comment) ;
         LinearLayout list_item = convertView.findViewById(R.id.list_item);
         // Data Set(listViewItemList)에서 position에 위치한 데이터 참조 획득
-        StudyItem studyItem = listViewItemList.get(position);
+        PostListItem studyItem = listViewItemList.get(position);
 
         // 아이템 내 각 위젯에 데이터 반영
         image.setImageDrawable(studyItem.getImage());
@@ -89,13 +88,13 @@ public class StudyAdapter extends BaseAdapter {
 
     // 지정한 위치(position)에 있는 데이터 리턴 : 필수 구현
     @Override
-    public StudyItem getItem(int position) {
+    public PostListItem getItem(int position) {
         return listViewItemList.get(position) ;
     }
 
     // 아이템 데이터 추가를 위한 함수. 개발자가 원하는대로 작성 가능.
     public void addItem(Drawable image, String title, String people, String date , String comment , String good) {
-        StudyItem item = new StudyItem();
+        PostListItem item = new PostListItem();
 
         item.setImage(image);
         item.setTitle(title);
@@ -105,7 +104,7 @@ public class StudyAdapter extends BaseAdapter {
         item.setGood(good);
         listViewItemList.add(item);
     }
-    public void addItem(StudyItem item) {
+    public void addItem(PostListItem item) {
         listViewItemList.add(item);
     }
 

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.GridView;
 
@@ -21,41 +22,43 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 public class Fragment1 extends Fragment {
 
     GridView gridView;
-    ProjectAdapter adapter ;
+    PostCategoryAdapter adapter;
     FloatingActionButton plus_btn;
     Button search_btn;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         setHasOptionsMenu(true);
-        View v =  inflater.inflate(R.layout.fragment1, container, false);
+        View v = inflater.inflate(R.layout.fragment1, container, false);
 
-        gridView =(GridView)v.findViewById(R.id.gridview);
-        adapter = new ProjectAdapter() ;
+        gridView = (GridView) v.findViewById(R.id.frg1_gridview);
+        adapter = new PostCategoryAdapter();
         gridView.setAdapter(adapter);
 
         adapter.addItem(ContextCompat.getDrawable(getActivity(), R.drawable.joystick),
-                "Game") ;
+                "Game");
         // 두 번째 아이템 추가.
         adapter.addItem(ContextCompat.getDrawable(getActivity(), R.drawable.bank),
-                "Fintech") ;
+                "Fintech");
         // 세 번째 아이템 추가.
         adapter.addItem(ContextCompat.getDrawable(getActivity(), R.drawable.innovation),
-                "AI") ;
+                "AI");
         adapter.addItem(ContextCompat.getDrawable(getActivity(), R.drawable.apps),
-                "App") ;
+                "App");
         adapter.addItem(ContextCompat.getDrawable(getActivity(), R.drawable.united),
-                "Side Project") ;
+                "Side Project");
         adapter.addItem(ContextCompat.getDrawable(getActivity(), R.drawable.www),
-                "Web") ;
+                "Web");
         adapter.addItem(ContextCompat.getDrawable(getActivity(), R.drawable.competition),
-                "Competition") ;
+                "Competition");
 
         plus_btn = v.findViewById(R.id.plus_btn);
         plus_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(),PlusActivity.class);
+                Intent intent = new Intent(getActivity(), PlusActivity.class);
+                intent.putExtra("collection", HelpPosting.PROJECT);
                 startActivity(intent);
             }
         });
@@ -65,8 +68,20 @@ public class Fragment1 extends Fragment {
             @Override
             public void onClick(View v) {
                 // 여기가 글 리스트 보여주는 곳
-                Intent intent = new Intent(getActivity(),SearchActivity.class);
+                Intent intent = new Intent(getActivity(), SearchActivity.class);
                 intent.putExtra("collection", HelpPosting.PROJECT);
+                startActivity(intent);
+            }
+        });
+
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(getActivity(), SearchActivity.class);
+                intent.putExtra("collection", HelpPosting.PROJECT);
+                String[] category = getResources().getStringArray(R.array.category);
+                intent.putExtra("category",category[position+1]);
+
                 startActivity(intent);
             }
         });
