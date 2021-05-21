@@ -49,23 +49,14 @@ public class SearchActivity extends AppCompatActivity {
         category_spinner = findViewById(R.id.search_cate_spinner);
 
         int i = 0;
-        for(String str :getResources().getStringArray(R.array.category)){
-            if(str.equals(category)) break;
-            i++;
-        }
+        if (category != null) {
+            for (String str : getResources().getStringArray(R.array.category)) {
+                if (str.equals(category)) break;
+                i++;
+            }
+        } 
 
         category_spinner.setSelection(i);
-        
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(getApplicationContext(), DetailActivity.class);
-                intent.putExtra("postID", adapter.getItem(position).getPostID());
-                intent.putExtra("collection", collection);
-                startActivity(intent);
-            }
-        });
-
         category_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -83,6 +74,18 @@ public class SearchActivity extends AppCompatActivity {
 
             }
         });
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(getApplicationContext(), DetailActivity.class);
+                intent.putExtra("postID", adapter.getItem(position).getPostID());
+                intent.putExtra("collection", collection);
+                startActivity(intent);
+            }
+        });
+
+
 //        adapter.addItem(ContextCompat.getDrawable(getApplicationContext(), R.drawable.android),
 //                "안드로이드", "5", "~2021/5/31", "3", "5");
 //        adapter.addItem(ContextCompat.getDrawable(getApplicationContext(), R.drawable.java),
