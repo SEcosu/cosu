@@ -5,9 +5,13 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import androidx.annotation.NonNull;
 
 import com.example.cosu_pra.ConnectFB.HelpPosting;
 import com.example.cosu_pra.DTO.Comment;
@@ -25,15 +29,18 @@ import java.util.Map;
 
 
 public class DetailActivity extends AppCompatActivity {
-
+    Button comment_bt;
+    EditText input_comment;
     ImageView image;
     TextView title_text,people_text,date_text,good_text,contents_text;
-    String postID, collection,title,people,date,good,contents;
+    String postID, collection,title,people,date,good,contents,comments;
     HelpPosting postHelper;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
+
+
 
         Intent intent = getIntent();
         postID = intent.getStringExtra("postID");
@@ -85,6 +92,26 @@ public class DetailActivity extends AppCompatActivity {
                     }
                 });
 
+        //TODO 리사이클러뷰 댓글 구현
+        RecyclerView recyclerView = findViewById(R.id.recyclerview_comment);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false);
+        recyclerView.setLayoutManager(layoutManager);
+
+        final CommentAdapter adapter = new CommentAdapter();
+        recyclerView.setAdapter(adapter);
+
+        input_comment = findViewById(R.id.input_comment);
+
+        comment_bt = findViewById(R.id.button);
+        comment_bt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String comment = input_comment.getText().toString();
+
+                adapter.addItem(new Comment_sub(comment));
+                adapter.notifyDataSetChanged();
+            }
+        });
 
 
 

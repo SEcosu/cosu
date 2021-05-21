@@ -5,14 +5,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".Main.DetailActivity">
+    tools:context=".Main.DetailActivity"
+   >
 
 
     <ImageView
         android:scaleType="fitXY"
         android:id="@+id/image"
         android:layout_width="match_parent"
-        android:layout_height="250dp"/>
+        android:layout_height="50dp"/>
 
     <View
         android:layout_width="match_parent"
@@ -132,21 +133,58 @@
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:weightSum="2">
-
-
+        android:layout_height="200dp"
+        android:weightSum="3">
         <LinearLayout
-            android:padding="10dp"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1">
-            <TextView
-                android:layout_gravity="center"
-                android:textSize="20dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <EditText
+                android:id="@+id/input_comment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="댓글을 입력하세요"
+                android:inputType="text" />
+
+            <Button
+                android:id="@+id/button"
+                android:layout_gravity="right"
+                android:layout_marginRight="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="댓글"/>
+                android:backgroundTint="#6fdcc6"
+                android:text="추가"/>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerview_comment"
+                android:layout_marginTop="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                />
+
+        </LinearLayout>
+
+
+<!--        <LinearLayout-->
+<!--            android:padding="10dp"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:orientation="vertical"-->
+<!--            android:layout_height="0dp"-->
+<!--            android:layout_weight="1">-->
+<!--            <TextView-->
+<!--                android:layout_gravity="left"-->
+<!--                android:textSize="20dp"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="댓글"/>-->
+
+<!--            <androidx.recyclerview.widget.RecyclerView-->
+<!--                android:id="@+id/recyclerview"-->
+<!--                android:layout_marginTop="5dp"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="match_parent"-->
+<!--         />-->
+
         </LinearLayout>
 
         <View
@@ -208,4 +246,3 @@
 
         </LinearLayout>
     </LinearLayout>
-</LinearLayout>
