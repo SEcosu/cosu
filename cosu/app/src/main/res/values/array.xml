@@ -56,7 +56,7 @@
         <item>3</item>
         <item>4</item>
         <item>5</item>
-        <item>6</item>
+        <item>6인 이상</item>
 
 
     </string-array>
@@ -73,8 +73,8 @@
         <item>앱</item>
         <item>사이드 프로젝트</item>
         <item>웹</item>
-        <item>경쟁</item>
-
+        <item>공모전</item>
     </string-array>
+
 
 </resources>

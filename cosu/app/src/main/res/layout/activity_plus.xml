@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".Main.PlusActivity">
+    tools:context=".Main.PlusActivity"
+    >
 
     <TextView
         android:id="@+id/together_textview"
@@ -55,7 +56,7 @@
         <Spinner
             android:id="@+id/project_plus_category"
             android:layout_width="0dp"
-            android:layout_height="80dp"
+            android:layout_height="60dp"
             android:layout_weight="1" />
 
         <View
@@ -66,7 +67,7 @@
         <Spinner
             android:id="@+id/project_plus_max"
             android:layout_width="0dp"
-            android:layout_height="80dp"
+            android:layout_height="60dp"
             android:layout_weight="1"
             android:entries="@array/people" />
     </LinearLayout>
@@ -78,47 +79,52 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="80dp"
+        android:layout_height="60dp"
         android:orientation="horizontal"
         android:padding="5dp">
 
 
-        <Button
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="44dp"
             android:layout_gravity="center"
+            android:layout_marginLeft="15dp"
             android:background="@drawable/calendar_2" />
 
-        <TextView
-            android:layout_width="100dp"
+        <Button
+            android:id="@+id/date_start"
+            android:layout_width="wrap_content"
             android:layout_height="40dp"
             android:layout_gravity="center"
-            android:layout_marginLeft="20dp"
+            android:layout_marginLeft="15dp"
             android:gravity="center"
-            android:text="yyyy/mm/dd"
-            android:textColor="#000000"
-            android:textSize="16dp" />
+            android:text="시작일"
+            android:backgroundTint="@color/white"
+            android:textColor="@color/black"
+            android:textSize="18dp" />
 
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="40dp"
             android:layout_gravity="center"
-            android:layout_marginLeft="15dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             android:gravity="center"
             android:text="~"
             android:textColor="#000000"
             android:textSize="18dp" />
 
-        <TextView
-            android:layout_width="100dp"
+        <Button
+            android:id="@+id/date_end"
+            android:layout_width="wrap_content"
             android:layout_height="40dp"
             android:layout_gravity="center"
-            android:layout_marginLeft="20dp"
             android:gravity="center"
-            android:text="yyyy/mm/dd"
-            android:textColor="#000000"
-            android:textSize="16dp" />
+            android:text="마감일"
+            android:backgroundTint="@color/white"
+            android:textColor="@color/black"
+            android:textSize="18dp" />
 
     </LinearLayout>
 
@@ -137,7 +143,10 @@
             android:layout_height="match_parent"
             android:background="@android:color/transparent"
             android:hint="프로젝트의 내용을 자세히 작성해주세요"
-            android:textSize="15dp" />
+            android:paddingLeft="15dp"
+            android:paddingTop="15dp"
+            android:gravity="left"
+            android:textSize="20dp" />
 
         <Button
             android:id="@+id/project_plus_btn"
