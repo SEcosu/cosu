@@ -250,4 +250,8 @@ public class HelpPosting {
         db.collection(collection).document(postID).update("likes", FieldValue.arrayUnion(userID));
     }
 
+    public Task<QuerySnapshot> getUserNickname(String userID){
+        return db.collection("users").whereEqualTo("Email",userID).get();
+    }
+
 }

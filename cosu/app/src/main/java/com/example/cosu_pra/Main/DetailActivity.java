@@ -24,6 +24,7 @@ import com.example.cosu_pra.ConnectFB.HelpPosting;
 import com.example.cosu_pra.DTO.Comment;
 import com.example.cosu_pra.DTO.ProjectPost;
 import com.example.cosu_pra.DTO.StudyPost;
+import com.example.cosu_pra.DTO.User;
 import com.example.cosu_pra.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -64,6 +65,8 @@ public class DetailActivity extends AppCompatActivity {
         good_text = findViewById(R.id.good_text);
         contents_text = findViewById(R.id.detail_content);
         sh_Pref = getSharedPreferences("Login Credentials ", MODE_PRIVATE);
+        TextView writer = findViewById(R.id.detail_writer);
+
         // get post
         postHelper.getPost(collection, postID)
                 .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
@@ -83,6 +86,19 @@ public class DetailActivity extends AppCompatActivity {
                         contents_text.setText(contents);
                     }
                 });
+        String wr = sh_Pref.getString("Email", "");
+        postHelper.getUserNickname(wr).addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        writer.setText(document.toObject(User.class).getNickName());
+                    }
+
+                }
+            }
+        });
+
 
         RecyclerView recyclerView = findViewById(R.id.recyclerview_comment);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
@@ -164,12 +180,12 @@ public class DetailActivity extends AppCompatActivity {
                                 }
 
                                 if (user >= max) {
-                                   return;
+                                    return;
                                 } else if (user + 1 == max) {
                                     userList.add(wr);
                                     HelpChatting chatting = new HelpChatting();
                                     chatting.makeCharRoom(userList);
-                                } 
+                                }
                                 postHelper.addUser(collection, postID, wr);
                             }
                         });
