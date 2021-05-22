@@ -39,6 +39,8 @@ public class PlusActivity extends AppCompatActivity {
     TextView together;
     Button date_start;
     Button date_end;
+    private int REQUEST_TEST = 1;
+    private int REQUEST_TEST2 = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,22 +48,25 @@ public class PlusActivity extends AppCompatActivity {
         setContentView(R.layout.activity_plus);
 
         //TODO 모집기간 설정
-        Button date_start = (Button)findViewById(R.id.date_start);
-        Button date_end = (Button)findViewById(R.id.date_end);
+        Button date_start = (Button) findViewById(R.id.date_start);
+        Button date_end = (Button) findViewById(R.id.date_end);
 
         date_start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), CalenderActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent, REQUEST_TEST);
+                // startActivityForResult(intent);
             }
         });
+
 
         date_end.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), CalenderActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent, REQUEST_TEST2);
+                // startActivityForResult(intent);
             }
         });
 
@@ -119,24 +124,55 @@ public class PlusActivity extends AppCompatActivity {
                 String co = contents.getText().toString();
                 List<String> list = new ArrayList<String>();
                 list.add(category_spinner.getSelectedItem().toString());
-                int max; 
+                int max;
 
-                if(collection.equals(HelpPosting.PROJECT)) {
+                if (collection.equals(HelpPosting.PROJECT)) {
                     max = Integer.parseInt(max_spinner.getSelectedItem().toString());
                     ProjectPost post = new ProjectPost(ti, wr, co, max, list);
                     postHelper.addPost(collection, post);
                 }
-                if(collection.equals(HelpPosting.STUDY)) {
+                if (collection.equals(HelpPosting.STUDY)) {
                     max = Integer.parseInt(max_spinner.getSelectedItem().toString());
                     StudyPost post = new StudyPost(ti, wr, co, max, list);
                     postHelper.addPost(collection, post);
                 }
-                if(collection.equals(HelpPosting.QNA)) {
+                if (collection.equals(HelpPosting.QNA)) {
                     QnAPost post = new QnAPost(ti, wr, co, list);
                     postHelper.addPost(collection, post);
                 }
                 finish();
             }
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        date_start = findViewById(R.id.date_start);
+        date_end = findViewById(R.id.date_end);
+        if (requestCode == REQUEST_TEST) {
+            if (resultCode == RESULT_OK) {
+//                Toast.makeText(PlusActivity.this, "Result: " + data.getStringExtra("date_start"), Toast.LENGTH_SHORT).show();
+                String sendText = data.getStringExtra("date_start");
+                date_start.setText(sendText);
+            } else {   // RESULT_CANCEL
+                Toast.makeText(PlusActivity.this, "Failed", Toast.LENGTH_SHORT).show();
+            }
+//        } else if (requestCode == REQUEST_ANOTHER) {
+//            ...
+        }
+        if (requestCode == REQUEST_TEST2) {
+            if (resultCode == RESULT_OK) {
+//                Toast.makeText(PlusActivity.this, "Result: " + data.getStringExtra("date_end"), Toast.LENGTH_SHORT).show();
+                String sendText = data.getStringExtra("date_end");
+                date_end.setText(sendText);
+            } else {   // RESULT_CANCEL
+                Toast.makeText(PlusActivity.this, "Failed", Toast.LENGTH_SHORT).show();
+            }
+//        } else if (requestCode == REQUEST_ANOTHER) {
+//            ...
+        }
+
     }
 }

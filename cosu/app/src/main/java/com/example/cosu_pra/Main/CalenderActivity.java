@@ -31,6 +31,7 @@ public class CalenderActivity extends AppCompatActivity {
                 selectedYear = year;
                 selectedMonth = month + 1; // 0~11월을 사용하므로 +1 필요
                 selectedDay = dayOfMonth;
+
             }
         });
 
@@ -43,7 +44,13 @@ public class CalenderActivity extends AppCompatActivity {
                 }
 
                 Toast.makeText(CalenderActivity.this, selectedYear + "년 " + selectedMonth + "월 " + selectedDay + "일", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent();
+                intent.putExtra("date_start", selectedYear + "년 " + selectedMonth + "월 " + selectedDay + "일"); //사용자에게 입력받은 시작일 값 넣기
+                intent.putExtra("date_end", selectedYear + "년 " + selectedMonth + "월 " + selectedDay + "일"); //사용자에게 입력받은 마감일 값 넣기
+                setResult(RESULT_OK, intent);//결과를 저장
+                finish();//액티비티 종료
             }
+
         });
 
     }
