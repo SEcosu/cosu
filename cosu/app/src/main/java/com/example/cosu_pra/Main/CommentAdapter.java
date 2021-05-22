@@ -47,15 +47,19 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
 
     static class ViewHolder extends RecyclerView.ViewHolder{
         TextView input_comment;
+        TextView comment_writer;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             input_comment = itemView.findViewById(R.id.input_comment);
+            comment_writer = itemView.findViewById(R.id.comment_writer);
 
         }
 
         public void setItem(Comment_sub item){
             input_comment.setText(item.getComment());
+            comment_writer.setText(item.getCommentWriter());
+
         }
     }
 }

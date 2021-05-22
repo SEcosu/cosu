@@ -141,7 +141,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@android:color/transparent"
-            android:hint="프로젝트의 내용을 자세히 작성해주세요"
+            android:hint="프로젝트의 내용을 자세히 작성해주세요\n(Github 주소 첨부 추천!)"
             android:paddingLeft="15dp"
             android:paddingTop="15dp"
             android:gravity="left"

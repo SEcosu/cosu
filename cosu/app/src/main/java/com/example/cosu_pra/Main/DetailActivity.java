@@ -42,7 +42,7 @@ public class DetailActivity extends AppCompatActivity {
     Button comment_bt;
     EditText input_comment;
     ImageView image;
-    TextView title_text, people_text, date_text, good_text, contents_text;
+    TextView title_text, people_text, date_text, good_text, contents_text,comment_writer;
     String postID, collection, title, people, date, good, contents, comments;
     HelpPosting postHelper;
     SharedPreferences sh_Pref;
@@ -101,10 +101,13 @@ public class DetailActivity extends AppCompatActivity {
 
 
         RecyclerView recyclerView = findViewById(R.id.recyclerview_comment);
+
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);
 
         CommentAdapter adapter = new CommentAdapter();
+        recyclerView.setAdapter(adapter);
+
         // get post's comments
         postHelper.getComments(collection, postID)
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -113,7 +116,7 @@ public class DetailActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 Comment comment = document.toObject(Comment.class);
-                                adapter.addItem(new Comment_sub(comment.getContent()));
+                                adapter.addItem(new Comment_sub(comment.getContent(),comment.getContent()));
 
                             }
                             recyclerView.setAdapter(adapter);
@@ -123,14 +126,18 @@ public class DetailActivity extends AppCompatActivity {
 
 
         input_comment = findViewById(R.id.input_comment);
+        comment_writer = findViewById(R.id.comment_writer);
 
         comment_bt = findViewById(R.id.button);
         comment_bt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String comment = input_comment.getText().toString();
-                adapter.addItem(new Comment_sub(comment));
+                String comment_name= comment_writer.getText().toString();
+                adapter.addItem(new Comment_sub(comment_name, comment));
                 adapter.notifyDataSetChanged();
+
+
                 String wr = sh_Pref.getString("Email", "");
 
                 Comment com = new Comment(wr, comment);
