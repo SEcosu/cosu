@@ -41,7 +41,8 @@ public class Fragment5 extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 //        _userID = MainActivity.client.getUserID();
-        _userID = "5sgFx141z4UOAzEPDDsgDeL8lj33";
+        firebaseAuth = FirebaseAuth.getInstance();//get instance to firebaseAuth
+        _userID = firebaseAuth.getCurrentUser().getUid();
     }
 
     @Override
