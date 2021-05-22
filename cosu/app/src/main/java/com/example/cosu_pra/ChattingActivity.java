@@ -1,28 +1,60 @@
 package com.example.cosu_pra;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
+import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.PopupMenu;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.ArrayList;
+import com.example.cosu_pra.DTO.ProjectPost;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class ChattingActivity extends AppCompatActivity {
-    ArrayList<String> chatoutList;
-    ArrayAdapter<String> chatoutAdapter;
+    ImageButton End = findViewById(R.id.project_end);
+    ImageButton Exit = findViewById(R.id.exit);
+    EditText mc = findViewById(R.id.message_content);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chatting);
+
+
         ImageButton End = findViewById(R.id.project_end);
         ImageButton Exit = findViewById(R.id.exit);
+        //채팅 리사이클러뷰 연결
+        RecyclerView rv = (RecyclerView)findViewById(R.id.message_recyclerview) ;
+        rv.setLayoutManager(new LinearLayoutManager(ChattingActivity.this));
+        rv.setAdapter(new RecyclerViewAdapter());
+        //TODO send 버튼 눌렀을때
+        End.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View v) {
+                String msg = mc.getText().toString();
+                if(mc!=null){
+
+                }
 
 
+            }
+        });
         //TODO 채팅방나가기
         End.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,5 +93,62 @@ public class ChattingActivity extends AppCompatActivity {
 
 
     }
+    //채팅리스트 연결 - 메세지
+    class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
+        Map<String, ProjectPost> comments = new HashMap<String, ProjectPost>();
+        public RecyclerViewAdapter(){
+            FirebaseDatabase.getInstance().getReference().child("chatrooms").child("comments").addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    comments.clear();
+
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+            //TODO 방이름 가져오기
+            //TODO 대화내용 가져오기
+        }
+        @NonNull
+        @Override
+
+        public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.itemmessage, parent, false);
+            return new MessageViewHolder(view);
+        }
+
+        @Override
+        public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+            MessageViewHolder messageViewHolder = ((MessageViewHolder)holder);
+            //내가 보낸 메세지라면(오른쪽버블 바탕화면으로
+
+
+        }
+
+        @Override
+        public int getItemCount() {
+            return comments.size();
+        }
+
+        private class MessageViewHolder extends RecyclerView.ViewHolder {
+            public TextView message;
+            public TextView name;
+            public LinearLayout lv;
+            public LinearLayout lv_chamessage_main;
+            public MessageViewHolder(View view) {
+                super(view);
+                message = (TextView)view.findViewById(R.id.profile1_content);
+                name = (TextView)view.findViewById(R.id.profile1_name);
+                lv = (LinearLayout)view.findViewById(R.id.chat1);
+                lv_chamessage_main = (LinearLayout)view.findViewById(R.id.lv_chamessage_main);
+
+            }
+        }
+    }
+
+
 
 }
