@@ -1,7 +1,6 @@
 package com.example.cosu_pra;
 
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,7 +18,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.cosu_pra.DTO.ProjectPost;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
@@ -126,25 +124,6 @@ public class ChattingActivity extends AppCompatActivity {
         public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
             MessageViewHolder messageViewHolder = ((MessageViewHolder)holder);
             //내가 보낸 메세지라면(오른쪽버블 바탕화면으로
-            if() {
-                messageViewHolder.message.setText(comments.get(position).message);
-                messageViewHolder.message.setBackgroundResource(R.drawable.bubble2);
-                //내 메세지 감쳐주는
-                messageViewHolder.message.setVisibility(View.INVISIBLE);
-                messageViewHolder.message.setTextSize(15);
-                messageViewHolder.lv_chamessage_main.setGravity(Gravity.RIGHT);
-            }
-            //상대방이 보낸 메세지
-            else {
-                //상대방이름가져오기
-                messageViewHolder.name.setText();
-                messageViewHolder.lv.setVisibility(View.VISIBLE);
-                messageViewHolder.message.setBackgroundResource(R.drawable.bubble1);
-                //상대방 메세지
-                messageViewHolder.message.setText(comments.get(position).message);
-                //텍스트 사이즈
-                messageViewHolder.message.setTextSize(15);
-            }
 
 
         }

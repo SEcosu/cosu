@@ -2,6 +2,8 @@ package com.example.cosu_pra.Main;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import java.util.*;
 
@@ -15,12 +17,14 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.PopupMenu;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.example.cosu_pra.MyCommentActivity;
+import com.example.cosu_pra.MylikeActivity;
+import com.example.cosu_pra.MypostActivity;
 import com.example.cosu_pra.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -31,12 +35,23 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.SetOptions;
 
+        lv2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/SEcosu/cosu"));
+                startActivity(intent);
+            }
+        });
 
 public class Fragment5 extends Fragment {
     FirebaseAuth firebaseAuth;
     FirebaseFirestore firebaseFirestore;
 
     private String _userID;
+
+
+    //고객센터 링크연결
+    LinearLayout lv2;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,6 +65,10 @@ public class Fragment5 extends Fragment {
         setHasOptionsMenu(true);
         View v = inflater.inflate(R.layout.fragment5, container, false);
         ImageButton btn = v.findViewById(R.id.mypage_btn);
+        ImageButton mypostbtn= v.findViewById(R.id.mypost);
+        ImageButton mylikebtn =  v.findViewById(R.id.mylike);
+        ImageButton mycommentbtn= v.findViewById(R.id.mycomment);
+
         Button profilebtn = v.findViewById(R.id.look_profilebtn);
 
         final LinearLayout[] dialogView = new LinearLayout[1];
@@ -70,20 +89,9 @@ public class Fragment5 extends Fragment {
                         //TODO 벨 버튼 클릭 후 이벤트
                         switch(item.getItemId()){
                             case R.id.action_menu1:
-                                Toast.makeText(getContext(), "푸시 알림 설정", Toast.LENGTH_SHORT).show();
-                                break;
-                            case R.id.action_menu2:
-                                Toast.makeText(getContext(), "진동", Toast.LENGTH_SHORT).show();
 
                                 break;
-                            case R.id.action_menu3:
-                                Toast.makeText(getContext(), "알림음", Toast.LENGTH_SHORT).show();
 
-                                break;
-                            case R.id.action_menu4:
-                                Toast.makeText(getContext(), "알림 ON/OFF", Toast.LENGTH_SHORT).show();
-
-                                break;
                         }
                         return false;
                     }
@@ -159,6 +167,29 @@ public class Fragment5 extends Fragment {
                 dlg.setNegativeButton("취소", null);
                 dlg.show();
 
+            }
+        });
+        mypostbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), MypostActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        mylikebtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), MylikeActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        mycommentbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), MyCommentActivity.class);
+                startActivity(intent);
             }
         });
 

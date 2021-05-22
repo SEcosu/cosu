@@ -2,6 +2,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.cosu_pra">
 
+    <service android:name=".MyFirebaseInstanceIDService">
+        <intent-filter>
+            <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
+        </intent-filter>
+    </service>
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher_cosu_logo"
@@ -9,7 +15,13 @@
         android:roundIcon="@mipmap/ic_launcher_cosu_logo_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Cosu_pra">
-
+        <activity android:name=".MyCommentActivity"></activity>
+        <activity android:name=".MylikeActivity" />
+        <activity android:name=".MypostActivity" />
+        <activity
+            android:name=".MypageActivity"
+            android:label="@string/title_activity_mypage"
+            android:theme="@style/Theme.Cosu_pra.NoActionBar" />
         <activity android:name=".SplashActivity" />
         <activity android:name=".SignupActivity" />
         <activity android:name=".LogoutActivity" />
@@ -19,15 +31,14 @@
         <activity android:name=".Main.PlusActivity" />
         <activity android:name=".Main.DetailActivity" />
         <activity android:name=".Main.SearchActivity" />
-        <activity android:name=".Main.CalenderActivity"/>
+        <activity android:name=".Main.CalenderActivity" />
         <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-
     </application>
 
 </manifest>
