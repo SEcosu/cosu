@@ -1,21 +1,30 @@
 package com.example.cosu_pra.Main;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 
+import com.example.cosu_pra.ConnectFB.HelpChatting;
 import com.example.cosu_pra.ConnectFB.HelpPosting;
 import com.example.cosu_pra.DTO.Comment;
 import com.example.cosu_pra.DTO.ProjectPost;
+import com.example.cosu_pra.DTO.StudyPost;
+import com.example.cosu_pra.DTO.User;
 import com.example.cosu_pra.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -25,6 +34,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -32,14 +42,15 @@ public class DetailActivity extends AppCompatActivity {
     Button comment_bt;
     EditText input_comment;
     ImageView image;
-    TextView title_text,people_text,date_text,good_text,contents_text;
-    String postID, collection,title,people,date,good,contents,comments;
+    TextView title_text, people_text, date_text, good_text, contents_text;
+    String postID, collection, title, people, date, good, contents, comments;
     HelpPosting postHelper;
+    SharedPreferences sh_Pref;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
-
 
 
         Intent intent = getIntent();
@@ -53,6 +64,8 @@ public class DetailActivity extends AppCompatActivity {
         date_text = findViewById(R.id.date_text);
         good_text = findViewById(R.id.good_text);
         contents_text = findViewById(R.id.detail_content);
+        sh_Pref = getSharedPreferences("Login Credentials ", MODE_PRIVATE);
+        TextView writer = findViewById(R.id.detail_writer);
 
         // get post
         postHelper.getPost(collection, postID)
@@ -61,9 +74,9 @@ public class DetailActivity extends AppCompatActivity {
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
                         ProjectPost post = documentSnapshot.toObject(ProjectPost.class); // post는 원하는 post 객체를 사용하세요
                         title = post.getTitle();
-                        people = post.getUsers().size()+"";
+                        people = post.getUsers().size() + "";
                         date = post.getDate();
-                        good = post.getLikes().size()+"";
+                        good = post.getLikes().size() + "";
                         contents = post.getContent();
 
                         title_text.setText(title);
@@ -73,32 +86,41 @@ public class DetailActivity extends AppCompatActivity {
                         contents_text.setText(contents);
                     }
                 });
+        String wr = sh_Pref.getString("Email", "");
+        postHelper.getUserNickname(wr).addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        writer.setText(document.toObject(User.class).getNickName());
+                    }
 
+                }
+            }
+        });
+
+
+        RecyclerView recyclerView = findViewById(R.id.recyclerview_comment);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        recyclerView.setLayoutManager(layoutManager);
+
+        CommentAdapter adapter = new CommentAdapter();
         // get post's comments
         postHelper.getComments(collection, postID)
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
-                            Map<String, Comment> comments = new HashMap<String, Comment>();
                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                comments.put(document.getId(), document.toObject(Comment.class)); // 맵으로 넣는 방법
+                                Comment comment = document.toObject(Comment.class);
+                                adapter.addItem(new Comment_sub(comment.getContent()));
+
                             }
-                            for (Comment cmt : comments.values()) {
-                                Log.d("test", cmt.getContent());
-                                Log.d("test", cmt.getWriter());
-                            }
+                            recyclerView.setAdapter(adapter);
                         }
                     }
                 });
 
-        //TODO 리사이클러뷰 댓글 구현
-        RecyclerView recyclerView = findViewById(R.id.recyclerview_comment);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false);
-        recyclerView.setLayoutManager(layoutManager);
-
-        final CommentAdapter adapter = new CommentAdapter();
-        recyclerView.setAdapter(adapter);
 
         input_comment = findViewById(R.id.input_comment);
 
@@ -107,13 +129,69 @@ public class DetailActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 String comment = input_comment.getText().toString();
-
                 adapter.addItem(new Comment_sub(comment));
                 adapter.notifyDataSetChanged();
+                String wr = sh_Pref.getString("Email", "");
+
+                Comment com = new Comment(wr, comment);
+                postHelper.addComment(collection, postID, com);
+
             }
         });
 
+        Button report = findViewById(R.id.report_btn);
+        report.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                postHelper.reportPost(collection, postID);
+            }
+        });
 
+        ImageButton likeBtn = findViewById(R.id.like_btn);
+        likeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String wr = sh_Pref.getString("Email", "");
+                postHelper.addLike(collection, postID, wr);
+            }
+        });
+
+        Button parButton = findViewById(R.id.particpate_btn);
+        parButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String wr = sh_Pref.getString("Email", "");
+                postHelper.getPost(collection, postID)
+                        .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                            @Override
+                            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                int user, max;
+                                List<String> userList;
+                                if (collection.equals(HelpPosting.PROJECT)) {
+                                    ProjectPost post = documentSnapshot.toObject(ProjectPost.class); // post는 원하는 post 객체를 사용하세요
+                                    user = post.getUsers().size();
+                                    max = post.getMax();
+                                    userList = post.getUsers();
+                                } else {
+                                    StudyPost post = documentSnapshot.toObject(StudyPost.class);
+                                    user = post.getUsers().size();
+                                    max = post.getMax();
+                                    userList = post.getUsers();
+                                }
+
+                                if (user >= max) {
+                                    return;
+                                } else if (user + 1 == max) {
+                                    userList.add(wr);
+                                    HelpChatting chatting = new HelpChatting();
+                                    chatting.makeCharRoom(userList);
+                                }
+                                postHelper.addUser(collection, postID, wr);
+                            }
+                        });
+
+            }
+        });
 
 
 //        if (title.equals("안드로이드")){
