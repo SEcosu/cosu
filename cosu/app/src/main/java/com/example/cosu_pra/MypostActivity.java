@@ -16,7 +16,7 @@ public class MypostActivity extends AppCompatActivity {
         setContentView(R.layout.activity_mypost);
         lv = findViewById(R.id.mypostlv);
         adapter = new MypostItemAdapter();
-        adapter.addItem(new mypostList("스터디원 구해요", "JAVA"));
+        adapter.addItem(new MypostItem("스터디원 구해요", "JAVA"));
         lv.setAdapter(adapter);
     }
 }
