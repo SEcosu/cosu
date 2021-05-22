@@ -40,6 +40,14 @@ public class StudyPost extends Post {
         this.location.put("latitude", location.getLatitude());
     }
 
+    public StudyPost(String title, String writer, String contents,
+                       int max_users, List<String> category, String startDate, String endDate) {
+        super(title, writer, contents,category,startDate,endDate);
+        max = max_users;
+        users = new ArrayList<String>();
+        users.add(writer);
+    }
+
     // getter
     public int getMax() {
         return max;

@@ -78,6 +78,7 @@
         android:background="#9e9d9d" />
 
     <LinearLayout
+        android:id="@+id/plus_date_container"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:orientation="horizontal"
@@ -97,9 +98,9 @@
             android:layout_height="40dp"
             android:layout_gravity="center"
             android:layout_marginLeft="5dp"
+            android:backgroundTint="@color/white"
             android:gravity="center"
             android:text="시작일"
-            android:backgroundTint="@color/white"
             android:textColor="@color/black"
             android:textSize="15dp" />
 
@@ -118,9 +119,9 @@
             android:layout_width="wrap_content"
             android:layout_height="40dp"
             android:layout_gravity="center"
+            android:backgroundTint="@color/white"
             android:gravity="center"
             android:text="마감일"
-            android:backgroundTint="@color/white"
             android:textColor="@color/black"
             android:textSize="15dp" />
 

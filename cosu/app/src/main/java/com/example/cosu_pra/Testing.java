@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 
 import com.example.cosu_pra.ConnectFB.HelpChatting;
 import com.example.cosu_pra.ConnectFB.HelpPosting;
+import com.example.cosu_pra.DTO.ChatData;
 import com.example.cosu_pra.DTO.Comment;
 import com.example.cosu_pra.DTO.ProjectPost;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -290,7 +291,25 @@ public class Testing {
         cht.waitMSG();
     }
 
+    private void getChats() {
+        cht.getMessages("Ij2L74mfcmWTIjDRwsBL") // 실제값 넣어준 것, 함수에서 받아서 넣어줘야함
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            Map<String, ProjectPost> comments = new HashMap<String, ProjectPost>();
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                ChatData MSG = document.toObject(ChatData.class);
 
+                                // 여기다 리스튜면 .add(MSG) 이런식으로 추가하고
+                            }
+
+                            // 리스트뷰를 보여주면 됨
+                        }
+                    }
+
+                });
+    }
 
 
 }

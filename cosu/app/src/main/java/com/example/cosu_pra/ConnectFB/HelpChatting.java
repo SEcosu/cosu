@@ -85,4 +85,10 @@ public class HelpChatting {
     public Task<QuerySnapshot> getChatRooms(String userID) {
         return db.collection(CHAT).whereArrayContains("userList", userID).get();
     }
+
+    public Task<QuerySnapshot> getMessages(String roomID) {
+        return db.collection(CHAT).document(roomID)
+                .collection(MSG).orderBy("data", Query.Direction.DESCENDING).get();
+    }
+
 }
