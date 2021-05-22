@@ -3,12 +3,14 @@ package com.example.cosu_pra.Main;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import java.util.*;
+
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.PopupMenu;
@@ -25,28 +27,23 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.SetOptions;
 
 
 public class Fragment5 extends Fragment {
     FirebaseAuth firebaseAuth;
     FirebaseFirestore firebaseFirestore;
 
-    // 회원가입시 작성한 이메일 값과 비밀번호 값을 저장할 객체 생성
-    private TextView editTextEmail;
-    private TextView editTextPassword;
-
-    // 회원가입시 작성한 이름 값과 닉네임 값을 저장할 객체 생성
-    private TextView editTextName;
-    private TextView editTextNickname;
+    private String _userID;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
+//        _userID = MainActivity.client.getUserID();
+        _userID = "5sgFx141z4UOAzEPDDsgDeL8lj33";
     }
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         setHasOptionsMenu(true);
@@ -55,6 +52,11 @@ public class Fragment5 extends Fragment {
         Button profilebtn = v.findViewById(R.id.look_profilebtn);
 
         final LinearLayout[] dialogView = new LinearLayout[1];
+
+        TextView nickNameView = v.findViewById(R.id.mypage_nickname);
+        TextView nameView = v.findViewById(R.id.mypage_nickname);  // fill out later if you want to display
+        TextView emailView = v.findViewById(R.id.mypage_nickname);  // fill out later if you want to display
+        showInfo(nameView, nickNameView, emailView);
 
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -102,6 +104,55 @@ public class Fragment5 extends Fragment {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
+                        String _name = ((TextView)dialogView[0].findViewById(R.id.ename)).getText().toString();
+                        String _nickname = ((TextView)dialogView[0].findViewById(R.id.enickname)).getText().toString();
+                        String _pw = ((TextView)dialogView[0].findViewById(R.id.epw)).getText().toString();
+                        String _pwc = ((TextView)dialogView[0].findViewById(R.id.epwc)).getText().toString();
+
+                        if (_name.equals("")) {
+                            // empty field, reject
+                            return;
+                        }
+                        if (_nickname.equals("")) {
+                            // empty field, reject
+                            return;
+                        }
+                        if (_pw.equals("")) {
+                            // empty field, reject
+                            return;
+                        }
+                        if (_pwc.equals("")) {
+                            // empty field, reject
+                            return;
+                        }
+
+                        if (!_pw.equals(_pwc)) {
+                            // this is where you display ERROR that they dont match
+                            return;
+                        }
+
+                        int _on_rejection_error = updateInfo(
+                                _userID,
+                                _name,
+                                _nickname,
+                                _pw,
+                                _pwc
+                        );
+                        if (_on_rejection_error == 1) {
+                            // wrong password
+                            return;
+                        }
+                        else if (_on_rejection_error == 2) {
+                            // no connection
+                            return;
+                        }
+                        else if (_on_rejection_error == 3) {
+                            // some other error
+                            return;
+                        }
+                        // if it does not return above, then error code = 0, and success
+
+                        showInfo(nameView, nickNameView, emailView);
                     }
                 });
                 dlg.setNegativeButton("취소", null);
@@ -113,19 +164,31 @@ public class Fragment5 extends Fragment {
         return v;
     }
 
-    //내가 쓴 글 불러오기
-    public Query getQuery(FirebaseFirestore databaseReference) {
-        firebaseAuth = FirebaseAuth.getInstance();
-        String myUserId = firebaseAuth.getCurrentUser().getUid();
+    private int updateInfo(String _userID, String _name, String _nickname, String _password,String _passwordConfirm) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-        return databaseReference.collection("Projects").whereEqualTo("writer", myUserId);
+        Map<String, Object> data = new HashMap<>();
+        data.put("Nickname", _nickname);
+        data.put("Name", _name);
+        data.put("Password", _password);
+        data.put("PasswordConfirm", _passwordConfirm);
+
+        db.collection("users").document(_userID).set(
+                data,
+                SetOptions.merge()
+        );
+
+        return 0;
     }
 
     //회원정보를 보여주는 showInfo 메서드
-    private void showInfo(){
+    private void showInfo(TextView nameView, TextView emailView, TextView nickNameView){
         // 현재 로그인이 되어있는 사용자를 가져옴
-        final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+//        final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         // firestore의 collection 경로를  "users"로 설정
+
+        firebaseFirestore = FirebaseFirestore.getInstance();
+
         firebaseFirestore.collection("users")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -135,12 +198,11 @@ public class Fragment5 extends Fragment {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult())
                             {
-                                assert user != null;
-                                    // editText에 파이어스토에 저장된 값을 setText해줌
-                                    editTextEmail.setText(document.getData().get("Email").toString());
-                                    editTextName.setText(document.getData().get("Name").toString());
-                                    editTextNickname.setText(document.getData().get("Nickname").toString());
-                                    editTextPassword.setText(document.getData().get("Password").toString());
+                                if (!document.getId().equals(_userID)) continue;
+                                nickNameView.setText(document.getData().get("Nickname").toString());
+//                                nameView.setText(document.getData().get("Name").toString());
+//                                emailView.setText(document.getData().get("Email").toString());
+                                break;
                             }
                         }
                     }
