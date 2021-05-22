@@ -31,17 +31,17 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/new_id"
+            android:id="@+id/new_nickname"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:paddingLeft="15dp"
             android:paddingTop="15dp"
 
-            android:text="이메일"
+            android:text="닉네임"
             android:textSize="20sp" />
 
         <EditText
-            android:id="@+id/eid"
+            android:id="@+id/enickname"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:paddingLeft="15dp" />
@@ -73,7 +73,7 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/new_email"
+            android:id="@+id/new_passwordConfirm"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:paddingLeft="15dp"
@@ -83,7 +83,7 @@
             android:textSize="20sp" />
 
         <EditText
-            android:id="@+id/eemail"
+            android:id="@+id/epwc"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:paddingLeft="15dp" />
