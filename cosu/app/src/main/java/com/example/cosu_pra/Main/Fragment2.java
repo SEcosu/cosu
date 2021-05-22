@@ -11,6 +11,7 @@ import android.widget.GridView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.SearchView;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
@@ -26,6 +27,7 @@ public class Fragment2 extends Fragment {
     PostCategoryAdapter adapter;
     FloatingActionButton plus_btn;
     Button search_btn;
+    SearchView searchBar;
 
     @Nullable
     @Override
@@ -67,6 +69,24 @@ public class Fragment2 extends Fragment {
                 "Python");
         adapter.addItem(ContextCompat.getDrawable(getActivity(), R.drawable.php),
                 "PHP");
+
+        searchBar = v.findViewById(R.id.frg1_searchview);
+        searchBar.setQueryHint("어떤 스터디를 찾고 계신가요?");
+        searchBar.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                Intent intent = new Intent(getActivity(), SearchActivity.class);
+                intent.putExtra("collection", HelpPosting.PROJECT);
+                intent.putExtra("search", query);
+                startActivity(intent);
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
 
         plus_btn = v.findViewById(R.id.plus_btn);
         plus_btn.setOnClickListener(new View.OnClickListener() {

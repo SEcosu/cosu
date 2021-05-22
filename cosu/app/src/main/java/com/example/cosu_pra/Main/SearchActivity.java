@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Spinner;
 
@@ -29,9 +30,9 @@ public class SearchActivity extends AppCompatActivity {
     HelpPosting postHelper;
     ListView listView;
     PostListAdapter adapter;
-    String collection, category;
+    String collection, category,searchWord;
     Spinner category_spinner;
-    String[] cateList;
+    String[] cateList, categoryTypeList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,28 +40,46 @@ public class SearchActivity extends AppCompatActivity {
         setContentView(R.layout.activity_search);
         collection = getIntent().getStringExtra("collection");
         category = getIntent().getStringExtra("category");
+        searchWord = getIntent().getStringExtra("search");
         cateList = new String[]{category};
 
         postHelper = new HelpPosting();
         listView = (ListView) findViewById(R.id.search_listview);
         category_spinner = findViewById(R.id.search_cate_spinner);
 
+        // Spinner 지정
+        if (collection.equals(HelpPosting.PROJECT)) {
+            categoryTypeList = getResources().getStringArray(R.array.project_category);
+        } else if (collection.equals(HelpPosting.STUDY)) {
+            categoryTypeList = getResources().getStringArray(R.array.study_category);
+        } else {
+            categoryTypeList = getResources().getStringArray(R.array.qna_category);
+        }
+        categoryTypeList[0] = "전체보기";
+        category_spinner.setAdapter(new ArrayAdapter<String>(this, R.layout.support_simple_spinner_dropdown_item, categoryTypeList));
+
+        // 카테고리를 지정한 경우 스피너를 카테고리에 맞게 선택
         int i = 0;
         if (category != null) {
-            for (String str : getResources().getStringArray(R.array.project_category)) {
+            for (String str : categoryTypeList) {
                 if (str.equals(category)) break;
                 i++;
             }
         }
 
+        // 스피너 리스너,
         category_spinner.setSelection(i);
         category_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (position == 0) {
                     category = null;
+                    if(searchWord != null){
+                        searchList(searchWord);
+                        return;
+                    }
                 } else {
-                    category = getResources().getStringArray(R.array.project_category)[position];
+                    category = categoryTypeList[position];
                     cateList = new String[]{category};
                 }
                 showList();
@@ -94,10 +113,6 @@ public class SearchActivity extends AppCompatActivity {
 
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-    }
 
     private void showList() {
         adapter = new PostListAdapter(collection);
@@ -246,6 +261,7 @@ public class SearchActivity extends AppCompatActivity {
         }
     }
 
+
     private void searchList(String searchWord) {
         adapter = new PostListAdapter(collection);
         if (collection.equals(HelpPosting.PROJECT)) { // Project
@@ -281,14 +297,14 @@ public class SearchActivity extends AppCompatActivity {
         }
         if (collection.equals(HelpPosting.STUDY)) { // Project
             if (category == null) { // 전체보기인 경우
-                postHelper.getAllPosts(HelpPosting.PROJECT).addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                postHelper.getAllPosts(HelpPosting.STUDY).addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 ProjectPost pp = document.toObject(ProjectPost.class);
 
-                                if (pp.getContent().contains(searchWord)) {
+                                if (pp.getContent().contains(searchWord) || pp.getTitle().contains(searchWord)) {
                                     PostListItem item = new PostListItem();
                                     item.setComment(pp.getComment() + "");
                                     item.setDate(pp.getDate());
@@ -312,7 +328,7 @@ public class SearchActivity extends AppCompatActivity {
         }
         if (collection.equals(HelpPosting.QNA)) { // Project
             if (category == null) { // 전체보기인 경우
-                postHelper.getAllPosts(HelpPosting.PROJECT).addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                postHelper.getAllPosts(HelpPosting.QNA).addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {

@@ -27,6 +27,7 @@ public class Fragment1 extends Fragment {
     PostCategoryAdapter adapter;
     FloatingActionButton plus_btn;
     Button search_btn;
+    SearchView searchBar;
 
     @Nullable
     @Override
@@ -37,6 +38,7 @@ public class Fragment1 extends Fragment {
         gridView = (GridView) v.findViewById(R.id.frg1_gridview);
         adapter = new PostCategoryAdapter();
         gridView.setAdapter(adapter);
+
 
         adapter.addItem(ContextCompat.getDrawable(getActivity(), R.drawable.joystick),
                 "Game");
@@ -55,6 +57,25 @@ public class Fragment1 extends Fragment {
         adapter.addItem(ContextCompat.getDrawable(getActivity(), R.drawable.competition),
                 "Competition");
 
+        searchBar = v.findViewById(R.id.frg1_searchview);
+        searchBar.setQueryHint("어떤 주제의 프로젝트인가요?");
+        searchBar.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                Intent intent = new Intent(getActivity(), SearchActivity.class);
+                intent.putExtra("collection", HelpPosting.PROJECT);
+                intent.putExtra("search", query);
+                startActivity(intent);
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
+
+        // 글 올리기 버튼
         plus_btn = v.findViewById(R.id.plus_btn);
         plus_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -65,6 +86,7 @@ public class Fragment1 extends Fragment {
             }
         });
 
+        // 전체보기 누르면
         search_btn = v.findViewById(R.id.search_btn);
         search_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,13 +98,14 @@ public class Fragment1 extends Fragment {
             }
         });
 
+        // 아이콘 누르면
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(getActivity(), SearchActivity.class);
                 intent.putExtra("collection", HelpPosting.PROJECT);
                 String[] category = getResources().getStringArray(R.array.project_category);
-                intent.putExtra("category",category[position+1]);
+                intent.putExtra("category", category[position + 1]);
 
                 startActivity(intent);
             }
