@@ -2,6 +2,7 @@ package com.example.cosu_pra.Main;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -41,7 +42,6 @@ public class SearchActivity extends AppCompatActivity {
         collection = getIntent().getStringExtra("collection");
         category = getIntent().getStringExtra("category");
         searchWord = getIntent().getStringExtra("search");
-        cateList = new String[]{category};
 
         postHelper = new HelpPosting();
         listView = (ListView) findViewById(R.id.search_listview);
@@ -134,12 +134,13 @@ public class SearchActivity extends AppCompatActivity {
                     }
                 });
             } else { // 카테고리가 있는 경우
-                postHelper.searchPostByCategory(collection, cateList).addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                postHelper.searchPostByCategory(collection, category).addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 ProjectPost pp = document.toObject(ProjectPost.class);
+                                Log.d("test",document.getData().toString());
 
                                 PostListItem item = new PostListItem();
                                 item.setComment(pp.getComment() + "");
@@ -182,7 +183,7 @@ public class SearchActivity extends AppCompatActivity {
                     }
                 });
             } else { // 카테고리가 있는 경우
-                postHelper.searchPostByCategory(collection, cateList).addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                postHelper.searchPostByCategory(collection, category).addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
@@ -229,7 +230,7 @@ public class SearchActivity extends AppCompatActivity {
                     }
                 });
             } else { // 카테고리가 있는 경우
-                postHelper.searchPostByCategory(collection, cateList).addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                postHelper.searchPostByCategory(collection, category).addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {

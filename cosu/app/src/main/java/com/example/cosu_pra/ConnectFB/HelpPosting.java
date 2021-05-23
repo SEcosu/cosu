@@ -231,8 +231,8 @@ public class HelpPosting {
      * @return Task<QuerySnapshot>:
      * use addOnCompleteListener method instead Thread
      */
-    public Task<QuerySnapshot> searchPostByCategory(String collection, String[] category) {
-        return db.collection(collection).whereArrayContainsAny("category", Arrays.asList(category)).orderBy("date", Query.Direction.DESCENDING).get();
+    public Task<QuerySnapshot> searchPostByCategory(String collection, String category) {
+        return db.collection(collection).whereArrayContains("category", category).get();
     }
 
     public Task<QuerySnapshot> getReportPost(String collection) {

@@ -226,22 +226,22 @@ public class Testing {
 //        Log.d("test", "writer");
         // search by category
         String[] cate = new String[]{"c"};
-        pst.searchPostByCategory(pst.PROJECT, cate)
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            Map<String, ProjectPost> comments = new HashMap<String, ProjectPost>();
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                comments.put(document.getId(), document.toObject(ProjectPost.class)); // 맵으로 넣는 방법
-                            }
-                            for (ProjectPost cmt : comments.values()) {
-                                Log.d("test", cmt.getContent());
-                                Log.d("test", cmt.getWriter());
-                            }
-                        }
-                    }
-                });
+//        pst.searchPostByCategory(pst.PROJECT, cate)
+//                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+//                    @Override
+//                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+//                        if (task.isSuccessful()) {
+//                            Map<String, ProjectPost> comments = new HashMap<String, ProjectPost>();
+//                            for (QueryDocumentSnapshot document : task.getResult()) {
+//                                comments.put(document.getId(), document.toObject(ProjectPost.class)); // 맵으로 넣는 방법
+//                            }
+//                            for (ProjectPost cmt : comments.values()) {
+//                                Log.d("test", cmt.getContent());
+//                                Log.d("test", cmt.getWriter());
+//                            }
+//                        }
+//                    }
+//                });
     }
 
     private void report() {
