@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/lv_chamessage_main"
+
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
     <LinearLayout
         android:id="@+id/chat1"
         android:layout_width="wrap_content"
@@ -24,15 +25,31 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingLeft="20dp"
-            android:text="상대방 이름"/>
+            android:text="상대방 이름" />
 
 
     </LinearLayout>
-    <TextView
-        android:id="@+id/profile1_content"
-        android:paddingTop="20dp"
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingLeft="20dp"
-        android:text="메세지 내용"/>
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/profile1_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="20dp"
+            android:paddingTop="20dp"
+            android:text="메세지 내용" />
+
+        <TextView
+            android:id="@+id/profile1_time"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="right"
+            android:paddingLeft="20dp"
+            android:paddingTop="20dp"
+            android:text="보낸 시간" />
+    </LinearLayout>
 </LinearLayout>
