@@ -29,6 +29,7 @@ import com.example.cosu_pra.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -42,12 +43,13 @@ public class DetailActivity extends AppCompatActivity {
     Button comment_bt;
     EditText input_comment;
     ImageView image;
-    TextView title_text, people_text, date_text, good_text, contents_text, comment_writer;
-    String postID, collection, title, people, date, good, contents, comments;
+    TextView title_text, people_text, date_text, good_text, contents_text, writerTextView;
+    String postID, collection, title, people, date, good, contents, writer;
     HelpPosting postHelper;
     SharedPreferences sh_Pref;
     CommentAdapter adapter;
     RecyclerView recyclerView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +62,7 @@ public class DetailActivity extends AppCompatActivity {
         collection = intent.getStringExtra("collection");
         postHelper = new HelpPosting();
 
+
         image = findViewById(R.id.image);
         title_text = findViewById(R.id.title_text);
         people_text = findViewById(R.id.people_text);
@@ -67,7 +70,15 @@ public class DetailActivity extends AppCompatActivity {
         good_text = findViewById(R.id.good_text);
         contents_text = findViewById(R.id.detail_content);
         sh_Pref = getSharedPreferences("Login Credentials ", MODE_PRIVATE);
-        TextView writer = findViewById(R.id.detail_writer);
+        writerTextView = findViewById(R.id.detail_writer);
+        recyclerView = findViewById(R.id.recyclerview_comment);
+        input_comment = findViewById(R.id.input_comment);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        recyclerView.setLayoutManager(layoutManager);
+        adapter = new CommentAdapter();
+
+        String wr = sh_Pref.getString("Email", "");
+
 
         // get post
         postHelper.getPost(collection, postID)
@@ -80,36 +91,31 @@ public class DetailActivity extends AppCompatActivity {
                         date = post.getDate();
                         good = post.getLikes().size() + "";
                         contents = post.getContent();
+                        writer = post.getWriter();
 
                         title_text.setText(title);
                         people_text.setText(people);
                         date_text.setText(date);
                         good_text.setText(good);
                         contents_text.setText(contents);
+
+                        postHelper.getUserNickname(writer).addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                if (task.isSuccessful()) {
+                                    for (QueryDocumentSnapshot document : task.getResult()) {
+                                        Log.d("test", document.toString());
+                                        User user = document.toObject(User.class);
+                                        String nickName = user.getNickName();
+                                        String name = user.getEmail();
+                                        writerTextView.setText(nickName);
+                                    }
+
+                                }
+                            }
+                        });
                     }
                 });
-        String wr = sh_Pref.getString("Email", "");
-        postHelper.getUserNickname(wr).addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful()) {
-                    for (QueryDocumentSnapshot document : task.getResult()) {
-                        writer.setText(document.toObject(User.class).getNickName());
-                    }
-
-                }
-            }
-        });
-
-
-        recyclerView = findViewById(R.id.recyclerview_comment);
-
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-        recyclerView.setLayoutManager(layoutManager);
-
-        adapter = new CommentAdapter();
-        recyclerView.setAdapter(adapter);
-
         // get post's comments
         postHelper.getComments(collection, postID)
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -123,23 +129,17 @@ public class DetailActivity extends AppCompatActivity {
                                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                                         if (task.isSuccessful()) {
                                             for (QueryDocumentSnapshot document : task.getResult()) {
-
                                                 adapter.addItem(new Comment_sub(document.toObject(User.class).getNickName(), comment.getContent()));
                                             }
-
                                         }
                                     }
                                 });
-
-
                             }
                             recyclerView.setAdapter(adapter);
                         }
                     }
                 });
 
-
-        input_comment = findViewById(R.id.input_comment);
 
         // 댓글올리기
         comment_bt = findViewById(R.id.button);
@@ -255,7 +255,7 @@ public class DetailActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 Comment comment = document.toObject(Comment.class);
-                                adapter.addItem(new Comment_sub(comment.getContent(), comment.getContent()));
+                                adapter.addItem(new Comment_sub(document.toObject(User.class).getNickName(), comment.getContent()));
 
                             }
                             recyclerView.setAdapter(adapter);

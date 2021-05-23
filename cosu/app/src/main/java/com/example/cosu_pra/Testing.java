@@ -9,6 +9,8 @@ import com.example.cosu_pra.ConnectFB.HelpPosting;
 import com.example.cosu_pra.DTO.ChatData;
 import com.example.cosu_pra.DTO.Comment;
 import com.example.cosu_pra.DTO.ProjectPost;
+import com.example.cosu_pra.DTO.User;
+import com.example.cosu_pra.Main.Comment_sub;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -26,10 +28,10 @@ public class Testing {
     HelpChatting cht;
     private Object ArrayList;
 
-    Testing() {
+    public Testing() {
         pst = new HelpPosting();
         cht = new HelpChatting();
-        waitChat();
+        getUserNickName();
     }
 
     // ok
@@ -309,6 +311,24 @@ public class Testing {
                     }
 
                 });
+    }
+
+    private void getUserNickName(){
+        Log.d("test","user.getNickName()");
+        pst.getUserNickname("tnflchzz@naver.com").addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        User user = document.toObject(User.class);
+                        Log.d("test","1");
+                        Log.d("test",document.getData().toString());
+                        Log.d("test",user.getNickName());
+
+                    }
+                }
+            }
+        });
     }
 
 

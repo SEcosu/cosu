@@ -265,7 +265,7 @@ public class HelpPosting {
     }
 
     public Task<QuerySnapshot> getUserNickname(String userID){
-        return db.collection("users").whereEqualTo("Email",userID).get();
+        return db.collection("users").whereEqualTo("email",userID).get();
     }
 
 }

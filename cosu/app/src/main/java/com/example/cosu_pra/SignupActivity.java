@@ -17,6 +17,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.cosu_pra.DTO.User;
+import com.example.cosu_pra.Main.MainActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -50,7 +52,7 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
     Button buttonSignup;
     ImageView buttonBack;
     TextView textviewMessage;
-    private TextView yourAccount,create;
+    private TextView yourAccount, create;
     ProgressDialog progressDialog;
     FirebaseAuth firebaseAuth;
     FirebaseFirestore fStore;
@@ -75,7 +77,8 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
 
         }
         //initializing views
-        editTextSignUpName = (EditText) findViewById(R.id.editTextSignUpName);;
+        editTextSignUpName = (EditText) findViewById(R.id.editTextSignUpName);
+        ;
         editTextSignUpNickname = (EditText) findViewById(R.id.editTextSignUpNickname);
         editTextSignUpEmail = (EditText) findViewById(R.id.editTextSignUpEmail);
         editTextSignUpPassword = (EditText) findViewById(R.id.editTextSignUpPassword);
@@ -91,9 +94,7 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
         yourAccount.setText(" your Account");
         buttonSignup.setOnClickListener(this);
         buttonBack.setOnClickListener(this);
-
     }
-
 
 
     private void registerUser() {
@@ -103,20 +104,6 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
         String confirmPassword = editTextSignUpPasswordConfirm.getText().toString().trim();
         String name = editTextSignUpName.getText().toString();
         String nickName = editTextSignUpNickname.getText().toString();
-
-        //SharedPreference에 입력반은 데이터 저장
-        sh_Pref = getSharedPreferences ("Login Credentials ", MODE_PRIVATE);
-        toEdit = sh_Pref.edit();
-        toEdit.putString ("Name", name);
-        toEdit.commit();
-        toEdit.putString ("Password", password);
-        toEdit.commit();
-        toEdit.putString ("Email", email);
-        toEdit.commit();
-        toEdit.putString ("Nickname", nickName);
-        toEdit.commit();
-
-
 
         //Check whether the email and password are empty or not.
         if (TextUtils.isEmpty(email)) {
@@ -150,8 +137,8 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
             return;
         }
 
-        if (!password.equals(confirmPassword)){
-            Toast.makeText(this,"Please check password again.",Toast.LENGTH_SHORT).show();
+        if (!password.equals(confirmPassword)) {
+            Toast.makeText(this, "Please check password again.", Toast.LENGTH_SHORT).show();
             editTextSignUpPassword.setText("");
             editTextSignUpPasswordConfirm.setText("");
             editTextSignUpPassword.requestFocus();
@@ -170,21 +157,23 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
                         if (task.isSuccessful()) {
                             finish();
                             userID = firebaseAuth.getCurrentUser().getUid();
-                            DocumentReference documentReference = fStore.collection("users").document(userID);
-                            Map<String,Object> user = new HashMap<>();
-                            user.put("Name", name);
-                            user.put("Nickname", nickName);
-                            user.put("Email", email);
-                            user.put("Password", password);
-                            user.put("PasswordConfirm", confirmPassword);
+                            User user = new User(email, name, nickName);
+                            fStore.collection("users").add(user);
 
-                            documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                @Override
-                                public void onSuccess(Void aVoid) {
-                                    Log.d(TAG, "onSuccess: user Profile is created for "+ userID);
-                                }
-                            });
-                            startActivity(new Intent(getApplicationContext(), LogoutActivity.class));
+                            //SharedPreference에 입력반은 데이터 저장
+                            sh_Pref = getSharedPreferences("Login Credentials ", MODE_PRIVATE);
+                            toEdit = sh_Pref.edit();
+                            toEdit.putString("Name", name);
+                            toEdit.commit();
+                            toEdit.putString("Password", password);
+                            toEdit.commit();
+                            toEdit.putString("Email", email);
+                            toEdit.commit();
+                            toEdit.putString("Nickname", nickName);
+                            toEdit.commit();
+
+
+                            startActivity(new Intent(getApplicationContext(), MainActivity.class));
                         } else {
                             //If error occured
                             textviewMessage.setText("Error type\n - Email already registered\n -Password at least 6 digits \n - Server error");
@@ -208,5 +197,6 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
         if (view == buttonBack) {
             finish();
         }
+
     }
 }
