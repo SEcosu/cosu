@@ -62,6 +62,8 @@ public class Fragment5 extends Fragment {
         ImageButton mypostbtn= v.findViewById(R.id.mypost);
         ImageButton mylikebtn =  v.findViewById(R.id.mylike);
         ImageButton mycommentbtn= v.findViewById(R.id.mycomment);
+        ImageButton logoutbtn = v.findViewById(R.id.logoutbtn);
+        ImageButton withdrawbtn = v.findViewById(R.id.withdrawbtn);
 
         Button profilebtn = v.findViewById(R.id.look_profilebtn);
 
@@ -77,7 +79,7 @@ public class Fragment5 extends Fragment {
                 startActivity(intent);
             }
         });
-
+        //옆에 팝업버튼(나중에)
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -102,7 +104,22 @@ public class Fragment5 extends Fragment {
             }
         });
 
+        //로그아웃
+        logoutbtn.setOnClickListener(new View.OnClickListener(){
 
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        //탈퇴하기
+        withdrawbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
         profilebtn.setOnClickListener(new View.OnClickListener(){
 
             //TODO 프로필 수정
