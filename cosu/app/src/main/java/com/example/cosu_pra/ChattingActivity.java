@@ -1,7 +1,6 @@
 package com.example.cosu_pra;
 
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,8 +17,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.cosu_pra.DTO.ChatData;
 import com.example.cosu_pra.DTO.ProjectPost;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
@@ -31,6 +30,7 @@ import java.util.Map;
 public class ChattingActivity extends AppCompatActivity {
     ImageButton End = findViewById(R.id.project_end);
     ImageButton Exit = findViewById(R.id.exit);
+    ImageButton send = findViewById(R.id.sendbtn);
     EditText mc = findViewById(R.id.message_content);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,18 +44,32 @@ public class ChattingActivity extends AppCompatActivity {
         RecyclerView rv = (RecyclerView)findViewById(R.id.message_recyclerview) ;
         rv.setLayoutManager(new LinearLayoutManager(ChattingActivity.this));
         rv.setAdapter(new RecyclerViewAdapter());
-        //TODO send 버튼 눌렀을때
+
+        //TODO SEND버튼
+        send.setOnClickListener(new View.OnClickListener(){
+
+            public void onClick(View v) {
+                String MSG = mc.getText().toString();
+                if(mc!=null){
+                    ChatData chatdata  = new ChatData();
+                    chatdata.setMsg(MSG);
+                    Toast.makeText(ChattingActivity.this, "성공", Toast.LENGTH_SHORT).show();
+                }
+                else
+                    Toast.makeText(ChattingActivity.this, "입력해주세요", Toast.LENGTH_SHORT).show();
+
+
+            }
+        });
+        //TODO END 버튼 눌렀을때
         End.setOnClickListener(new View.OnClickListener(){
 
             @Override
             public void onClick(View v) {
-                String msg = mc.getText().toString();
-                if(mc!=null){
-
-                }
-
 
             }
+
+
         });
         //TODO 채팅방나가기
         End.setOnClickListener(new View.OnClickListener() {

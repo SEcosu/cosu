@@ -24,6 +24,8 @@
         <activity android:name=".Main.DetailActivity" />
         <activity android:name=".Main.SearchActivity" />
         <activity android:name=".Main.CalenderActivity" />
+        <activity android:name=".MyCommentActivity" />
+
         <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
