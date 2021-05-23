@@ -125,26 +125,26 @@ public class ChattingActivity extends AppCompatActivity {
         @Override
         public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
             MessageViewHolder messageViewHolder = ((MessageViewHolder)holder);
-            //내가 보낸 메세지라면(오른쪽버블 바탕화면으로
-            if() {
-                messageViewHolder.message.setText(comments.get(position).message);
-                messageViewHolder.message.setBackgroundResource(R.drawable.bubble2);
-                //내 메세지 감쳐주는
-                messageViewHolder.message.setVisibility(View.INVISIBLE);
-                messageViewHolder.message.setTextSize(15);
-                messageViewHolder.lv_chamessage_main.setGravity(Gravity.RIGHT);
-            }
-            //상대방이 보낸 메세지
-            else {
-                //상대방이름가져오기
-                messageViewHolder.name.setText();
-                messageViewHolder.lv.setVisibility(View.VISIBLE);
-                messageViewHolder.message.setBackgroundResource(R.drawable.bubble1);
-                //상대방 메세지
-                messageViewHolder.message.setText(comments.get(position).message);
-                //텍스트 사이즈
-                messageViewHolder.message.setTextSize(15);
-            }
+//            //내가 보낸 메세지라면(오른쪽버블 바탕화면으로
+//            if() {
+//                messageViewHolder.message.setText(comments.get(position).message);
+//                messageViewHolder.message.setBackgroundResource(R.drawable.bubble2);
+//                //내 메세지 감쳐주는
+//                messageViewHolder.message.setVisibility(View.INVISIBLE);
+//                messageViewHolder.message.setTextSize(15);
+//                messageViewHolder.lv_chamessage_main.setGravity(Gravity.RIGHT);
+//            }
+//            //상대방이 보낸 메세지
+//            else {
+//                //상대방이름가져오기
+//                messageViewHolder.name.setText();
+//                messageViewHolder.lv.setVisibility(View.VISIBLE);
+//                messageViewHolder.message.setBackgroundResource(R.drawable.bubble1);
+//                //상대방 메세지
+//                messageViewHolder.message.setText(comments.get(position).message);
+//                //텍스트 사이즈
+//                messageViewHolder.message.setTextSize(15);
+//            }
 
 
         }

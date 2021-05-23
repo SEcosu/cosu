@@ -42,10 +42,12 @@ public class DetailActivity extends AppCompatActivity {
     Button comment_bt;
     EditText input_comment;
     ImageView image;
-    TextView title_text, people_text, date_text, good_text, contents_text,comment_writer;
+    TextView title_text, people_text, date_text, good_text, contents_text, comment_writer;
     String postID, collection, title, people, date, good, contents, comments;
     HelpPosting postHelper;
     SharedPreferences sh_Pref;
+    CommentAdapter adapter;
+    RecyclerView recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,12 +102,12 @@ public class DetailActivity extends AppCompatActivity {
         });
 
 
-        RecyclerView recyclerView = findViewById(R.id.recyclerview_comment);
+        recyclerView = findViewById(R.id.recyclerview_comment);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);
 
-        CommentAdapter adapter = new CommentAdapter();
+        adapter = new CommentAdapter();
         recyclerView.setAdapter(adapter);
 
         // get post's comments
@@ -116,7 +118,19 @@ public class DetailActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 Comment comment = document.toObject(Comment.class);
-                                adapter.addItem(new Comment_sub(comment.getContent(),comment.getContent()));
+                                postHelper.getUserNickname(wr).addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                        if (task.isSuccessful()) {
+                                            for (QueryDocumentSnapshot document : task.getResult()) {
+
+                                                adapter.addItem(new Comment_sub(document.toObject(User.class).getNickName(), comment.getContent()));
+                                            }
+
+                                        }
+                                    }
+                                });
+
 
                             }
                             recyclerView.setAdapter(adapter);
@@ -126,43 +140,43 @@ public class DetailActivity extends AppCompatActivity {
 
 
         input_comment = findViewById(R.id.input_comment);
-        comment_writer = findViewById(R.id.comment_writer);
 
+        // 댓글올리기
         comment_bt = findViewById(R.id.button);
         comment_bt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String comment = input_comment.getText().toString();
-                String comment_name= comment_writer.getText().toString();
-                adapter.addItem(new Comment_sub(comment_name, comment));
-                adapter.notifyDataSetChanged();
-
-
                 String wr = sh_Pref.getString("Email", "");
 
                 Comment com = new Comment(wr, comment);
                 postHelper.addComment(collection, postID, com);
-
+                reload();
             }
         });
 
+        // 신고하기
         Button report = findViewById(R.id.report_btn);
         report.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 postHelper.reportPost(collection, postID);
+                reload();
             }
         });
 
+        // 좋아요 버튼
         ImageButton likeBtn = findViewById(R.id.like_btn);
         likeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String wr = sh_Pref.getString("Email", "");
                 postHelper.addLike(collection, postID, wr);
+                reload();
             }
         });
 
+        // 참여하기 버튼
         Button parButton = findViewById(R.id.particpate_btn);
         parButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -211,4 +225,44 @@ public class DetailActivity extends AppCompatActivity {
 //            image.setImageDrawable(getResources().getDrawable(R.drawable.python));
 //        }
     }
+
+    private void reload() {
+        // read a post
+        postHelper.getPost(collection, postID)
+                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        ProjectPost post = documentSnapshot.toObject(ProjectPost.class); // post는 원하는 post 객체를 사용하세요
+                        title = post.getTitle();
+                        people = post.getUsers().size() + "";
+                        date = post.getDate();
+                        good = post.getLikes().size() + "";
+                        contents = post.getContent();
+
+                        title_text.setText(title);
+                        people_text.setText(people);
+                        date_text.setText(date);
+                        good_text.setText(good);
+                        contents_text.setText(contents);
+                    }
+                });
+
+        // get post's comments
+        postHelper.getComments(collection, postID)
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                Comment comment = document.toObject(Comment.class);
+                                adapter.addItem(new Comment_sub(comment.getContent(), comment.getContent()));
+
+                            }
+                            recyclerView.setAdapter(adapter);
+                        }
+                    }
+                });
+    }
+
+
 }

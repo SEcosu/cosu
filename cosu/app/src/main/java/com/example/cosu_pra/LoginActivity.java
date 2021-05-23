@@ -94,11 +94,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             Toast.makeText(this, "Please input password.", Toast.LENGTH_SHORT).show();
             return;
         }
-//        if(!Pattern.matches("^(?=.*\\d)(?=.*[~`!@#$%\\^&*()-])(?=.*[a-zA-Z]).{8,20}$", password))
-//        {
-//            Toast.makeText(this,"Please keep the password format.",Toast.LENGTH_SHORT).show();
-//            return;
-//        }
+        if(!Pattern.matches("^(?=.*\\d)(?=.*[~`!@#$%\\^&*()-])(?=.*[a-zA-Z]).{8,20}$", password))
+        {
+            Toast.makeText(this,"Please keep the password format.",Toast.LENGTH_SHORT).show();
+            return;
+        }
         if(email!=null&&password!=null) {
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
