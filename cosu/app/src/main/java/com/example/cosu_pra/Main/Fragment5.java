@@ -218,22 +218,14 @@ public class Fragment5 extends Fragment {
         return v;
     }
 
-    //내가 쓴 글 불러오기
-    public Query getQuery(FirebaseFirestore databaseReference) {
-        firebaseAuth = FirebaseAuth.getInstance();
-        String myUserId = firebaseAuth.getCurrentUser().getUid();
-
-        return databaseReference.collection("Projects").whereEqualTo("writer", myUserId);
-    }
-
     private int updateInfo(String _userID, String _name, String _nickname, String _password,String _passwordConfirm) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
         Map<String, Object> data = new HashMap<>();
-        data.put("Nickname", _nickname);
-        data.put("Name", _name);
-        data.put("Password", _password);
-        data.put("PasswordConfirm", _passwordConfirm);
+        data.put("nickName", _nickname);
+        data.put("realName", _name);
+      //  data.put("Password", _password);
+      //  data.put("PasswordConfirm", _passwordConfirm);
 
         db.collection("users").document(_userID).set(
                 data,
@@ -261,7 +253,7 @@ public class Fragment5 extends Fragment {
                             for (QueryDocumentSnapshot document : task.getResult())
                             {
                                 if (!document.getId().equals(_userID)) continue;
-                                nickNameView.setText(document.getData().get("Nickname").toString());
+                                nickNameView.setText(document.getData().get("nickName").toString());
 //                                nameView.setText(document.getData().get("Name").toString());
 //                                emailView.setText(document.getData().get("Email").toString());
                                 break;
