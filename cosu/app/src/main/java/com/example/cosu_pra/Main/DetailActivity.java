@@ -43,7 +43,7 @@ public class DetailActivity extends AppCompatActivity {
     Button comment_bt;
     EditText input_comment;
     ImageView image;
-    TextView title_text, people_text, date_text, good_text, contents_text, writerTextView;
+    TextView title_text, people_text, date_text, good_text, contents_text, writerTextView,commentWriter;
     String postID, collection, title, people, date, good, contents, writer;
     HelpPosting postHelper;
     SharedPreferences sh_Pref;
@@ -75,10 +75,13 @@ public class DetailActivity extends AppCompatActivity {
         input_comment = findViewById(R.id.input_comment);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);
+        commentWriter=findViewById(R.id.comment_writer);
+
         adapter = new CommentAdapter();
 
-        String wr = sh_Pref.getString("Email", "");
-
+        String userEmail = sh_Pref.getString("Email", "");
+        String userNickName = sh_Pref.getString("Nickname", "");
+        commentWriter.setText(userNickName);
 
         // get post
         postHelper.getPost(collection, postID)
@@ -124,7 +127,7 @@ public class DetailActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 Comment comment = document.toObject(Comment.class);
-                                postHelper.getUserNickname(wr).addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                postHelper.getUserNickname(userEmail).addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                                     @Override
                                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                                         if (task.isSuccessful()) {
@@ -132,10 +135,11 @@ public class DetailActivity extends AppCompatActivity {
                                                 adapter.addItem(new Comment_sub(document.toObject(User.class).getNickName(), comment.getContent()));
                                             }
                                         }
+                                        recyclerView.setAdapter(adapter);
                                     }
                                 });
                             }
-                            recyclerView.setAdapter(adapter);
+
                         }
                     }
                 });

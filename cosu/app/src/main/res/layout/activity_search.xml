@@ -19,6 +19,7 @@
              />
 
         <Spinner
+
             android:entries="@array/type2"
             android:layout_marginRight="80dp"
             android:layout_alignParentRight="true"
