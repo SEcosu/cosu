@@ -210,7 +210,7 @@ public class DetailActivity extends AppCompatActivity {
                                 } else if (user + 1 == max) {
                                     userList.add(wr);
                                     HelpChatting chatting = new HelpChatting();
-                                    chatting.makeCharRoom(userList);
+                                    chatting.makeChatRoom(userList,title);
                                 }
                                 postHelper.addUser(collection, postID, wr);
                             }

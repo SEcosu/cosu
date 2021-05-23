@@ -14,8 +14,9 @@ public class Chatroom {
     }
 
 
-    public Chatroom(List<String> userList) {
+    public Chatroom(List<String> userList, String roomName) {
         this.userList = userList;
+        this.roomName = roomName;
     }
 
     // getter

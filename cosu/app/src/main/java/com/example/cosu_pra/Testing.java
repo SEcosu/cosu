@@ -281,7 +281,7 @@ public class Testing {
         userList.add("member2");
         userList.add("member3");
 
-        cht.makeCharRoom(userList);
+        //cht.makeCharRoom(userList);
 
     }
 

@@ -30,9 +30,10 @@ public class HelpChatting {
         db = FirebaseFirestore.getInstance();
     }
 
-    public void makeCharRoom(List<String> userList) {
+    public void makeChatRoom(List<String> userList,String roomName) {
 
-        Chatroom chm = new Chatroom(userList);
+
+        Chatroom chm = new Chatroom(userList,roomName);
 
         db.collection(CHAT).add(chm);
     }
