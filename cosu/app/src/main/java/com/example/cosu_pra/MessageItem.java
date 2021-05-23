@@ -29,7 +29,7 @@ public class MessageItem {
         this.time = time;
     }
 
-    public MessageItem(String name, String conetent, String time){
+    public MessageItem(String id, String content, String time){
         this.time = time;
         this.content = content;
         this.id = id;
