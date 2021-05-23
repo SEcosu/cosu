@@ -331,6 +331,7 @@
                     tools:ignore="MissingConstraints">
 
                     <ImageButton
+                        android:id="@+id/logoutbtn"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:backgroundTint="#FFFFFF"
@@ -364,6 +365,7 @@
                     tools:ignore="MissingConstraints">
 
                     <ImageButton
+                        android:id="@+id/withdrawbtn"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:backgroundTint="#FFFFFF"
