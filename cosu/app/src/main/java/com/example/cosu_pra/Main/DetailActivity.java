@@ -43,7 +43,7 @@ public class DetailActivity extends AppCompatActivity {
     Button comment_bt;
     EditText input_comment;
     ImageView image;
-    TextView title_text, people_text, date_text, good_text, contents_text, writerTextView,commentWriter;
+    TextView title_text, maxpeople, date_text, good_text, contents_text, writerTextView,commentWriter,nowpeple;
     String postID, collection, title, people, date, good, contents, writer;
     HelpPosting postHelper;
     SharedPreferences sh_Pref;
@@ -65,7 +65,7 @@ public class DetailActivity extends AppCompatActivity {
 
         image = findViewById(R.id.image);
         title_text = findViewById(R.id.title_text);
-        people_text = findViewById(R.id.people_text);
+        maxpeople = findViewById(R.id.people_text_goal);
         date_text = findViewById(R.id.date_text);
         good_text = findViewById(R.id.good_text);
         contents_text = findViewById(R.id.detail_content);
@@ -76,7 +76,7 @@ public class DetailActivity extends AppCompatActivity {
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);
         commentWriter=findViewById(R.id.comment_writer);
-
+        nowpeple = findViewById(R.id.people_text);
         adapter = new CommentAdapter();
 
         String userEmail = sh_Pref.getString("Email", "");
@@ -91,16 +91,17 @@ public class DetailActivity extends AppCompatActivity {
                         ProjectPost post = documentSnapshot.toObject(ProjectPost.class); // post는 원하는 post 객체를 사용하세요
                         title = post.getTitle();
                         if (post.getUsers() != null) people = post.getUsers().size() + "";
-                        date = post.getDate();
+                        date = post.getEndDate();
                         good = post.getLikes().size() + "";
                         contents = post.getContent();
                         writer = post.getWriter();
 
                         title_text.setText(title);
-                        people_text.setText(people);
+                        maxpeople.setText(post.getMax()+"");
                         date_text.setText(date);
                         good_text.setText(good);
                         contents_text.setText(contents);
+                        nowpeple.setText(people);
 
                         postHelper.getUserNickname(writer).addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                             @Override
@@ -239,15 +240,18 @@ public class DetailActivity extends AppCompatActivity {
                         ProjectPost post = documentSnapshot.toObject(ProjectPost.class); // post는 원하는 post 객체를 사용하세요
                         title = post.getTitle();
                         if (post.getUsers() != null) people = post.getUsers().size() + "";
-                        date = post.getDate();
+                        date = post.getEndDate();
                         good = post.getLikes().size() + "";
                         contents = post.getContent();
+                        writer = post.getWriter();
 
                         title_text.setText(title);
-                        people_text.setText(people);
+                        maxpeople.setText(post.getMax()+"");
                         date_text.setText(date);
                         good_text.setText(good);
                         contents_text.setText(contents);
+                        nowpeple.setText(people);
+
                     }
                 });
 
