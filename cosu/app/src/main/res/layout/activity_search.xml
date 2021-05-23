@@ -18,13 +18,13 @@
             android:layout_marginLeft="8dp"
              />
 
-        <Spinner
-
-            android:entries="@array/type2"
-            android:layout_marginRight="80dp"
-            android:layout_alignParentRight="true"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"/>
+<!--        <Spinner-->
+<!--            android:id="@+id/detail_sort"-->
+<!--            android:entries="@array/type2"-->
+<!--            android:layout_marginRight="80dp"-->
+<!--            android:layout_alignParentRight="true"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="match_parent"/>-->
 
 <!--        <Button-->
 <!--            android:layout_alignParentRight="true"-->

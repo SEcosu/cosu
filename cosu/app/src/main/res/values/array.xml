@@ -63,7 +63,7 @@
 
     <string-array name="type2">
         <item>최신순</item>
-        <item>관련도순</item>
+        <item>시작일순</item>
     </string-array>
     <string-array name="type">
         <item>전체보기</item>

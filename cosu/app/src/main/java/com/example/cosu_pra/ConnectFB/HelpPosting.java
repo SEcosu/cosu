@@ -122,6 +122,10 @@ public class HelpPosting {
         return db.collection(collection).orderBy("date", Query.Direction.DESCENDING).get();
     }
 
+    public Task<QuerySnapshot> getAllPosts(String collection,boolean option) {
+        return db.collection(collection).orderBy("startDate").get();
+    }
+
     /**
      * addComment
      * add a comment on post which id is postID
@@ -228,7 +232,7 @@ public class HelpPosting {
      * use addOnCompleteListener method instead Thread
      */
     public Task<QuerySnapshot> searchPostByCategory(String collection, String[] category) {
-        return db.collection(collection).whereArrayContainsAny("category", Arrays.asList(category)).get();
+        return db.collection(collection).whereArrayContainsAny("category", Arrays.asList(category)).orderBy("date", Query.Direction.DESCENDING).get();
     }
 
     public Task<QuerySnapshot> getReportPost(String collection) {
@@ -267,5 +271,7 @@ public class HelpPosting {
     public Task<QuerySnapshot> getUserNickname(String userID){
         return db.collection("users").whereEqualTo("email",userID).get();
     }
+
+   
 
 }

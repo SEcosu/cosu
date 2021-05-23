@@ -30,8 +30,8 @@ public class SearchActivity extends AppCompatActivity {
     HelpPosting postHelper;
     ListView listView;
     PostListAdapter adapter;
-    String collection, category,searchWord;
-    Spinner category_spinner;
+    String collection, category, searchWord;
+    Spinner category_spinner, sort_spinner;
     String[] cateList, categoryTypeList;
 
     @Override
@@ -46,6 +46,7 @@ public class SearchActivity extends AppCompatActivity {
         postHelper = new HelpPosting();
         listView = (ListView) findViewById(R.id.search_listview);
         category_spinner = findViewById(R.id.search_cate_spinner);
+
 
         // Spinner 지정
         if (collection.equals(HelpPosting.PROJECT)) {
@@ -67,14 +68,14 @@ public class SearchActivity extends AppCompatActivity {
             }
         }
 
-        // 스피너 리스너,
+        // category 스피너 리스너,
         category_spinner.setSelection(i);
         category_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (position == 0) {
                     category = null;
-                    if(searchWord != null){
+                    if (searchWord != null) {
                         searchList(searchWord);
                         return;
                     }
@@ -91,6 +92,7 @@ public class SearchActivity extends AppCompatActivity {
             }
         });
 
+        // item select
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -101,15 +103,6 @@ public class SearchActivity extends AppCompatActivity {
             }
         });
 
-
-//        adapter.addItem(ContextCompat.getDrawable(getApplicationContext(), R.drawable.android),
-//                "안드로이드", "5", "~2021/5/31", "3", "5");
-//        adapter.addItem(ContextCompat.getDrawable(getApplicationContext(), R.drawable.java),
-//                "자바", "6", "~2021/5/31", "4", "6");
-//        adapter.addItem(ContextCompat.getDrawable(getApplicationContext(), R.drawable.kotlin),
-//                "코틀린", "3", "~2021/5/31", "1", "0");
-//        adapter.addItem(ContextCompat.getDrawable(getApplicationContext(), R.drawable.python),
-//                "파이썬", "7", "~2021/5/31", "2", "2");
 
     }
 
@@ -358,4 +351,5 @@ public class SearchActivity extends AppCompatActivity {
             }
         }
     }
+
 }

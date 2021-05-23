@@ -32,6 +32,7 @@ import java.util.List;
 public class Fragment4 extends Fragment {
     HelpChatting chatHelper;
     SharedPreferences sh_Pref;
+    ChatRoomAdatper adatper;
 
     @Nullable
     @Override
@@ -40,7 +41,7 @@ public class Fragment4 extends Fragment {
         View v = inflater.inflate(R.layout.fragment4, container, false);
         ListView chatRoomView = (ListView) v.findViewById(R.id.mainlist);
         List<ChatRoomItem> listViewItemList = new ArrayList<>();
-        ChatRoomAdatper adatper = new ChatRoomAdatper(getActivity(), listViewItemList);
+        adatper = new ChatRoomAdatper(getActivity(), listViewItemList);
 
         sh_Pref = getActivity().getSharedPreferences("Login Credentials ", Context.MODE_PRIVATE);
         String userID = sh_Pref.getString("Email", "");
@@ -67,9 +68,6 @@ public class Fragment4 extends Fragment {
             }
         });
 
-
-
-
         return v;
     }
 
@@ -78,6 +76,7 @@ public class Fragment4 extends Fragment {
         String strText = (String) l.getItemAtPosition(position);
         Log.d("listview: ", position + ": " + strText);
         Intent intent = new Intent(getActivity(), ChattingActivity.class);
+        intent.putExtra("roomID", adatper.getItem(position).getRoomID());
         startActivity(intent);
     }
 
