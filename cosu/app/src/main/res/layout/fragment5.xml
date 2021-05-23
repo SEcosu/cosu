@@ -260,10 +260,11 @@
                     app:layout_constraintHorizontal_bias="1.0"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/mypageTV"
-                    tools:ignore="MissingConstraints">
+                    tools:ignore="DuplicateIds,MissingConstraints">
 
                     <ImageButton
                         android:id="@+id/mypagelist1"
+                        android:backgroundTint="#FFFFFF"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:paddingLeft="10dp"
@@ -296,6 +297,7 @@
 
                     <ImageButton
                         android:id="@+id/mypagelist2"
+                        android:backgroundTint="#FFFFFF"
 
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -331,6 +333,8 @@
                     <ImageButton
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:backgroundTint="#FFFFFF"
+
                         android:paddingLeft="10dp"
                         android:src="@drawable/logout" />
 
@@ -362,6 +366,7 @@
                     <ImageButton
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:backgroundTint="#FFFFFF"
                         android:paddingLeft="10dp"
                         android:src="@drawable/withdraw" />
 

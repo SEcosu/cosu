@@ -11,6 +11,7 @@
         android:roundIcon="@mipmap/ic_launcher_cosu_logo_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Cosu_pra">
+
         <activity android:name=".MylikeActivity" />
         <activity android:name=".MypostActivity" />
         <activity android:name=".SplashActivity" />

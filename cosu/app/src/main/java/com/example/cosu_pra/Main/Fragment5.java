@@ -91,7 +91,9 @@ public class Fragment5 extends Fragment {
                             case R.id.action_menu1:
 
                                 break;
+                            case R.id.action_menu2:
 
+                                break;
                         }
                         return false;
                     }
@@ -99,6 +101,8 @@ public class Fragment5 extends Fragment {
                 popupmenu.show();
             }
         });
+
+
         profilebtn.setOnClickListener(new View.OnClickListener(){
 
             //TODO 프로필 수정
