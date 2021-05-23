@@ -17,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.cosu_pra.ConnectFB.HelpChatting;
 import com.example.cosu_pra.DTO.ChatData;
 import com.example.cosu_pra.DTO.ProjectPost;
 import com.google.firebase.database.DataSnapshot;
@@ -24,7 +25,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class ChattingActivity extends AppCompatActivity {
@@ -32,14 +35,25 @@ public class ChattingActivity extends AppCompatActivity {
     ImageButton Exit = findViewById(R.id.exit);
     ImageButton send = findViewById(R.id.sendbtn);
     EditText mc = findViewById(R.id.message_content);
+    HelpChatting chatHelper;
+    List<ChatData> chatList;
+    String roomID;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chatting);
 
+        roomID = getIntent().getStringExtra("roomID");
+
+        chatList = new ArrayList<>();
+        //chatHelper.getMessages()
 
         ImageButton End = findViewById(R.id.project_end);
         ImageButton Exit = findViewById(R.id.exit);
+
+
+
         //채팅 리사이클러뷰 연결
         RecyclerView rv = (RecyclerView)findViewById(R.id.message_recyclerview) ;
         rv.setLayoutManager(new LinearLayoutManager(ChattingActivity.this));

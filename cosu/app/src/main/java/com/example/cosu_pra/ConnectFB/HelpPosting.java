@@ -180,7 +180,7 @@ public class HelpPosting {
      * @return Task<QuerySnapshot> to use addOnSuccessListener
      */
     public Task<QuerySnapshot> getComments(String collection, String postID) {
-        return db.collection(collection).document(postID).collection(COMMENTS).get();
+        return db.collection(collection).document(postID).collection(COMMENTS).orderBy("date").get();
     }
 
     /**
@@ -272,6 +272,6 @@ public class HelpPosting {
         return db.collection("users").whereEqualTo("email",userID).get();
     }
 
-   
+
 
 }
