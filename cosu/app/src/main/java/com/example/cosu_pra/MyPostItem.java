@@ -1,6 +1,6 @@
 package com.example.cosu_pra;
 
-public class MypostItem {
+public class MyPostItem {
     private String content;
     private String category;
     public String getContent(){
@@ -17,7 +17,7 @@ public class MypostItem {
     public void setCategory(String category) {
         this.category = category;
     }
-    MypostItem(String content, String category){
+    public MyPostItem(String content, String category){
         this.content = content;
         this.category = category;
     }

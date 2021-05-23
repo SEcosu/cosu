@@ -1,6 +1,6 @@
 package com.example.cosu_pra;
 
-public class MyLikeItem {
+public class LikeItem{
     private String content;
     private String writer;
 
@@ -19,7 +19,7 @@ public class MyLikeItem {
     public void setWriter(String writer) {
         this.writer = writer;
     }
-    MyLikeItem(String content, String writer){
+    LikeItem(String content, String writer){
         this.content = content;
         this.writer = writer;
     }

@@ -7,13 +7,13 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import com.example.cosu_pra.MycommentItem;
+import com.example.cosu_pra.CommentItem;
 import com.example.cosu_pra.R;
 
 import java.util.ArrayList;
 
 public class MyCommentItemAdapter extends BaseAdapter {
-    ArrayList<MycommentItem> items = new ArrayList<MycommentItem>();
+    ArrayList<CommentItem> items = new ArrayList<CommentItem>();
     Context context;
 
     @Override
@@ -34,20 +34,20 @@ public class MyCommentItemAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         context = parent.getContext();
-        MycommentItem MycommentItem = items.get(position);
+        CommentItem MycommentList = items.get(position);
         if(convertView==null){
             LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(R.layout.mycommentitem, parent, false);
+            convertView = inflater.inflate(R.layout.mylikeitem, parent, false);
 
         }
-        TextView postcontent = convertView.findViewById(R.id.mycom_content);
-        TextView postwriter = convertView.findViewById(R.id.mycom_writer);
+        TextView postcontent = convertView.findViewById(R.id.mylike_content);
+        TextView postwriter = convertView.findViewById(R.id.mylike_writer);
 
-        postcontent.setText(MycommentItem.getContent());
-        postwriter.setText(MycommentItem.getWriter());
+        postcontent.setText(MycommentList.getContent());
+        postwriter.setText(MycommentList.getWriter());
         return convertView;
     }
-    public void addItem(MycommentItem item){
+    public void addItem(CommentItem item){
         items.add(item);
     }
 }

@@ -7,13 +7,13 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import com.example.cosu_pra.MyLikeItem;
 import com.example.cosu_pra.R;
+import com.example.cosu_pra.LikeItem;
 
 import java.util.ArrayList;
 
 public class MylikeItemAdapter  extends BaseAdapter {
-    ArrayList<MyLikeItem> items = new ArrayList<MyLikeItem>();
+    ArrayList<LikeItem> items = new ArrayList<LikeItem>();
     Context context;
 
     @Override
@@ -34,7 +34,7 @@ public class MylikeItemAdapter  extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         context = parent.getContext();
-        MyLikeItem MylikeList = items.get(position);
+        LikeItem MylikeList = items.get(position);
         if(convertView==null){
             LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.mylikeitem, parent, false);
@@ -47,7 +47,7 @@ public class MylikeItemAdapter  extends BaseAdapter {
         postwriter.setText(MylikeList.getWriter());
         return convertView;
     }
-    public void addItem(MyLikeItem item){
+    public void addItem(LikeItem item){
         items.add(item);
     }
 }

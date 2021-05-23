@@ -2,11 +2,14 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/mypageRV"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     tools:ignore="MissingConstraints">
-
+    <RelativeLayout
+        android:id="@+id/mypageRV"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:ignore="MissingConstraints">
     <TextView
         android:id="@+id/mypagename"
         android:layout_width="wrap_content"
@@ -35,16 +38,17 @@
         android:layout_height="2px"
         android:layout_alignBottom="@id/mypagename"
         android:background="#5E5E5E" />
+    </RelativeLayout>
 
     <ScrollView
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_below="@id/mypageview">
+        android:layout_below="@id/mypageRV">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -141,12 +145,14 @@
                 android:id="@+id/mypageTV"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:paddingBottom="10dp"
                 app:layout_constraintTop_toBottomOf="@id/look_profilebtn">
 
                 <TableRow
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+
                     android:orientation="horizontal"
                     android:paddingTop="15dp">
 
@@ -154,6 +160,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
+
                         android:paddingLeft="20dp">
 
                         <ImageButton
@@ -208,7 +215,6 @@
 
                         <ImageButton
                             android:id="@+id/mycomment"
-
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:backgroundTint="#FFFFFF"
@@ -256,7 +262,8 @@
                     app:layout_constraintTop_toBottomOf="@+id/mypageTV"
                     tools:ignore="MissingConstraints">
 
-                    <ImageView
+                    <ImageButton
+                        android:id="@+id/mypagelist1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:paddingLeft="10dp"
@@ -276,7 +283,7 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/mypagelist2"
+                    android:duplicateParentState="true"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
@@ -287,7 +294,9 @@
                     app:layout_constraintTop_toBottomOf="@+id/mypagelist1"
                     tools:ignore="MissingConstraints">
 
-                    <ImageView
+                    <ImageButton
+                        android:id="@+id/mypagelist2"
+
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:paddingLeft="10dp"
@@ -300,7 +309,7 @@
                         android:layout_gravity="center"
                         android:backgroundTint="#FFFFFF"
                         android:paddingLeft="10dp"
-                        android:text="고객센터"
+                        android:text="이용방법"
                         android:textAlignment="textStart"
                         android:textColor="#000000"
                         android:textSize="14sp"
@@ -319,7 +328,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/mypagelist2"
                     tools:ignore="MissingConstraints">
 
-                    <ImageView
+                    <ImageButton
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:paddingLeft="10dp"
@@ -350,7 +359,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/mypagelist3"
                     tools:ignore="MissingConstraints">
 
-                    <ImageView
+                    <ImageButton
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:paddingLeft="10dp"
@@ -369,9 +378,7 @@
                         tools:ignore="RtlCompat" />
                 </LinearLayout>
             </LinearLayout>
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
 
     </ScrollView>
 </RelativeLayout>
-
-

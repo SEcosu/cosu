@@ -14,9 +14,10 @@ public class MyCommentActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_comment);
+
         lv = findViewById(R.id.mycommentlv);
         adapter = new MyCommentItemAdapter();
-        adapter.addItem(new MycommentItem("참여하고 싶습니다.", "홍길동"));
+        adapter.addItem(new CommentItem("스터디원 구해요", "김가천"));
         lv.setAdapter(adapter);
     }
 }

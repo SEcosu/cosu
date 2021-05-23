@@ -133,11 +133,25 @@ public class HelpPosting {
      */
     public void addComment(String collection, String postID, Comment comment) {
 
+        getPost(collection, postID).addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                int numOfComment = 0;
+                if (collection.equals(HelpPosting.PROJECT)) {
+                    ProjectPost post = documentSnapshot.toObject(ProjectPost.class);
+                    numOfComment = post.getComment();
+                } else if (collection.equals(HelpPosting.STUDY)) {
+                    StudyPost post = documentSnapshot.toObject(StudyPost.class);
+                    numOfComment = post.getComment();
+                } else if (collection.equals(HelpPosting.QNA)) {
+                    QnAPost post = documentSnapshot.toObject(QnAPost.class);
+                    numOfComment = post.getComment();
+                }
+                db.collection(collection).document(postID).collection(COMMENTS).add(comment);
+                db.collection(collection).document(postID).update("comment",numOfComment+1);
 
-        db.collection(collection).document(postID).collection(COMMENTS).add(comment);
-        db.collection(collection).document(postID).update("comment", FieldValue.increment(1));
-
-
+            }
+        });
     }
 
     /**
@@ -225,33 +239,5 @@ public class HelpPosting {
         db.collection(collection).document(postID).update("report", 0);
     }
 
-    public void reportPost(String collection, String postID) {
-        getPost(collection, postID).addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-            @Override
-            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                int reports = 0;
-                if (collection.equals(HelpPosting.PROJECT)) {
-                    ProjectPost post = documentSnapshot.toObject(ProjectPost.class);
-                    reports = post.getReport();
-                } else if (collection.equals(HelpPosting.STUDY)) {
-                    StudyPost post = documentSnapshot.toObject(StudyPost.class);
-                    reports = post.getReport();
-                } else if (collection.equals(HelpPosting.QNA)) {
-                    QnAPost post = documentSnapshot.toObject(QnAPost.class);
-                    reports = post.getReport();
-                }
-                db.collection(collection).document(postID).update("report", reports + 1);
-
-            }
-        });
-    }
-
-    public void addLike(String collection, String postID, String userID) {
-        db.collection(collection).document(postID).update("likes", FieldValue.arrayUnion(userID));
-    }
-
-    public Task<QuerySnapshot> getUserNickname(String userID){
-        return db.collection("users").whereEqualTo("Email",userID).get();
-    }
 
 }
