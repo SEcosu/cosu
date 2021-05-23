@@ -66,8 +66,9 @@ public class ChattingActivity extends AppCompatActivity {
                 String MSG = mc.getText().toString();
                 if(mc!=null){
                     ChatData chatdata  = new ChatData();
-
                     chatdata.setMsg(MSG);
+                    //보내고나서 초기화
+                    chatdata.setMsg("");
                     Toast.makeText(ChattingActivity.this, "성공", Toast.LENGTH_SHORT).show();
                 }
                 else
