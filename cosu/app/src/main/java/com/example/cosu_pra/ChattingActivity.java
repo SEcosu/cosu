@@ -103,6 +103,7 @@ public class ChattingActivity extends AppCompatActivity {
                     items.add(item);
 
                 }
+                // TODO:어뎁터에 리스트 연결하면 됨
             }
         });
 
