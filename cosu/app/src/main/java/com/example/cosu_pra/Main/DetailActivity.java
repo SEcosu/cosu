@@ -90,7 +90,7 @@ public class DetailActivity extends AppCompatActivity {
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
                         ProjectPost post = documentSnapshot.toObject(ProjectPost.class); // post는 원하는 post 객체를 사용하세요
                         title = post.getTitle();
-                        people = post.getUsers().size() + "";
+                        if (post.getUsers() != null) people = post.getUsers().size() + "";
                         date = post.getDate();
                         good = post.getLikes().size() + "";
                         contents = post.getContent();
@@ -238,7 +238,7 @@ public class DetailActivity extends AppCompatActivity {
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
                         ProjectPost post = documentSnapshot.toObject(ProjectPost.class); // post는 원하는 post 객체를 사용하세요
                         title = post.getTitle();
-                        people = post.getUsers().size() + "";
+                        if (post.getUsers() != null) people = post.getUsers().size() + "";
                         date = post.getDate();
                         good = post.getLikes().size() + "";
                         contents = post.getContent();
