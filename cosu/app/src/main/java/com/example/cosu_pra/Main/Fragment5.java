@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -25,6 +26,8 @@ import com.example.cosu_pra.MylikeActivity;
 import com.example.cosu_pra.MypostActivity;
 import com.example.cosu_pra.R;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -109,7 +112,7 @@ public class Fragment5 extends Fragment {
 
             @Override
             public void onClick(View v) {
-
+                FirebaseAuth.getInstance().signOut();
             }
         });
 
@@ -117,7 +120,7 @@ public class Fragment5 extends Fragment {
         withdrawbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                firebaseAuth.getCurrentUser().delete();
             }
         });
         profilebtn.setOnClickListener(new View.OnClickListener(){
