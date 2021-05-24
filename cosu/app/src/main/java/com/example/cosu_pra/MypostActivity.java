@@ -1,5 +1,6 @@
 package com.example.cosu_pra;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ListView;
@@ -26,10 +27,10 @@ import java.util.List;
 public class MypostActivity extends AppCompatActivity {
     ListView lv;
     MypostItemAdapter adapter;
-
+    SharedPreferences sh_Pref;
     //Firebase
     private FirebaseFirestore db;
-    private FirebaseAuth firebaseAuth;
+
 
     private String _userID;
 
@@ -41,27 +42,26 @@ public class MypostActivity extends AppCompatActivity {
         adapter = new MypostItemAdapter();
         adapter.addItem(new MyPostItem("스터디원 구해요", "JAVA"));
         //  lv.setAdapter(adapter);
+        sh_Pref = getSharedPreferences("Login Credentials ", MODE_PRIVATE);
 
-        firebaseAuth = FirebaseAuth.getInstance();
-        _userID = firebaseAuth.getCurrentUser().getUid();
+        _userID = sh_Pref.getString("Email", "");
         db = FirebaseFirestore.getInstance();
+        Log.d("test","My id: "+_userID);
 
         db.collection(HelpPosting.PROJECT).whereEqualTo("writer", _userID).get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        List<MyPostItem> myPostItemList = new ArrayList<>();
+
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 ProjectPost post = document.toObject(ProjectPost.class);
                                 MyPostItem item = new MyPostItem(post.getContent(), post.getCategory());
                                 item.collection = HelpPosting.PROJECT;
                                 item.postID = document.getId();
-
-                                myPostItemList.add(item);
-                                break;
+                                adapter.addItem(item);
                             }
-                            adapter = new MypostItemAdapter();
+
                             lv.setAdapter(adapter);
                         } else {
                             Log.d("MypostActivity", "Error getting documents: ", task.getException());
@@ -79,11 +79,9 @@ public class MypostActivity extends AppCompatActivity {
                                 MyPostItem item = new MyPostItem(post.getContent(), post.getCategory());
                                 item.collection = HelpPosting.STUDY;
                                 item.postID = document.getId();
-
-                                myPostItemList.add(item);
-                                break;
+                                adapter.addItem(item);
                             }
-                            adapter = new MypostItemAdapter();
+
                             lv.setAdapter(adapter);
                         } else {
                             Log.d("MypostActivity", "Error getting documents: ", task.getException());
@@ -99,13 +97,10 @@ public class MypostActivity extends AppCompatActivity {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 QnAPost post = document.toObject(QnAPost.class);
                                 MyPostItem item = new MyPostItem(post.getContent(), post.getCategory());
-                                item.collection = HelpPosting.PROJECT;
+                                item.collection = HelpPosting.QNA;
                                 item.postID = document.getId();
-
-                                myPostItemList.add(item);
-                                break;
+                                adapter.addItem(item);
                             }
-                            adapter = new MypostItemAdapter();
                             lv.setAdapter(adapter);
                         } else {
                             Log.d("MypostActivity", "Error getting documents: ", task.getException());

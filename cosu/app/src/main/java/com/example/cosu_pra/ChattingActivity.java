@@ -56,7 +56,7 @@ public class ChattingActivity extends AppCompatActivity {
         setContentView(R.layout.activity_chatting);
 
         roomID = getIntent().getStringExtra("roomID");
-
+        sh_Pref = getSharedPreferences("Login Credentials ", MODE_PRIVATE);
 
         //chatHelper.getMessages()
         chatHelper = new HelpChatting();
