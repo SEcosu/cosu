@@ -1,5 +1,6 @@
 package com.example.cosu_pra;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ListView;
@@ -9,6 +10,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.cosu_pra.Adapter.MyCommentItemAdapter;
 import com.example.cosu_pra.Adapter.MypostItemAdapter;
+import com.example.cosu_pra.ConnectFB.HelpPosting;
+import com.example.cosu_pra.DTO.Comment;
+import com.example.cosu_pra.DTO.ProjectPost;
+import com.example.cosu_pra.Main.Comment_sub;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -22,6 +27,7 @@ import java.util.List;
 public class MyCommentActivity extends AppCompatActivity {
     ListView lv;
     MyCommentItemAdapter adapter;
+    SharedPreferences sh_Pref;
 
     //Firebase
     private FirebaseFirestore db;
@@ -36,32 +42,38 @@ public class MyCommentActivity extends AppCompatActivity {
         lv = findViewById(R.id.mycommentlv);
         adapter = new MyCommentItemAdapter();
         adapter.addItem(new CommentItem("스터디원 구해요", "김가천"));
-        lv.setAdapter(adapter);
 
         firebaseAuth = FirebaseAuth.getInstance();
         _userID = firebaseAuth.getCurrentUser().getUid();
         db = FirebaseFirestore.getInstance();
 
         //project에서 comment정보를 가져오는 방법
-        db.collection("Projects").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                List<CommentItem> commentItemList = new ArrayList<>();
+        sh_Pref = getSharedPreferences("Login Credentials ", MODE_PRIVATE);
 
-                if(task.isSuccessful()){
-                    for(QueryDocumentSnapshot document : task.getResult()) {
-                        if (!document.getId().equals(_userID)) continue;
-                        CommentItem commentItem = document.toObject(CommentItem.class);
-                        commentItemList.add(commentItem);
-                        break;
+        _userID = sh_Pref.getString("Email", "");
+        db = FirebaseFirestore.getInstance();
+        Log.d("test","My id: "+_userID);
+
+        db.collection(HelpPosting.COMMENTS).whereEqualTo("writer", _userID).get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                Comment_sub comment = document.toObject(Comment_sub.class);
+                                CommentItem item = new CommentItem(comment.getComment(), comment.getCommentWriter());
+                                item.collection = HelpPosting.COMMENTS;
+                                item.postID = document.getId();
+                                adapter.addItem(item);
+                            }
+
+                            lv.setAdapter(adapter);
+                        } else {
+                            Log.d("MyCommentActivity", "Error getting documents: ", task.getException());
+                        }
                     }
-                    adapter = new MyCommentItemAdapter();
-                    lv.setAdapter(adapter);
-                } else {
-                    Log.d("MyCommentActivity", "Error getting documents: ", task.getException());
-                }
-            }
-        });
+                });
 
     }
 }

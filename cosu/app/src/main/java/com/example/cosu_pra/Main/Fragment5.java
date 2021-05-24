@@ -3,6 +3,7 @@ package com.example.cosu_pra.Main;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -39,11 +40,13 @@ import com.google.firebase.firestore.SetOptions;
 import java.util.HashMap;
 import java.util.Map;
 
+import static android.content.Context.MODE_PRIVATE;
+
 
 public class Fragment5 extends Fragment {
     FirebaseAuth firebaseAuth;
     FirebaseFirestore firebaseFirestore;
-
+    SharedPreferences sh_Pref;
     private String _userID;
 
     public void onCreate(Bundle savedInstanceState) {
@@ -51,6 +54,9 @@ public class Fragment5 extends Fragment {
 
         firebaseAuth = FirebaseAuth.getInstance();//get instance to firebaseAuth
         _userID = firebaseAuth.getCurrentUser().getUid();
+
+        sh_Pref = this.getActivity().getSharedPreferences("Login Credentials ", MODE_PRIVATE);
+        _userID = sh_Pref.getString("Nickname", "");
 
     }
     @Override
@@ -71,7 +77,9 @@ public class Fragment5 extends Fragment {
         TextView nickNameView = v.findViewById(R.id.mypage_nickname);
         TextView nameView = v.findViewById(R.id.mypage_nickname);  // fill out later if you want to display
         TextView emailView = v.findViewById(R.id.mypage_nickname);  // fill out later if you want to display
-        showInfo(nameView, nickNameView, emailView);
+
+        nickNameView.setText(_userID);
+        //showInfo(nameView, nickNameView, emailView);
 
         //고객센터 링크연결
         ImageButton center =  v.findViewById(R.id.mypagelist2);

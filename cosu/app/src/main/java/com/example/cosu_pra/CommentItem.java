@@ -1,6 +1,8 @@
 package com.example.cosu_pra;
 
 public class CommentItem {
+    public String collection;
+    public String postID;
     private String content;
     private String writer;
 
