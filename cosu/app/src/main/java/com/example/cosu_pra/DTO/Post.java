@@ -13,7 +13,7 @@ public class Post {
     private String startDate;
     private String endDate;
     private String content;
-    private List<String> category;
+    private String category;
     private List<String> likes;
     private int comment;
     private int report;
@@ -21,7 +21,6 @@ public class Post {
     public Post() {
         date = new SimpleDateFormat("yyyy/ MM / dd / HH:mm:ss").
                 format(Calendar.getInstance().getTime());
-        category = new ArrayList<String>();
         likes = new ArrayList<String>();
         report = 0;
         comment = 0;
@@ -38,13 +37,13 @@ public class Post {
         this.title = title;
     }
 
-    public Post(String title, String writer, String content,List<String> category) {
+    public Post(String title, String writer, String content,String category) {
         this(writer, content);
         this.title = title;
         this.category = category;
     }
 
-    public Post(String title, String writer, String content,List<String> category, String startDate, String endDate) {
+    public Post(String title, String writer, String content,String category, String startDate, String endDate) {
         this(writer, content);
         this.title = title;
         this.category = category;
@@ -79,7 +78,7 @@ public class Post {
         return title;
     }
 
-    public List<String> getCategory() {
+    public String getCategory() {
         return category;
     }
 
@@ -124,7 +123,7 @@ public class Post {
         this.likes = likes;
     }
 
-    public void setCategory(List<String> category){
+    public void setCategory(String category){
         this.category = category;
     }
 

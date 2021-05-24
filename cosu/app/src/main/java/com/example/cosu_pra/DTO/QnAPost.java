@@ -10,7 +10,7 @@ public class QnAPost extends Post{
         super(title, writer_id,content);
     }
 
-    public QnAPost(String title, String writer_id, String content, List<String> category){
+    public QnAPost(String title, String writer_id, String content, String category){
         super(title, writer_id,content,category);
     }
 

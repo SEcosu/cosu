@@ -8,6 +8,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -21,16 +22,21 @@ import androidx.annotation.NonNull;
 
 import com.example.cosu_pra.ConnectFB.HelpChatting;
 import com.example.cosu_pra.ConnectFB.HelpPosting;
+import com.example.cosu_pra.DTO.ChatData;
 import com.example.cosu_pra.DTO.Comment;
 import com.example.cosu_pra.DTO.ProjectPost;
 import com.example.cosu_pra.DTO.StudyPost;
 import com.example.cosu_pra.DTO.User;
+import com.example.cosu_pra.MessageItem;
 import com.example.cosu_pra.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -43,8 +49,8 @@ public class DetailActivity extends AppCompatActivity {
     Button comment_bt;
     EditText input_comment;
     ImageView image;
-    TextView title_text, maxpeople, date_text, good_text, contents_text, writerTextView,commentWriter,nowpeple;
-    String postID, collection, title, people, date, good, contents, writer;
+    TextView title_text, maxpeople, date_text, good_text, contents_text, writerTextView, commentWriter, nowpeple;
+    String postID, collection, title, people, date, good, contents, writer, userEmail;
     HelpPosting postHelper;
     SharedPreferences sh_Pref;
     CommentAdapter adapter;
@@ -75,11 +81,11 @@ public class DetailActivity extends AppCompatActivity {
         input_comment = findViewById(R.id.input_comment);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);
-        commentWriter=findViewById(R.id.comment_writer);
+        commentWriter = findViewById(R.id.comment_writer);
         nowpeple = findViewById(R.id.people_text);
         adapter = new CommentAdapter();
 
-        String userEmail = sh_Pref.getString("Email", "");
+        userEmail = sh_Pref.getString("Email", "");
         String userNickName = sh_Pref.getString("Nickname", "");
         commentWriter.setText(userNickName);
 
@@ -97,7 +103,7 @@ public class DetailActivity extends AppCompatActivity {
                         writer = post.getWriter();
 
                         title_text.setText(title);
-                        maxpeople.setText(post.getMax()+"");
+                        maxpeople.setText(post.getMax() + "");
                         date_text.setText(date);
                         good_text.setText(good);
                         contents_text.setText(contents);
@@ -121,29 +127,7 @@ public class DetailActivity extends AppCompatActivity {
                     }
                 });
         // get post's comments
-        postHelper.getComments(collection, postID)
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                Comment comment = document.toObject(Comment.class);
-                                postHelper.getUserNickname(userEmail).addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                        if (task.isSuccessful()) {
-                                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                                adapter.addItem(new Comment_sub(document.toObject(User.class).getNickName(), comment.getContent()));
-                                            }
-                                        }
-                                        recyclerView.setAdapter(adapter);
-                                    }
-                                });
-                            }
-
-                        }
-                    }
-                });
+        //loadComments();
 
 
         // 댓글올리기
@@ -156,7 +140,7 @@ public class DetailActivity extends AppCompatActivity {
 
                 Comment com = new Comment(wr, comment);
                 postHelper.addComment(collection, postID, com);
-                reload();
+
             }
         });
 
@@ -166,7 +150,7 @@ public class DetailActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 postHelper.reportPost(collection, postID);
-                reload();
+
             }
         });
 
@@ -177,7 +161,7 @@ public class DetailActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String wr = sh_Pref.getString("Email", "");
                 postHelper.addLike(collection, postID, wr);
-                reload();
+
             }
         });
 
@@ -210,7 +194,7 @@ public class DetailActivity extends AppCompatActivity {
                                 } else if (user + 1 == max) {
                                     userList.add(wr);
                                     HelpChatting chatting = new HelpChatting();
-                                    chatting.makeChatRoom(userList,title);
+                                    chatting.makeChatRoom(userList, title);
                                 }
                                 postHelper.addUser(collection, postID, wr);
                             }
@@ -218,6 +202,60 @@ public class DetailActivity extends AppCompatActivity {
 
             }
         });
+
+
+        postHelper.checkChangeComment(collection, postID).addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@Nullable @org.jetbrains.annotations.Nullable QuerySnapshot value,
+                                @Nullable @org.jetbrains.annotations.Nullable FirebaseFirestoreException error) {
+                if (error != null) {
+                    Log.w("test", "Listen failed.", error);
+                    return;
+                }
+                for (DocumentChange dc : value.getDocumentChanges()) {
+                    switch (dc.getType()) {
+                        case ADDED:
+                            Comment comment = dc.getDocument().toObject(Comment.class);
+                            postHelper.getUserNickname(comment.getWriter()).addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                @Override
+                                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                    if (task.isSuccessful()) {
+                                        for (QueryDocumentSnapshot document : task.getResult()) {
+                                            adapter.addItem(new Comment_sub(document.toObject(User.class).getNickName(), comment.getContent()));
+                                        }
+                                    }
+                                    recyclerView.setAdapter(adapter);
+                                }
+                            });
+                            break;
+
+                    }
+                }
+            }
+        });
+
+        postHelper.checkChange(collection, postID)
+                .addSnapshotListener(new EventListener<DocumentSnapshot>() {
+                                         @Override
+                                         public void onEvent(@Nullable @org.jetbrains.annotations.Nullable DocumentSnapshot value, @Nullable @org.jetbrains.annotations.Nullable FirebaseFirestoreException error) {
+
+                                             ProjectPost post = value.toObject(ProjectPost.class);
+                                             title = post.getTitle();
+                                             if (post.getUsers() != null) people = post.getUsers().size() + "";
+                                             date = post.getEndDate();
+                                             good = post.getLikes().size() + "";
+                                             contents = post.getContent();
+                                             writer = post.getWriter();
+
+                                             title_text.setText(title);
+                                             maxpeople.setText(post.getMax() + "");
+                                             date_text.setText(date);
+                                             good_text.setText(good);
+                                             contents_text.setText(contents);
+                                             nowpeple.setText(people);
+                                         }
+                                     }
+                );
 
 
 //        if (title.equals("안드로이드")){
@@ -231,30 +269,7 @@ public class DetailActivity extends AppCompatActivity {
 //        }
     }
 
-    private void reload() {
-        // read a post
-        postHelper.getPost(collection, postID)
-                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                    @Override
-                    public void onSuccess(DocumentSnapshot documentSnapshot) {
-                        ProjectPost post = documentSnapshot.toObject(ProjectPost.class); // post는 원하는 post 객체를 사용하세요
-                        title = post.getTitle();
-                        if (post.getUsers() != null) people = post.getUsers().size() + "";
-                        date = post.getEndDate();
-                        good = post.getLikes().size() + "";
-                        contents = post.getContent();
-                        writer = post.getWriter();
-
-                        title_text.setText(title);
-                        maxpeople.setText(post.getMax()+"");
-                        date_text.setText(date);
-                        good_text.setText(good);
-                        contents_text.setText(contents);
-                        nowpeple.setText(people);
-
-                    }
-                });
-
+    private void loadComments() {
         // get post's comments
         postHelper.getComments(collection, postID)
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -263,14 +278,21 @@ public class DetailActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 Comment comment = document.toObject(Comment.class);
-                                adapter.addItem(new Comment_sub(document.toObject(User.class).getNickName(), comment.getContent()));
-
+                                postHelper.getUserNickname(comment.getWriter()).addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                        if (task.isSuccessful()) {
+                                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                                adapter.addItem(new Comment_sub(document.toObject(User.class).getNickName(), comment.getContent()));
+                                            }
+                                        }
+                                        recyclerView.setAdapter(adapter);
+                                    }
+                                });
                             }
-                            recyclerView.setAdapter(adapter);
+
                         }
                     }
                 });
     }
-
-
 }

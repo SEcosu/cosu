@@ -35,54 +35,54 @@ public class Testing {
     }
 
     // ok
-    private void writePost() {
-
-        List<String> cte1 = new ArrayList<String>();
-        cte1.add("c");
-        cte1.add("c++");
-        cte1.add("c#");
-        cte1.add("developer");
-
-        List<String> cte2 = new ArrayList<String>();
-        cte2.add("java");
-        cte2.add("css");
-        cte2.add("html");
-        cte2.add("developer");
-
-
-        // Project
-        ProjectPost pp1 = new ProjectPost("cate project post help", "god",
-                "This is content. it maybe changed", 3, cte1);
-        ProjectPost pp2 = new ProjectPost("hohoho project post", "dog",
-                "This is content. it maybe changed. but i do not want to change it", 7, cte1);
-        ProjectPost pp3 = new ProjectPost("ahahaha project post", "cat",
-                "please help me", 6, cte2);
-        pst.addPost(pst.PROJECT, pp1);
-        pst.addPost(pst.PROJECT, pp2);
-        pst.addPost(pst.PROJECT, pp3);
-
-//        // Study
-//        StudyPost sp1 = new StudyPost("first study post", "lion",
-//                "This is content. it maybe changed", 3);
-//        StudyPost sp2 = new StudyPost("second study post", "tiger",
-//                "This is content. it maybe changed. but i do not want to change it", 7);
-//        StudyPost sp3 = new StudyPost("third study post", "horse",
-//                "please help me", 6);
-//        pst.addPost(pst.STUDY, sp1);
-//        pst.addPost(pst.STUDY, sp2);
-//        pst.addPost(pst.STUDY, sp3);
+//    private void writePost() {
 //
-//        // QnA
-//        QnAPost qq1 = new QnAPost("first study post", "queen",
-//                "This is content. it maybe changed");
-//        QnAPost qq2 = new QnAPost("how can i get good score?", "rabbit",
-//                "This is content. it maybe changed");
-//        QnAPost qq3 = new QnAPost("help firesoter", "king",
-//                "fire store help");
-//        pst.addPost(pst.QNA, qq1);
-//        pst.addPost(pst.QNA, qq2);
-//        pst.addPost(pst.QNA, qq3);
-    }
+//        List<String> cte1 = new ArrayList<String>();
+//        cte1.add("c");
+//        cte1.add("c++");
+//        cte1.add("c#");
+//        cte1.add("developer");
+//
+//        List<String> cte2 = new ArrayList<String>();
+//        cte2.add("java");
+//        cte2.add("css");
+//        cte2.add("html");
+//        cte2.add("developer");
+//
+//
+//        // Project
+//        ProjectPost pp1 = new ProjectPost("cate project post help", "god",
+//                "This is content. it maybe changed", 3, cte1);
+//        ProjectPost pp2 = new ProjectPost("hohoho project post", "dog",
+//                "This is content. it maybe changed. but i do not want to change it", 7, cte1);
+//        ProjectPost pp3 = new ProjectPost("ahahaha project post", "cat",
+//                "please help me", 6, cte2);
+//        pst.addPost(pst.PROJECT, pp1);
+//        pst.addPost(pst.PROJECT, pp2);
+//        pst.addPost(pst.PROJECT, pp3);
+//
+////        // Study
+////        StudyPost sp1 = new StudyPost("first study post", "lion",
+////                "This is content. it maybe changed", 3);
+////        StudyPost sp2 = new StudyPost("second study post", "tiger",
+////                "This is content. it maybe changed. but i do not want to change it", 7);
+////        StudyPost sp3 = new StudyPost("third study post", "horse",
+////                "please help me", 6);
+////        pst.addPost(pst.STUDY, sp1);
+////        pst.addPost(pst.STUDY, sp2);
+////        pst.addPost(pst.STUDY, sp3);
+////
+////        // QnA
+////        QnAPost qq1 = new QnAPost("first study post", "queen",
+////                "This is content. it maybe changed");
+////        QnAPost qq2 = new QnAPost("how can i get good score?", "rabbit",
+////                "This is content. it maybe changed");
+////        QnAPost qq3 = new QnAPost("help firesoter", "king",
+////                "fire store help");
+////        pst.addPost(pst.QNA, qq1);
+////        pst.addPost(pst.QNA, qq2);
+////        pst.addPost(pst.QNA, qq3);
+//    }
 
     // ok
     private void addComment() {
@@ -289,9 +289,9 @@ public class Testing {
         cht.addChat("Ij2L74mfcmWTIjDRwsBL", "member1", "welcome!");
     }
 
-    private void waitChat() {
-        cht.waitMSG();
-    }
+//    private void waitChat() {
+//        cht.waitMSG();
+//    }
 
     private void getChats() {
         cht.getMessages("Ij2L74mfcmWTIjDRwsBL") // 실제값 넣어준 것, 함수에서 받아서 넣어줘야함

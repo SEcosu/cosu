@@ -1,7 +1,5 @@
 package com.example.cosu_pra.ConnectFB;
 
-import android.util.Log;
-
 import androidx.annotation.NonNull;
 
 import com.example.cosu_pra.DTO.Comment;
@@ -12,6 +10,7 @@ import com.example.cosu_pra.DTO.StudyPost;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldValue;
@@ -19,8 +18,6 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
-
-import java.util.Arrays;
 
 /**
  * HelpPosting 역할
@@ -122,7 +119,7 @@ public class HelpPosting {
         return db.collection(collection).orderBy("date", Query.Direction.DESCENDING).get();
     }
 
-    public Task<QuerySnapshot> getAllPosts(String collection,boolean option) {
+    public Task<QuerySnapshot> getAllPosts(String collection, boolean option) {
         return db.collection(collection).orderBy("startDate").get();
     }
 
@@ -152,7 +149,7 @@ public class HelpPosting {
                     numOfComment = post.getComment();
                 }
                 db.collection(collection).document(postID).collection(COMMENTS).add(comment);
-                db.collection(collection).document(postID).update("comment",numOfComment+1);
+                db.collection(collection).document(postID).update("comment", numOfComment + 1);
 
             }
         });
@@ -232,7 +229,7 @@ public class HelpPosting {
      * use addOnCompleteListener method instead Thread
      */
     public Task<QuerySnapshot> searchPostByCategory(String collection, String category) {
-        return db.collection(collection).whereArrayContains("category", category).get();
+        return db.collection(collection).whereEqualTo("category", category).get();
     }
 
     public Task<QuerySnapshot> getReportPost(String collection) {
@@ -268,10 +265,18 @@ public class HelpPosting {
         db.collection(collection).document(postID).update("likes", FieldValue.arrayUnion(userID));
     }
 
-    public Task<QuerySnapshot> getUserNickname(String userID){
-        return db.collection("users").whereEqualTo("email",userID).get();
+    public Task<QuerySnapshot> getUserNickname(String userID) {
+        return db.collection("users").whereEqualTo("email", userID).get();
     }
 
+    public DocumentReference checkChange(String collection, String postID) {
+        return db.collection(collection).document(postID);
+    }
 
+    public CollectionReference checkChangeComment(String collection, String postID) {
+        return db.collection(collection).document(postID).collection("comments");
+
+
+    }
 
 }

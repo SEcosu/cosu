@@ -23,7 +23,7 @@ public class StudyPost extends Post {
         users.add(writer_id);
     }
 
-    public StudyPost(String title, String writer_id, String contents, int max_users, List<String> category) {
+    public StudyPost(String title, String writer_id, String contents, int max_users, String category) {
         super(title, writer_id, contents, category);
 
         max = max_users;
@@ -41,7 +41,7 @@ public class StudyPost extends Post {
     }
 
     public StudyPost(String title, String writer, String contents,
-                       int max_users, List<String> category, String startDate, String endDate) {
+                       int max_users, String category, String startDate, String endDate) {
         super(title, writer, contents,category,startDate,endDate);
         max = max_users;
         users = new ArrayList<String>();

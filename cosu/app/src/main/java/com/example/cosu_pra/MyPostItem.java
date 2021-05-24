@@ -1,8 +1,11 @@
 package com.example.cosu_pra;
 
 public class MyPostItem {
+    public String collection;
+    public String postID;
     private String content;
     private String category;
+
     public String getContent(){
         return content;
     }

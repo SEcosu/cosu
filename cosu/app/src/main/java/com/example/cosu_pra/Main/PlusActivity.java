@@ -127,26 +127,26 @@ public class PlusActivity extends AppCompatActivity {
                 String ti = title.getText().toString();
                 String wr = sh_Pref.getString("Email", "");
                 String co = contents.getText().toString();
-                List<String> list = new ArrayList<String>();
-                list.add(category_spinner.getSelectedItem().toString());
+                String category =category_spinner.getSelectedItem().toString();
+
                 int max;
 
                 if (collection.equals(HelpPosting.PROJECT)) {
                     max = Integer.parseInt(max_spinner.getSelectedItem().toString());
                     String start = (String) date_start.getText();
                     String end = (String) date_end.getText();
-                    ProjectPost post = new ProjectPost(ti, wr, co, max, list, start, end);
+                    ProjectPost post = new ProjectPost(ti, wr, co, max, category, start, end);
                     postHelper.addPost(collection, post);
                 }
                 if (collection.equals(HelpPosting.STUDY)) {
                     max = Integer.parseInt(max_spinner.getSelectedItem().toString());
                     String start = (String) date_start.getText();
                     String end = (String) date_end.getText();
-                    StudyPost post = new StudyPost(ti, wr, co, max, list, start, end);
+                    StudyPost post = new StudyPost(ti, wr, co, max, category, start, end);
                     postHelper.addPost(collection, post);
                 }
                 if (collection.equals(HelpPosting.QNA)) {
-                    QnAPost post = new QnAPost(ti, wr, co, list);
+                    QnAPost post = new QnAPost(ti, wr, co, category);
                     postHelper.addPost(collection, post);
                 }
                 finish();
