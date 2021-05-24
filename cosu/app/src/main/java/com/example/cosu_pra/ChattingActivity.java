@@ -157,7 +157,7 @@ public class ChattingActivity extends AppCompatActivity {
                             case R.id.menu1:
 
                                 break;
-                                //채팅방 나가기
+                            //채팅방 나가기
                             case R.id.menu2:
                                 Toast.makeText(getApplicationContext(), "채팅방 나가기", Toast.LENGTH_SHORT).show();
 
@@ -199,7 +199,6 @@ public class ChattingActivity extends AppCompatActivity {
             //내가 보낸 메세지라면(오른쪽버블 바탕화면으로
             if(chats.get(position).getUserID().equals(userEmail)) {
                 messageViewHolder.message.setText(chats.get(position).getMsg());
-                messageViewHolder.message.setBackgroundResource(R.drawable.bubble2);
                 //내 메세지 감쳐주는
                 messageViewHolder.message.setVisibility(View.VISIBLE);
                 messageViewHolder.message.setTextSize(15);
@@ -210,11 +209,12 @@ public class ChattingActivity extends AppCompatActivity {
                 //상대방이름가져오기
                 messageViewHolder.name.setText(chats.get(position).getUserID());
                 messageViewHolder.lv.setVisibility(View.VISIBLE);
-                messageViewHolder.message.setBackgroundResource(R.drawable.bubble1);
                 //상대방 메세지
                 messageViewHolder.message.setText(chats.get(position).getMsg());
                 //텍스트 사이즈
                 messageViewHolder.message.setTextSize(15);
+                messageViewHolder.lv_chamessage_main.setGravity(Gravity.RIGHT);
+
             }
 
 

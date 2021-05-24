@@ -40,6 +40,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingLeft="20dp"
+            android:background="@drawable/messagere"
             android:paddingTop="20dp"
             android:text="메세지 내용" />
 
