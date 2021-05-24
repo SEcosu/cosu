@@ -49,4 +49,5 @@ public class ChatRoomAdatper extends ArrayAdapter<ChatRoomItem> {
         itemList.add(item);
     }
 
+
 }

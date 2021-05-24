@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import androidx.annotation.NonNull;
@@ -67,6 +68,15 @@ public class Fragment4 extends Fragment {
                 }
             }
         });
+        chatRoomView.setAdapter(adatper);
+
+        chatRoomView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+            }
+        });
+
 
         return v;
     }
@@ -79,7 +89,14 @@ public class Fragment4 extends Fragment {
         intent.putExtra("roomID", adatper.getItem(position).getRoomID());
         startActivity(intent);
     }
+
     //리스트뷰 클릭이벤트
+
+
+
+
+    }
+
 
 
 
