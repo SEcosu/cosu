@@ -40,6 +40,7 @@
     <ListView
         android:id="@+id/mainlist"
         android:layout_width="match_parent"
+        android:descendantFocusability="blocksDescendants"
         android:layout_height="match_parent"
         android:layout_below="@+id/chatRV"
         android:paddingTop="20dp"

@@ -40,10 +40,7 @@ import java.util.List;
 import java.util.Map;
 
 public class ChattingActivity extends AppCompatActivity {
-    ImageButton End = findViewById(R.id.project_end);
-    ImageButton Exit = findViewById(R.id.exit);
-    ImageButton send = findViewById(R.id.sendbtn);
-    EditText mc = findViewById(R.id.message_content);
+
     HelpChatting chatHelper;
     String roomID;
     SharedPreferences sh_Pref;
@@ -54,15 +51,19 @@ public class ChattingActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chatting);
+        ImageButton End = findViewById(R.id.project_end);
+        ImageButton Exit = findViewById(R.id.exit);
 
+        ImageButton send = findViewById(R.id.sendbtn);
+        EditText mc = findViewById(R.id.message_content);
         roomID = getIntent().getStringExtra("roomID");
         sh_Pref = getSharedPreferences("Login Credentials ", MODE_PRIVATE);
 
         //chatHelper.getMessages()
         chatHelper = new HelpChatting();
-        ImageButton End = findViewById(R.id.project_end);
-        ImageButton Exit = findViewById(R.id.exit);
+
         userEmail = sh_Pref.getString("Email", "");
+
 
         //채팅 리사이클러뷰 연결
         RecyclerView rv = (RecyclerView) findViewById(R.id.message_recyclerview);
@@ -121,7 +122,6 @@ public class ChattingActivity extends AppCompatActivity {
                 if (mc != null) {
                     ChatData chat = new ChatData(userEmail, MSG);
                     chatHelper.addChat(userEmail, chat);
-
                     Toast.makeText(ChattingActivity.this, "성공", Toast.LENGTH_SHORT).show();
                 } else
                     Toast.makeText(ChattingActivity.this, "입력해주세요", Toast.LENGTH_SHORT).show();
@@ -129,7 +129,7 @@ public class ChattingActivity extends AppCompatActivity {
 
             }
         });
-        //TODO END 버튼 눌렀을때
+        //TODO END 버튼 눌렀을때-모집완료
         End.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -158,11 +158,14 @@ public class ChattingActivity extends AppCompatActivity {
                     public boolean onMenuItemClick(MenuItem item) {
                         //TODO 벨 버튼 클릭 후 이벤트
                         switch (item.getItemId()) {
+                            //알림끄기
                             case R.id.menu1:
-                                Toast.makeText(getApplicationContext(), "푸시 알림 설정", Toast.LENGTH_SHORT).show();
+
                                 break;
+                                //채팅방 나가기
                             case R.id.menu2:
-                                Toast.makeText(getApplicationContext(), "진동", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getApplicationContext(), "채팅방 나가기", Toast.LENGTH_SHORT).show();
+
 
                                 break;
 
@@ -253,6 +256,7 @@ public class ChattingActivity extends AppCompatActivity {
 
             }
         }
+
     }
 
 
