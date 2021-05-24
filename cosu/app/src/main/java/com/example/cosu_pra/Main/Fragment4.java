@@ -34,15 +34,19 @@ public class Fragment4 extends Fragment {
     HelpChatting chatHelper;
     SharedPreferences sh_Pref;
     ChatRoomAdatper adatper;
+    ListView chatRoomView;
+    ArrayList<ChatRoomItem> chatRoomList;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         setHasOptionsMenu(true);
         View v = inflater.inflate(R.layout.fragment4, container, false);
-        ListView chatRoomView = (ListView) v.findViewById(R.id.mainlist);
-        List<ChatRoomItem> listViewItemList = new ArrayList<>();
-        adatper = new ChatRoomAdatper(getActivity(), listViewItemList);
+        chatRoomList = new ArrayList<ChatRoomItem>();
+
+        chatRoomView = (ListView) v.findViewById(R.id.mainlist);
+        adatper = new ChatRoomAdatper();
+        chatRoomView.setAdapter(adatper);
 
         sh_Pref = getActivity().getSharedPreferences("Login Credentials ", Context.MODE_PRIVATE);
         String userID = sh_Pref.getString("Email", "");
@@ -60,7 +64,7 @@ public class Fragment4 extends Fragment {
                         item.setRoomID(document.getId());
                         item.setLastTime(room.getLastTime());
                         item.setRoomName(room.getRoomName());
-                        item.setNewMSG(3); //TODO: 이거 어케하지?
+                        //item.setNewMSG(3); //TODO: 이거 어케하지?
 
                         adatper.addItem(item);
                     }
@@ -68,38 +72,25 @@ public class Fragment4 extends Fragment {
                 }
             }
         });
-        chatRoomView.setAdapter(adatper);
 
         chatRoomView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+                Intent intent = new Intent(getActivity(), ChattingActivity.class);
+                intent.putExtra("roomID", adatper.getItem(position).getRoomID());
+                startActivity(intent);
             }
         });
-
 
         return v;
     }
 
-    //TODO 단톡방 클릭 이벤트
-    public void onListItemClick(ListView l, View v, int position, long id) {
-        String strText = (String) l.getItemAtPosition(position);
-        Log.d("listview: ", position + ": " + strText);
-        Intent intent = new Intent(getActivity(), ChattingActivity.class);
-        intent.putExtra("roomID", adatper.getItem(position).getRoomID());
-        startActivity(intent);
-    }
-
-    //리스트뷰 클릭이벤트
-
-
-
-
-    }
-
-
-
 
 }
+
+
+
+
+
 
 
