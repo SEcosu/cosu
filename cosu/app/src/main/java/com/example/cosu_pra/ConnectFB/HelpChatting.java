@@ -1,19 +1,11 @@
 package com.example.cosu_pra.ConnectFB;
 
-import android.util.Log;
-
-import androidx.annotation.Nullable;
-
 import com.example.cosu_pra.DTO.ChatData;
 import com.example.cosu_pra.DTO.Chatroom;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentChange;
-import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 
@@ -42,11 +34,15 @@ public class HelpChatting {
 
         db.collection(CHAT).document(roomID)
                 .collection(MSG).add(chat);
+        db.collection(CHAT).document(roomID).update("lastMSG",chat.getMsg());
+        db.collection(CHAT).document(roomID).update("lastTime",chat.getTime());
     }
 
     public void addChat(String roomID, ChatData chat) {
         db.collection(CHAT).document(roomID)
                 .collection(MSG).add(chat);
+        db.collection(CHAT).document(roomID).update("lastMSG",chat.getMsg());
+        db.collection(CHAT).document(roomID).update("lastTime",chat.getTime());
     }
 
     public CollectionReference waitMSG(String roomID) {
@@ -56,13 +52,13 @@ public class HelpChatting {
 
     }
 
-    public Task<QuerySnapshot> getChatRooms(String userID) {
-        return db.collection(CHAT).whereArrayContains("userList", userID).get();
+    public Query getChatRooms(String userID) {
+        return db.collection(CHAT).whereArrayContains("userList", userID);
     }
 
     public Task<QuerySnapshot> getMessages(String roomID) {
         return db.collection(CHAT).document(roomID)
-                .collection(MSG).orderBy("data", Query.Direction.DESCENDING).get();
+                .collection(MSG).orderBy("time", Query.Direction.DESCENDING).get();
     }
 
 }

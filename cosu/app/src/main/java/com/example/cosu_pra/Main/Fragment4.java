@@ -23,8 +23,13 @@ import com.example.cosu_pra.DTO.Chatroom;
 import com.example.cosu_pra.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentChange;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,6 +41,7 @@ public class Fragment4 extends Fragment {
     ChatRoomAdatper adatper;
     ListView chatRoomView;
     ArrayList<ChatRoomItem> chatRoomList;
+    String userID;
 
     @Nullable
     @Override
@@ -49,29 +55,45 @@ public class Fragment4 extends Fragment {
         chatRoomView.setAdapter(adatper);
 
         sh_Pref = getActivity().getSharedPreferences("Login Credentials ", Context.MODE_PRIVATE);
-        String userID = sh_Pref.getString("Email", "");
+        userID = sh_Pref.getString("Email", "");
 
         chatHelper = new HelpChatting();
-        chatHelper.getChatRooms(userID).addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful()) {
-                    for (QueryDocumentSnapshot document : task.getResult()) {
-                        Chatroom room = document.toObject(Chatroom.class);
-                        ChatRoomItem item = new ChatRoomItem();
+        chatHelper.getChatRooms(userID)
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable @org.jetbrains.annotations.Nullable QuerySnapshot value,
+                                        @Nullable @org.jetbrains.annotations.Nullable FirebaseFirestoreException error) {
+                        if (error != null) {
+                            return;
+                        }
 
-                        item.setLastMSG(room.getLastMSG());
-                        item.setRoomID(document.getId());
-                        item.setLastTime(room.getLastTime());
-                        item.setRoomName(room.getRoomName());
-                        //item.setNewMSG(3); //TODO: 이거 어케하지?
+                        for (DocumentChange dc : value.getDocumentChanges()) {
 
-                        adatper.addItem(item);
+                            switch (dc.getType()) {
+
+                                case ADDED:
+                                    Chatroom room = dc.getDocument().toObject(Chatroom.class);
+                                    ChatRoomItem item = new ChatRoomItem();
+
+                                    item.setLastMSG(room.getLastMSG());
+                                    item.setRoomID(dc.getDocument().getId());
+                                    item.setLastTime(room.getLastTime());
+                                    item.setRoomName(room.getRoomName());
+
+                                    adatper.addItem(item);
+                                    break;
+                                case MODIFIED:
+
+                                    break;
+                                case REMOVED:
+
+                                    break;
+                            }
+                        }
+                        chatRoomView.setAdapter(adatper);
                     }
-                    chatRoomView.setAdapter(adatper);
-                }
-            }
-        });
+                });
+
 
         chatRoomView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
