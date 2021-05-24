@@ -29,7 +29,6 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -81,8 +80,9 @@ public class ChattingActivity extends AppCompatActivity {
                         MessageItem item = new MessageItem(MSG.getUserID(), MSG.getMsg(), MSG.getTime());
                         items.add(item);
                     }
-                    // TODO:어뎁터에 리스트 연결하면 됨
                 }
+                adapter.notifyDataSetChanged();
+                rv.setAdapter(adapter);
             }
 
         });
@@ -103,8 +103,8 @@ public class ChattingActivity extends AppCompatActivity {
                     items.add(item);
 
                 }
-                // TODO:어뎁터에 리스트 연결하면 됨
-            }
+                adapter.notifyDataSetChanged();
+                rv.setAdapter(adapter);            }
         });
 
 

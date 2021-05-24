@@ -19,6 +19,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.example.cosu_pra.AdminActivity;
 import com.example.cosu_pra.MyCommentActivity;
 import com.example.cosu_pra.MylikeActivity;
 import com.example.cosu_pra.MypostActivity;
@@ -26,7 +27,6 @@ import com.example.cosu_pra.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -91,12 +91,11 @@ public class Fragment5 extends Fragment {
                     public boolean onMenuItemClick(MenuItem item) {
                         //TODO 벨 버튼 클릭 후 이벤트
                         switch(item.getItemId()){
-                            case R.id.action_menu1:
-
-                                break;
                             case R.id.action_menu2:
-
+                                Intent intent = new Intent(getActivity(),  AdminActivity.class);
+                                startActivity(intent);
                                 break;
+
                         }
                         return false;
                     }
