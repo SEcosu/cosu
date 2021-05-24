@@ -109,9 +109,6 @@ public class ChattingActivity extends AppCompatActivity {
         });
 
 
-
-
-
         rv.setAdapter(adapter);
 
         //TODO SEND버튼
@@ -121,7 +118,7 @@ public class ChattingActivity extends AppCompatActivity {
                 String MSG = mc.getText().toString();
                 if (mc != null) {
                     ChatData chat = new ChatData(userEmail, MSG);
-                    chatHelper.addChat(userEmail, chat);
+                    chatHelper.addChat(roomID, chat);
                     Toast.makeText(ChattingActivity.this, "성공", Toast.LENGTH_SHORT).show();
                 } else
                     Toast.makeText(ChattingActivity.this, "입력해주세요", Toast.LENGTH_SHORT).show();
@@ -143,7 +140,7 @@ public class ChattingActivity extends AppCompatActivity {
         End.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                finish();
             }
         });
 
@@ -185,18 +182,7 @@ public class ChattingActivity extends AppCompatActivity {
         Map<String, ProjectPost> comments = new HashMap<String, ProjectPost>();
 
         public RecyclerViewAdapter() {
-            FirebaseDatabase.getInstance().getReference().child("chatrooms").child("comments").addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    comments.clear();
 
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-
-                }
-            });
             //TODO 방이름 가져오기
             //TODO 대화내용 가져오기
         }
@@ -212,26 +198,26 @@ public class ChattingActivity extends AppCompatActivity {
         @Override
         public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
             MessageViewHolder messageViewHolder = ((MessageViewHolder) holder);
-//            //내가 보낸 메세지라면(오른쪽버블 바탕화면으로
-//            if() {
-//                messageViewHolder.message.setText(comments.get(position).message);
-//                messageViewHolder.message.setBackgroundResource(R.drawable.bubble2);
-//                //내 메세지 감쳐주는
-//                messageViewHolder.message.setVisibility(View.INVISIBLE);
-//                messageViewHolder.message.setTextSize(15);
-//                messageViewHolder.lv_chamessage_main.setGravity(Gravity.RIGHT);
-//            }
-//            //상대방이 보낸 메세지
-//            else {
-//                //상대방이름가져오기
-//                messageViewHolder.name.setText();
-//                messageViewHolder.lv.setVisibility(View.VISIBLE);
-//                messageViewHolder.message.setBackgroundResource(R.drawable.bubble1);
-//                //상대방 메세지
-//                messageViewHolder.message.setText(comments.get(position).message);
-//                //텍스트 사이즈
-//                messageViewHolder.message.setTextSize(15);
-//            }
+            //내가 보낸 메세지라면(오른쪽버블 바탕화면으로
+            if() {
+                messageViewHolder.message.setText(comments.get(position).message);
+                messageViewHolder.message.setBackgroundResource(R.drawable.bubble2);
+                //내 메세지 감쳐주는
+                messageViewHolder.message.setVisibility(View.INVISIBLE);
+                messageViewHolder.message.setTextSize(15);
+                messageViewHolder.lv_chamessage_main.setGravity(Gravity.RIGHT);
+            }
+            //상대방이 보낸 메세지
+            else {
+                //상대방이름가져오기
+                messageViewHolder.name.setText();
+                messageViewHolder.lv.setVisibility(View.VISIBLE);
+                messageViewHolder.message.setBackgroundResource(R.drawable.bubble1);
+                //상대방 메세지
+                messageViewHolder.message.setText(comments.get(position).message);
+                //텍스트 사이즈
+                messageViewHolder.message.setTextSize(15);
+            }
 
 
         }
