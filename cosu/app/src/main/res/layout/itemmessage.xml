@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/lv_chamessage_main"
 
@@ -39,7 +39,8 @@
             android:id="@+id/profile1_content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingLeft="20dp"
+            android:paddingLeft="25sp"
+            android:background="@drawable/messagere"
             android:paddingTop="20dp"
             android:text="메세지 내용" />
 
@@ -52,4 +53,4 @@
             android:paddingTop="20dp"
             android:text="보낸 시간" />
     </LinearLayout>
-</LinearLayout>
+</RelativeLayout>
