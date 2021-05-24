@@ -9,6 +9,8 @@ import com.example.cosu_pra.ConnectFB.HelpPosting;
 import com.example.cosu_pra.DTO.ChatData;
 import com.example.cosu_pra.DTO.Comment;
 import com.example.cosu_pra.DTO.ProjectPost;
+import com.example.cosu_pra.DTO.QnAPost;
+import com.example.cosu_pra.DTO.StudyPost;
 import com.example.cosu_pra.DTO.User;
 import com.example.cosu_pra.Main.Comment_sub;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -26,63 +28,72 @@ import java.util.Map;
 public class Testing {
     HelpPosting pst;
     HelpChatting cht;
-    private Object ArrayList;
 
     public Testing() {
         pst = new HelpPosting();
         cht = new HelpChatting();
+
+
+        //readProjectPosts();
+
+        //readPost();
+
+        //search();
+
+        //getChats();
+
         getUserNickName();
     }
 
     // ok
-//    private void writePost() {
-//
-//        List<String> cte1 = new ArrayList<String>();
-//        cte1.add("c");
-//        cte1.add("c++");
-//        cte1.add("c#");
-//        cte1.add("developer");
-//
-//        List<String> cte2 = new ArrayList<String>();
-//        cte2.add("java");
-//        cte2.add("css");
-//        cte2.add("html");
-//        cte2.add("developer");
-//
-//
-//        // Project
-//        ProjectPost pp1 = new ProjectPost("cate project post help", "god",
-//                "This is content. it maybe changed", 3, cte1);
-//        ProjectPost pp2 = new ProjectPost("hohoho project post", "dog",
-//                "This is content. it maybe changed. but i do not want to change it", 7, cte1);
-//        ProjectPost pp3 = new ProjectPost("ahahaha project post", "cat",
-//                "please help me", 6, cte2);
-//        pst.addPost(pst.PROJECT, pp1);
-//        pst.addPost(pst.PROJECT, pp2);
-//        pst.addPost(pst.PROJECT, pp3);
-//
-////        // Study
-////        StudyPost sp1 = new StudyPost("first study post", "lion",
-////                "This is content. it maybe changed", 3);
-////        StudyPost sp2 = new StudyPost("second study post", "tiger",
-////                "This is content. it maybe changed. but i do not want to change it", 7);
-////        StudyPost sp3 = new StudyPost("third study post", "horse",
-////                "please help me", 6);
-////        pst.addPost(pst.STUDY, sp1);
-////        pst.addPost(pst.STUDY, sp2);
-////        pst.addPost(pst.STUDY, sp3);
-////
-////        // QnA
-////        QnAPost qq1 = new QnAPost("first study post", "queen",
-////                "This is content. it maybe changed");
-////        QnAPost qq2 = new QnAPost("how can i get good score?", "rabbit",
-////                "This is content. it maybe changed");
-////        QnAPost qq3 = new QnAPost("help firesoter", "king",
-////                "fire store help");
-////        pst.addPost(pst.QNA, qq1);
-////        pst.addPost(pst.QNA, qq2);
-////        pst.addPost(pst.QNA, qq3);
-//    }
+    private void writePost() {
+
+        List<String> cte1 = new ArrayList<String>();
+        cte1.add("c");
+        cte1.add("c++");
+        cte1.add("c#");
+        cte1.add("developer");
+
+        List<String> cte2 = new ArrayList<String>();
+        cte2.add("java");
+        cte2.add("css");
+        cte2.add("html");
+        cte2.add("developer");
+
+
+        // Project
+        ProjectPost pp1 = new ProjectPost("cate project post help", "god",
+                "This is content. it maybe changed", 3, "AI");
+        ProjectPost pp2 = new ProjectPost("hohoho project post", "dog",
+                "This is content. it maybe changed. but i do not want to change it", 7, "AI");
+        ProjectPost pp3 = new ProjectPost("ahahaha project post", "cat",
+                "please help me", 6, "AI");
+        pst.addPost(pst.PROJECT, pp1);
+        pst.addPost(pst.PROJECT, pp2);
+        pst.addPost(pst.PROJECT, pp3);
+
+        // Study
+        StudyPost sp1 = new StudyPost("first study post", "lion",
+                "This is content. it maybe changed", 3);
+        StudyPost sp2 = new StudyPost("second study post", "tiger",
+                "This is content. it maybe changed. but i do not want to change it", 7);
+        StudyPost sp3 = new StudyPost("third study post", "horse",
+                "please help me", 6);
+        pst.addPost(pst.STUDY, sp1);
+        pst.addPost(pst.STUDY, sp2);
+        pst.addPost(pst.STUDY, sp3);
+
+        // QnA
+        QnAPost qq1 = new QnAPost("first study post", "queen",
+                "This is content. it maybe changed");
+        QnAPost qq2 = new QnAPost("how can i get good score?", "rabbit",
+                "This is content. it maybe changed");
+        QnAPost qq3 = new QnAPost("help firesoter", "king",
+                "fire store help");
+        pst.addPost(pst.QNA, qq1);
+        pst.addPost(pst.QNA, qq2);
+        pst.addPost(pst.QNA, qq3);
+    }
 
     // ok
     private void addComment() {
@@ -108,6 +119,7 @@ public class Testing {
                     for (QueryDocumentSnapshot document : task.getResult()) {
                         posts.put(document.getId(), document.toObject(ProjectPost.class)); // 맵으로 넣는 방법
                     }
+                    Log.d("test", "Read a Project");
                     for (ProjectPost pp : posts.values()) {
                         Log.d("test", pp.getContent());
                         Log.d("test", pp.getWriter());
@@ -130,7 +142,7 @@ public class Testing {
     // ok
     private void readPost() {
         // get post
-        pst.getPost(pst.PROJECT, "5mCaTT8j2qmoXkFxnywY")
+        pst.getPost(pst.PROJECT, "43d202DHMR3CPeRM0Q1n")
                 .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                     @Override
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
@@ -205,43 +217,42 @@ public class Testing {
 
     // ok
     private void search() {
-//        // search by writer
-//        pst.searchPostByWriter(pst.PROJECT, "dog")
-//                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-//                    @Override
-//                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-//                        if (task.isSuccessful()) {
-//                            Map<String, ProjectPost> comments = new HashMap<String, ProjectPost>();
-//                            for (QueryDocumentSnapshot document : task.getResult()) {
-//                                comments.put(document.getId(), document.toObject(ProjectPost.class)); // 맵으로 넣는 방법
-//                            }
-//                            for (ProjectPost cmt : comments.values()) {
-//                                Log.d("test", "writer");
-//                                Log.d("test", cmt.getContent());
-//                                Log.d("test", cmt.getWriter());
-//                            }
-//                        }
-//                    }
-//                });
-//        Log.d("test", "writer");
+        // search by writer
+        pst.searchPostByWriter(pst.PROJECT, "tnflchzz@naver.com")
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            Map<String, ProjectPost> comments = new HashMap<String, ProjectPost>();
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                comments.put(document.getId(), document.toObject(ProjectPost.class)); // 맵으로 넣는 방법
+                            }
+                            for (ProjectPost cmt : comments.values()) {
+                                Log.d("test", "writer");
+                                Log.d("test", cmt.getContent());
+                                Log.d("test", cmt.getWriter());
+                            }
+                        }
+                    }
+                });
+        Log.d("test", "writer");
         // search by category
-        String[] cate = new String[]{"c"};
-//        pst.searchPostByCategory(pst.PROJECT, cate)
-//                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-//                    @Override
-//                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-//                        if (task.isSuccessful()) {
-//                            Map<String, ProjectPost> comments = new HashMap<String, ProjectPost>();
-//                            for (QueryDocumentSnapshot document : task.getResult()) {
-//                                comments.put(document.getId(), document.toObject(ProjectPost.class)); // 맵으로 넣는 방법
-//                            }
-//                            for (ProjectPost cmt : comments.values()) {
-//                                Log.d("test", cmt.getContent());
-//                                Log.d("test", cmt.getWriter());
-//                            }
-//                        }
-//                    }
-//                });
+        pst.searchPostByCategory(pst.PROJECT, "AI")
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            Map<String, ProjectPost> comments = new HashMap<String, ProjectPost>();
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                comments.put(document.getId(), document.toObject(ProjectPost.class)); // 맵으로 넣는 방법
+                            }
+                            for (ProjectPost cmt : comments.values()) {
+                                Log.d("test", cmt.getContent());
+                                Log.d("test", cmt.getWriter());
+                            }
+                        }
+                    }
+                });
     }
 
     private void report() {
@@ -268,7 +279,7 @@ public class Testing {
                     }
                 });
 
-        //pst.setReportPostZero(pst.PROJECT, "mdUTbav2vLaAVCfJ34cg");
+        pst.setReportPostZero(pst.PROJECT, "mdUTbav2vLaAVCfJ34cg");
     }
 
 
@@ -289,12 +300,12 @@ public class Testing {
         cht.addChat("Ij2L74mfcmWTIjDRwsBL", "member1", "welcome!");
     }
 
-//    private void waitChat() {
-//        cht.waitMSG();
-//    }
+    private void waitChat() {
+        cht.waitMSG("Ij2L74mfcmWTIjDRwsBL");
+    }
 
     private void getChats() {
-        cht.getMessages("Ij2L74mfcmWTIjDRwsBL") // 실제값 넣어준 것, 함수에서 받아서 넣어줘야함
+        cht.getMessages("43d202DHMR3CPeRM0Q1n") // 실제값 넣어준 것, 함수에서 받아서 넣어줘야함
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -302,7 +313,7 @@ public class Testing {
                             Map<String, ProjectPost> comments = new HashMap<String, ProjectPost>();
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 ChatData MSG = document.toObject(ChatData.class);
-
+                                Log.d("test",MSG.getMsg());
                                 // 여기다 리스튜면 .add(MSG) 이런식으로 추가하고
                             }
 
@@ -313,17 +324,17 @@ public class Testing {
                 });
     }
 
-    private void getUserNickName(){
-        Log.d("test","user.getNickName()");
+    private void getUserNickName() {
+        Log.d("test", "user.getNickName()");
         pst.getUserNickname("tnflchzz@naver.com").addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
                     for (QueryDocumentSnapshot document : task.getResult()) {
                         User user = document.toObject(User.class);
-                        Log.d("test","1");
-                        Log.d("test",document.getData().toString());
-                        Log.d("test",user.getNickName());
+                        Log.d("test", "1");
+                        Log.d("test", document.getData().toString());
+                        Log.d("test", user.getNickName());
 
                     }
                 }

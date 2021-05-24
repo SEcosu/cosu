@@ -140,6 +140,7 @@ public class DetailActivity extends AppCompatActivity {
 
                 Comment com = new Comment(wr, comment);
                 postHelper.addComment(collection, postID, com);
+                input_comment.setText("");
 
             }
         });
