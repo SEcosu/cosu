@@ -22,7 +22,7 @@ public class MypostItemAdapter extends BaseAdapter {
     }
 
     @Override
-    public Object getItem(int position) {
+    public MyPostItem getItem(int position) {
         return items.get(position);
     }
 

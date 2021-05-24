@@ -1,8 +1,11 @@
 package com.example.cosu_pra;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import androidx.annotation.NonNull;
@@ -14,6 +17,7 @@ import com.example.cosu_pra.ConnectFB.HelpPosting;
 import com.example.cosu_pra.DTO.ProjectPost;
 import com.example.cosu_pra.DTO.QnAPost;
 import com.example.cosu_pra.DTO.StudyPost;
+import com.example.cosu_pra.Main.DetailActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -40,7 +44,6 @@ public class MypostActivity extends AppCompatActivity {
         setContentView(R.layout.activity_mypost);
         lv = findViewById(R.id.mypostlv);
         adapter = new MypostItemAdapter();
-        adapter.addItem(new MyPostItem("스터디원 구해요", "JAVA"));
         //  lv.setAdapter(adapter);
         sh_Pref = getSharedPreferences("Login Credentials ", MODE_PRIVATE);
 
@@ -108,6 +111,16 @@ public class MypostActivity extends AppCompatActivity {
                     }
                 });
 
+        // item select
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(getApplicationContext(), DetailActivity.class);
+                intent.putExtra("postID", adapter.getItem(position).postID);
+                intent.putExtra("collection", adapter.getItem(position).collection);
+                startActivity(intent);
+            }
+        });
 
     }
 
