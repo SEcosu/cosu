@@ -3,6 +3,7 @@ package com.example.cosu_pra;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -25,10 +26,6 @@ import com.example.cosu_pra.DTO.ChatData;
 import com.example.cosu_pra.DTO.ProjectPost;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -78,8 +75,9 @@ public class ChattingActivity extends AppCompatActivity {
                     for (QueryDocumentSnapshot document : task.getResult()) {
                         ChatData MSG = document.toObject(ChatData.class);
 
-                        MessageItem item = new MessageItem(MSG.getUserID(), MSG.getMsg(), MSG.getTime());
-                        items.add(item);
+                        //MessageItem item = new MessageItem(MSG.getUserID(), MSG.getMsg(), MSG.getTime());
+                        Log.d("test",MSG.getMsg());
+                        adapter.add(MSG);
                     }
                 }
                 adapter.notifyDataSetChanged();
@@ -100,8 +98,8 @@ public class ChattingActivity extends AppCompatActivity {
 
                     ChatData MSG = doc.toObject(ChatData.class);
 
-                    MessageItem item = new MessageItem(MSG.getUserID(), MSG.getMsg(), MSG.getTime());
-                    items.add(item);
+                    Log.d("test",MSG.getMsg());
+                    adapter.add(MSG);
 
                 }
                 adapter.notifyDataSetChanged();
@@ -179,10 +177,10 @@ public class ChattingActivity extends AppCompatActivity {
 
     //채팅리스트 연결 - 메세지
     class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-        Map<String, ProjectPost> comments = new HashMap<String, ProjectPost>();
+        ArrayList<ChatData> chats;
 
         public RecyclerViewAdapter() {
-
+            chats = new ArrayList<>();
             //TODO 방이름 가져오기
             //TODO 대화내용 가져오기
         }
@@ -199,22 +197,22 @@ public class ChattingActivity extends AppCompatActivity {
         public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
             MessageViewHolder messageViewHolder = ((MessageViewHolder) holder);
             //내가 보낸 메세지라면(오른쪽버블 바탕화면으로
-            if() {
-                messageViewHolder.message.setText(comments.get(position).message);
+            if(chats.get(position).getUserID().equals(userEmail)) {
+                messageViewHolder.message.setText(chats.get(position).getMsg());
                 messageViewHolder.message.setBackgroundResource(R.drawable.bubble2);
                 //내 메세지 감쳐주는
-                messageViewHolder.message.setVisibility(View.INVISIBLE);
+                messageViewHolder.message.setVisibility(View.VISIBLE);
                 messageViewHolder.message.setTextSize(15);
                 messageViewHolder.lv_chamessage_main.setGravity(Gravity.RIGHT);
             }
             //상대방이 보낸 메세지
             else {
                 //상대방이름가져오기
-                messageViewHolder.name.setText();
+                messageViewHolder.name.setText(chats.get(position).getUserID());
                 messageViewHolder.lv.setVisibility(View.VISIBLE);
                 messageViewHolder.message.setBackgroundResource(R.drawable.bubble1);
                 //상대방 메세지
-                messageViewHolder.message.setText(comments.get(position).message);
+                messageViewHolder.message.setText(chats.get(position).getMsg());
                 //텍스트 사이즈
                 messageViewHolder.message.setTextSize(15);
             }
@@ -224,7 +222,11 @@ public class ChattingActivity extends AppCompatActivity {
 
         @Override
         public int getItemCount() {
-            return comments.size();
+            return chats.size();
+        }
+
+        public void add(ChatData chatData){
+            chats.add(chatData);
         }
 
         private class MessageViewHolder extends RecyclerView.ViewHolder {
