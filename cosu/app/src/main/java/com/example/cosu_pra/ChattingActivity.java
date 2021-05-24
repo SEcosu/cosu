@@ -67,24 +67,24 @@ public class ChattingActivity extends AppCompatActivity {
         rv.setLayoutManager(new LinearLayoutManager(ChattingActivity.this));
         RecyclerViewAdapter adapter = new RecyclerViewAdapter();
 
-        chatHelper.getMessages(roomID).addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful()) {
-                    Map<String, ProjectPost> comments = new HashMap<String, ProjectPost>();
-                    for (QueryDocumentSnapshot document : task.getResult()) {
-                        ChatData MSG = document.toObject(ChatData.class);
-
-                        //MessageItem item = new MessageItem(MSG.getUserID(), MSG.getMsg(), MSG.getTime());
-                        Log.d("test",MSG.getMsg());
-                        adapter.add(MSG);
-                    }
-                }
-                adapter.notifyDataSetChanged();
-                rv.setAdapter(adapter);
-            }
-
-        });
+//        chatHelper.getMessages(roomID).addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+//            @Override
+//            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+//                if (task.isSuccessful()) {
+//                    Map<String, ProjectPost> comments = new HashMap<String, ProjectPost>();
+//                    for (QueryDocumentSnapshot document : task.getResult()) {
+//                        ChatData MSG = document.toObject(ChatData.class);
+//
+//                        //MessageItem item = new MessageItem(MSG.getUserID(), MSG.getMsg(), MSG.getTime());
+//                        Log.d("test",MSG.getMsg());
+//                        adapter.add(MSG);
+//                    }
+//                }
+//                adapter.notifyDataSetChanged();
+//                rv.setAdapter(adapter);
+//            }
+//
+//        });
 
         chatHelper.waitMSG(roomID).addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
@@ -200,8 +200,9 @@ public class ChattingActivity extends AppCompatActivity {
             if(chats.get(position).getUserID().equals(userEmail)) {
                 messageViewHolder.message.setText(chats.get(position).getMsg());
                 //내 메세지 감쳐주는
-                messageViewHolder.message.setVisibility(View.VISIBLE);
+                messageViewHolder.lv.setVisibility(View.INVISIBLE);
                 messageViewHolder.message.setTextSize(15);
+                messageViewHolder.message.setBackgroundColor(getResources().getColor(R.color.colorAccent));
                 messageViewHolder.lv_chamessage_main.setGravity(Gravity.RIGHT);
             }
             //상대방이 보낸 메세지
@@ -213,7 +214,7 @@ public class ChattingActivity extends AppCompatActivity {
                 messageViewHolder.message.setText(chats.get(position).getMsg());
                 //텍스트 사이즈
                 messageViewHolder.message.setTextSize(15);
-                messageViewHolder.lv_chamessage_main.setGravity(Gravity.RIGHT);
+                messageViewHolder.lv_chamessage_main.setGravity(Gravity.LEFT);
 
             }
 
