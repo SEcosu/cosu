@@ -10,7 +10,6 @@ import com.example.cosu_pra.DTO.ChatData;
 import com.example.cosu_pra.DTO.Comment;
 import com.example.cosu_pra.DTO.ProjectPost;
 import com.example.cosu_pra.DTO.User;
-import com.example.cosu_pra.Main.Comment_sub;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -289,8 +288,8 @@ public class Testing {
         cht.addChat("Ij2L74mfcmWTIjDRwsBL", "member1", "welcome!");
     }
 
-    private void waitChat() {
-        cht.waitMSG();
+    private void waitChat(String str) {
+        cht.waitMSG(str);
     }
 
     private void getChats() {

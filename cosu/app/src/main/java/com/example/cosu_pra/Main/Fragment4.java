@@ -79,6 +79,8 @@ public class Fragment4 extends Fragment {
         intent.putExtra("roomID", adatper.getItem(position).getRoomID());
         startActivity(intent);
     }
+    //리스트뷰 클릭이벤트
+
 
 
 }
