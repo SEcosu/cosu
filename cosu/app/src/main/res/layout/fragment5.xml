@@ -24,8 +24,8 @@
 
     <ImageButton
         android:id="@+id/mypage_btn"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:layout_alignParentRight="true"
         android:backgroundTint="#FFFFFF"
         android:scaleType="fitXY"
@@ -54,16 +54,16 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/myprofileLL"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="110dp"
 
                 >
 
                 <ImageView
                     android:id="@+id/myImg"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
                     android:layout_marginLeft="10dp"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginTop="30dp"
                     android:paddingBottom="16dp"
                     android:src="@drawable/chatroomimg"
                     app:layout_constraintStart_toStartOf="parent"
@@ -73,9 +73,9 @@
                     android:id="@+id/mypage_nickname"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="128dp"
-                    android:layout_marginLeft="128dp"
-                    android:text="닉네임"
+                    android:layout_marginStart="90dp"
+                    android:layout_marginLeft="100dp"
+                    android:text="파란 하늘"
                     android:textColor="#000000"
                     android:textSize="14sp"
                     android:textStyle="bold"
@@ -93,10 +93,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginTop="48dp"
-                    android:layout_marginEnd="104dp"
+                    android:layout_marginTop="32dp"
+                    android:layout_marginEnd="20dp"
                     android:layout_marginRight="104dp"
-                    android:text="고수 레벨"
+                    android:text="코수 (최고의 실력자시네요~!)"
                     android:textColor="#03DAC5"
 
                     android:textSize="14sp"
@@ -109,10 +109,10 @@
                     android:id="@+id/mypage_locate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="28dp"
+                    android:layout_marginStart="10dp"
                     android:layout_marginLeft="28dp"
                     android:layout_marginTop="68dp"
-                    android:text="동네 위치"
+                    android:text="성남시 수정구 복정동"
                     android:textColor="#000000"
 
                     android:textSize="12sp"
@@ -161,7 +161,7 @@
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
 
-                        android:paddingLeft="20dp">
+                        android:paddingLeft="10dp">
 
                         <ImageButton
                             android:id="@+id/mypost"

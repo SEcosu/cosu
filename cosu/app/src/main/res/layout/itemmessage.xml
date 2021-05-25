@@ -14,6 +14,7 @@
         tools:ignore="MissingConstraints">
 
         <ImageView
+            android:layout_marginTop="10dp"
             android:id="@+id/profile1_picture"
             android:layout_width="60dp"
             android:layout_height="60dp"
@@ -25,7 +26,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingLeft="20dp"
-            android:text="상대방 이름" />
+            android:text="허서윤" />
 
 
     </LinearLayout>
@@ -39,6 +40,9 @@
             android:id="@+id/profile1_content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="15dp"
+
             android:paddingLeft="20dp"
             android:background="@drawable/messagere"
             android:paddingTop="20dp"
@@ -50,7 +54,8 @@
             android:layout_height="match_parent"
             android:layout_gravity="right"
             android:paddingLeft="20dp"
-            android:paddingTop="20dp"
-            android:text="보낸 시간" />
+            android:paddingTop="10dp"
+            android:layout_marginRight="15dp"
+            android:text="23:10" />
     </LinearLayout>
 </LinearLayout>
