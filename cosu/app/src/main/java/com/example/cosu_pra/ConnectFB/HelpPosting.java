@@ -20,22 +20,9 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 /**
- * HelpPosting 역할
- * 글 올리기 -> 완료
- * 글 지우기 ->완료
- * 글 수정하기 -> 완료
- * 댓글 올리기 -> 완료
- * 댓글 지우기 -> 완료
- * 팀원으로 참여하기 -> 완료, Testing에 예시 있음
- * 팀원으로 참여한것 취소하기 --> 완료
- * 검색기능 -글쓴이 -> 완료
- * 검색기능 -카테고리 -> OR연산으로 계산 가능
- * 검색기능 -내용 -> 불가
- * 신고기능 -> 포스트는 완료
- * 관심 유저 등록하기 -> 유저정보에 저장하면 좋을 듯
- * 관심 글 등록하기 -> 유저정보에 저장하면 좋을 듯
- * <p>
- * 시간 남으면 -> 대댓글, 댓글 신고
+ * HelpPosting
+ * this class consist of posting functions
+ * adding, updating .....
  */
 public class HelpPosting {
     public static final String PROJECT = "Projects";
@@ -232,14 +219,32 @@ public class HelpPosting {
         return db.collection(collection).whereEqualTo("category", category).get();
     }
 
+    /**
+     * getReportPost
+     * get report posts when method called
+     * @param collection: path of post
+     * @return  QuerySnapShot
+     */
     public Task<QuerySnapshot> getReportPost(String collection) {
         return db.collection(collection).whereGreaterThan("report", 0).get();
     }
 
+    /**
+     * setReportPostZero
+     * set report post's reports
+     * @param collection: path of post
+     * @param postID: id of post
+     */
     public void setReportPostZero(String collection, String postID) {
         db.collection(collection).document(postID).update("report", 0);
     }
 
+    /**
+     * reportPost
+     * add post's report 1
+     * @param collection: path of post
+     * @param postID: id of post
+     */
     public void reportPost(String collection, String postID) {
         getPost(collection, postID).addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
@@ -261,18 +266,44 @@ public class HelpPosting {
         });
     }
 
+    /**
+     * addLike
+     * add id to post's likes list
+     * @param collection: path of post
+     * @param postID : id of post
+     * @param userID : user id
+     */
     public void addLike(String collection, String postID, String userID) {
         db.collection(collection).document(postID).update("likes", FieldValue.arrayUnion(userID));
     }
 
+    /**
+     * getUserNickname
+     * get user nickname by user id
+     * @param userID: user id
+     * @return: QuerySnapShot
+     */
     public Task<QuerySnapshot> getUserNickname(String userID) {
         return db.collection("users").whereEqualTo("email", userID).get();
     }
 
+    /**
+     * check if post is updated
+     * @param collection: path of post
+     * @param postID : post id
+     * @return : {@link DocumentReference}
+     */
     public DocumentReference checkChange(String collection, String postID) {
         return db.collection(collection).document(postID);
     }
 
+    /**
+     * checkChangeComment
+     * check if comment is update
+     * @param collection: path of post
+     * @param postID : post id
+     * @return CollectionReference
+     */
     public CollectionReference checkChangeComment(String collection, String postID) {
         return db.collection(collection).document(postID).collection("comments");
 
