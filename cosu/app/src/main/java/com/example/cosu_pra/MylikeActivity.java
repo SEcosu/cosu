@@ -50,6 +50,7 @@ public class MylikeActivity extends AppCompatActivity {
         db = FirebaseFirestore.getInstance();
         Log.d("test","My id: "+_userID);
 
+        // read user's like posts in Project
         db.collection(HelpPosting.PROJECT).whereArrayContains("likes", _userID).get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -70,6 +71,7 @@ public class MylikeActivity extends AppCompatActivity {
                         }
                     }
                 });
+        // read user's like posts in Study
         db.collection(HelpPosting.STUDY).whereArrayContains("likes", _userID).get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -90,6 +92,7 @@ public class MylikeActivity extends AppCompatActivity {
                         }
                     }
                 });
+        // read user's like posts in QnA
         db.collection(HelpPosting.QNA).whereArrayContains("likes", _userID).get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override

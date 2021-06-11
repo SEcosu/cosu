@@ -49,8 +49,10 @@ public class MypostActivity extends AppCompatActivity {
 
         _userID = sh_Pref.getString("Email", "");
         db = FirebaseFirestore.getInstance();
-        Log.d("test","My id: "+_userID);
+        Log.d("test", "My id: " + _userID);
 
+
+        // read user's posts in Project
         db.collection(HelpPosting.PROJECT).whereEqualTo("writer", _userID).get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -71,6 +73,7 @@ public class MypostActivity extends AppCompatActivity {
                         }
                     }
                 });
+        // read user's posts in Study
         db.collection(HelpPosting.STUDY).whereEqualTo("writer", _userID).get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -91,6 +94,7 @@ public class MypostActivity extends AppCompatActivity {
                         }
                     }
                 });
+        // read user's posts in QnA
         db.collection(HelpPosting.QNA).whereEqualTo("writer", _userID).get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
