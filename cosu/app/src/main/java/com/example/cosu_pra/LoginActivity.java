@@ -74,10 +74,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         String password = editTextLoginPassword.getText().toString().trim();
         //get identification
 
-        /* *******Validation ref:http://blog.naver.com/suda552/220813122485******** */
-
-        // 401sujung@naver.com
-        // wlwjtm1023@
 
         /* *******Validation of email(is empty& validation)******** */
         if (TextUtils.isEmpty(email)) {
@@ -88,8 +84,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             Toast.makeText(this, "Not in email format\n", Toast.LENGTH_SHORT).show();
             return;
         }
-        /* *******Validation of email(is empty& validation)******** */
 
+        /* *******Validation of password(is empty& validation)******** */
         if (TextUtils.isEmpty(password)) {
             Toast.makeText(this, "Please input password.", Toast.LENGTH_SHORT).show();
             return;
@@ -100,28 +96,28 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             return;
         }
         if(email!=null&&password!=null) {
-            Intent intent = new Intent(this, MainActivity.class);
-            startActivity(intent);
+            //Logging in the user
+            //Check whether user login data equals data in the firebase
+            firebaseAuth.signInWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            progressDialog.dismiss();
+                            if (task.isSuccessful()) {
+                                finish();
+                                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                            } else {
+                                Toast.makeText(getApplicationContext(), "Login Failed! Please try again", Toast.LENGTH_LONG).show();
+                                textviewMessage.setText("Passwords must consist of numbers, alphabets, \nand special symbols.\nPassword must be \nat least 8 characters long\n");
+                            }
+                        }
+                    });
         }
 
         progressDialog.setMessage("Logging in. wait a moment please...");
         progressDialog.show();
 
-        //logging in the user
-        firebaseAuth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        progressDialog.dismiss();
-                        if (task.isSuccessful()) {
-                            finish();
-                            startActivity(new Intent(getApplicationContext(), MainActivity.class));
-                        } else {
-                            Toast.makeText(getApplicationContext(), "Login Failed! Please try again", Toast.LENGTH_LONG).show();
-                            textviewMessage.setText("Passwords must consist of numbers, alphabets, \nand special symbols.\nPassword must be \nat least 8 characters long\n");
-                        }
-                    }
-                });
+
     }
 
 
@@ -129,18 +125,18 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     public void onClick(View view) {
         EditText uemail = (EditText)findViewById(R.id.editTextLoginEmail);
         EditText upassword = (EditText)findViewById(R.id.editTextLoginPassword);
+
         /* *******if click Login button , can login ******** */
         if (view == buttonSignin) {
             userLogin();
-
         }
-        /* *******if click Signup button , can Signup ******** */
 
+        /* *******if click Signup button , can Signup ******** */
         if (view == textviewSignup) {
             startActivity(new Intent(this, SignupActivity.class));
         }
-        /* *******go to find password ******** */
 
+        /* *******go to find password ******** */
         if (view == textviewFindPassword) {
             startActivity(new Intent(this, FindActivity.class));
         }

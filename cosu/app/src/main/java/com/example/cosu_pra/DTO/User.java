@@ -1,7 +1,7 @@
 package com.example.cosu_pra.DTO;
 
 public class User {
-
+//user data
     private String email;
     private String pwd;
     private String realName;

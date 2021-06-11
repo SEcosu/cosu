@@ -46,10 +46,29 @@ public class LogoutActivity extends AppCompatActivity implements View.OnClickLis
 
     }
 
+    //Logging out
     private void Logout() {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
+        progressDialog.setMessage("Logout. please wait a moment please...");
+        progressDialog.show();
+
+        user.delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()) {
+                    FirebaseAuth.getInstance().signOut();
+                    Toast.makeText(getApplicationContext(), "Your account has been deleted.", Toast.LENGTH_LONG).show();
+                    finish();
+                    startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+                } else {
+                    Toast.makeText(getApplicationContext(), "Please try again", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 
+    //Delete user account
     private void deleteUser() {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 

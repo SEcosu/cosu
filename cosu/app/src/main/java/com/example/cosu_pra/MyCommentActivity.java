@@ -47,13 +47,12 @@ public class MyCommentActivity extends AppCompatActivity {
         _userID = firebaseAuth.getCurrentUser().getUid();
         db = FirebaseFirestore.getInstance();
 
-        //project에서 comment정보를 가져오는 방법
         sh_Pref = getSharedPreferences("Login Credentials ", MODE_PRIVATE);
-
         _userID = sh_Pref.getString("Email", "");
         db = FirebaseFirestore.getInstance();
         Log.d("test","My id: "+_userID);
 
+        // Retrieves user-written comments in Project
         db.collection(HelpPosting.COMMENTS).whereEqualTo("writer", _userID).get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override

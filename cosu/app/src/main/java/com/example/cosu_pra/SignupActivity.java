@@ -70,7 +70,6 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
         fStore = FirebaseFirestore.getInstance();
 
         /* ********if already logged in,finish this job********* */
-
         if (firebaseAuth.getCurrentUser() != null) {
             finish();
             startActivity(new Intent(getApplicationContext(), LogoutActivity.class));
@@ -97,6 +96,7 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
     }
 
 
+    //Register(Sign up)
     private void registerUser() {
         //Get the email & password that the user enters.
         String email = editTextSignUpEmail.getText().toString().trim();
@@ -121,6 +121,7 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
             editTextSignUpPasswordConfirm.requestFocus();
             return;
         }
+        //Check whether email and password format is correct
         if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             Toast.makeText(this, "Not in email format.", Toast.LENGTH_SHORT).show();
             editTextSignUpEmail.requestFocus();
@@ -137,6 +138,7 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
             return;
         }
 
+        //Check whether password equals password confirmed
         if (!password.equals(confirmPassword)) {
             Toast.makeText(this, "Please check password again.", Toast.LENGTH_SHORT).show();
             editTextSignUpPassword.setText("");
@@ -160,7 +162,7 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
                             User user = new User(email, name, nickName);
                             fStore.collection("users").add(user);
 
-                            //SharedPreference에 입력반은 데이터 저장
+                            //Input user data is stored in SharedPreference
                             sh_Pref = getSharedPreferences("Login Credentials ", MODE_PRIVATE);
                             toEdit = sh_Pref.edit();
                             toEdit.putString("Name", name);
