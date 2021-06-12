@@ -106,7 +106,10 @@ public class SearchActivity extends AppCompatActivity {
 
     }
 
-
+    /**
+     * showList
+     * checking collection and category and show list of valid posts
+     */
     private void showList() {
         adapter = new PostListAdapter(collection);
         if (collection.equals(HelpPosting.PROJECT)) { // Project
@@ -256,6 +259,12 @@ public class SearchActivity extends AppCompatActivity {
     }
 
 
+    /**
+     * searchList
+     * checking collection and search word and show list of valid posts
+     *
+     * @param searchWord: String that user's search
+     */
     private void searchList(String searchWord) {
         adapter = new PostListAdapter(collection);
         if (collection.equals(HelpPosting.PROJECT)) { // Project

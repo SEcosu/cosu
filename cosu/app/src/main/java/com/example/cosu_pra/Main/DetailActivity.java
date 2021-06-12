@@ -204,7 +204,8 @@ public class DetailActivity extends AppCompatActivity {
             }
         });
 
-
+        // check if comment is changed
+        // it use event listener to firebase supported
         postHelper.checkChangeComment(collection, postID).addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable @org.jetbrains.annotations.Nullable QuerySnapshot value,
@@ -235,6 +236,8 @@ public class DetailActivity extends AppCompatActivity {
             }
         });
 
+        // check if post is changed
+        // it use event listener to firebase supported
         postHelper.checkChange(collection, postID)
                 .addSnapshotListener(new EventListener<DocumentSnapshot>() {
                                          @Override
@@ -270,6 +273,10 @@ public class DetailActivity extends AppCompatActivity {
 //        }
     }
 
+    /**
+     * loadComments
+     * download comment and show to UI
+     */
     private void loadComments() {
         // get post's comments
         postHelper.getComments(collection, postID)

@@ -59,7 +59,7 @@ public class PlusActivity extends AppCompatActivity {
         dateContainer = findViewById(R.id.plus_date_container);
         sh_Pref = getSharedPreferences("Login Credentials ", MODE_PRIVATE);
 
-
+        // check collection to know add what type of post
         if (collection.equals(HelpPosting.PROJECT)) {
             together.setText("프로젝트 같이해요!");
             category_spinner.setAdapter(new ArrayAdapter<String>(this, R.layout.support_simple_spinner_dropdown_item, getResources().getStringArray(R.array.project_category)));
@@ -83,7 +83,8 @@ public class PlusActivity extends AppCompatActivity {
             dateContainer.setLayoutParams(params2);
         }
 
-
+        // when click date start button
+        // it is not visible in QnA collection
         date_start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -93,7 +94,8 @@ public class PlusActivity extends AppCompatActivity {
             }
         });
 
-
+        // when click date end button
+        // it is not visible in QnA collection
         date_end.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -103,10 +105,14 @@ public class PlusActivity extends AppCompatActivity {
             }
         });
 
+        // when click add post button
+        // check if post is valid or invalid
+        // if post is invalid, then do not update and show toast message
         plus_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
+                // check post valid
                 if (title.getText().toString().equals("")) {
                     Toast.makeText(getApplicationContext(), "제목을 써주세요", Toast.LENGTH_LONG).show();
                     return;
@@ -124,6 +130,7 @@ public class PlusActivity extends AppCompatActivity {
                     return;
                 }
 
+                // get post information
                 String ti = title.getText().toString();
                 String wr = sh_Pref.getString("Email", "");
                 String co = contents.getText().toString();
@@ -131,6 +138,7 @@ public class PlusActivity extends AppCompatActivity {
 
                 int max;
 
+                // update post to firebase
                 if (collection.equals(HelpPosting.PROJECT)) {
                     max = Integer.parseInt(max_spinner.getSelectedItem().toString());
                     String start = (String) date_start.getText();
@@ -149,6 +157,8 @@ public class PlusActivity extends AppCompatActivity {
                     QnAPost post = new QnAPost(ti, wr, co, category);
                     postHelper.addPost(collection, post);
                 }
+
+                // finis activity, return to main fragment
                 finish();
             }
         });
