@@ -62,29 +62,11 @@ public class ChattingActivity extends AppCompatActivity {
         userEmail = sh_Pref.getString("Email", "");
 
 
-        //채팅 리사이클러뷰 연결
+        //Connect recyclerview
         RecyclerView rv = (RecyclerView) findViewById(R.id.message_recyclerview);
         rv.setLayoutManager(new LinearLayoutManager(ChattingActivity.this));
         RecyclerViewAdapter adapter = new RecyclerViewAdapter();
 
-//        chatHelper.getMessages(roomID).addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-//            @Override
-//            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-//                if (task.isSuccessful()) {
-//                    Map<String, ProjectPost> comments = new HashMap<String, ProjectPost>();
-//                    for (QueryDocumentSnapshot document : task.getResult()) {
-//                        ChatData MSG = document.toObject(ChatData.class);
-//
-//                        //MessageItem item = new MessageItem(MSG.getUserID(), MSG.getMsg(), MSG.getTime());
-//                        Log.d("test",MSG.getMsg());
-//                        adapter.add(MSG);
-//                    }
-//                }
-//                adapter.notifyDataSetChanged();
-//                rv.setAdapter(adapter);
-//            }
-//
-//        });
 
         chatHelper.waitMSG(roomID).addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
@@ -109,7 +91,7 @@ public class ChattingActivity extends AppCompatActivity {
 
         rv.setAdapter(adapter);
 
-        //TODO SEND버튼
+        //send button
         send.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {
@@ -124,7 +106,7 @@ public class ChattingActivity extends AppCompatActivity {
 
             }
         });
-        //TODO END 버튼 눌렀을때-모집완료
+        //send end button
         End.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -134,7 +116,7 @@ public class ChattingActivity extends AppCompatActivity {
 
 
         });
-        //TODO 채팅방나가기
+        //send outchattingroom
         End.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -142,7 +124,7 @@ public class ChattingActivity extends AppCompatActivity {
             }
         });
 
-        //TODO 3 DOT 버튼
+        //3 dot button
         Exit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -151,13 +133,13 @@ public class ChattingActivity extends AppCompatActivity {
                 popupmenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {
-                        //TODO 벨 버튼 클릭 후 이벤트
+
                         switch (item.getItemId()) {
-                            //알림끄기
+
                             case R.id.menu1:
 
                                 break;
-                            //채팅방 나가기
+
                             case R.id.menu2:
                                 Toast.makeText(getApplicationContext(), "채팅방 나가기", Toast.LENGTH_SHORT).show();
 
@@ -175,14 +157,13 @@ public class ChattingActivity extends AppCompatActivity {
 
     }
 
-    //채팅리스트 연결 - 메세지
+    //To connect message
     class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         ArrayList<ChatData> chats;
 
         public RecyclerViewAdapter() {
             chats = new ArrayList<>();
-            //TODO 방이름 가져오기
-            //TODO 대화내용 가져오기
+
         }
 
         @NonNull
@@ -196,23 +177,21 @@ public class ChattingActivity extends AppCompatActivity {
         @Override
         public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
             MessageViewHolder messageViewHolder = ((MessageViewHolder) holder);
-            //내가 보낸 메세지라면(오른쪽버블 바탕화면으로
+            //If I send message
             if(chats.get(position).getUserID().equals(userEmail)) {
                 messageViewHolder.message.setText(chats.get(position).getMsg());
-                //내 메세지 감쳐주는
+
                 messageViewHolder.lv.setVisibility(View.INVISIBLE);
                 messageViewHolder.message.setTextSize(15);
                 messageViewHolder.message.setBackgroundColor(getResources().getColor(R.color.colorAccent));
                 messageViewHolder.lv_chamessage_main.setGravity(Gravity.RIGHT);
             }
-            //상대방이 보낸 메세지
+            //If other send message
             else {
-                //상대방이름가져오기
+                //To someone else's name
                 messageViewHolder.name.setText(chats.get(position).getUserID());
                 messageViewHolder.lv.setVisibility(View.VISIBLE);
-                //상대방 메세지
                 messageViewHolder.message.setText(chats.get(position).getMsg());
-                //텍스트 사이즈
                 messageViewHolder.message.setTextSize(15);
                 messageViewHolder.lv_chamessage_main.setGravity(Gravity.LEFT);
 

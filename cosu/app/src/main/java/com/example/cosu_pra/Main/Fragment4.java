@@ -94,7 +94,7 @@ public class Fragment4 extends Fragment {
                     }
                 });
 
-
+        //To click chatroom
         chatRoomView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

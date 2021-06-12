@@ -81,7 +81,7 @@ public class Fragment5 extends Fragment {
         nickNameView.setText(_userID);
         //showInfo(nameView, nickNameView, emailView);
 
-        //고객센터 링크연결
+        //To link Customer Service button
         ImageButton center =  v.findViewById(R.id.mypagelist2);
 
         center.setOnClickListener(new View.OnClickListener() {
@@ -91,7 +91,7 @@ public class Fragment5 extends Fragment {
                 startActivity(intent);
             }
         });
-        //옆에 팝업버튼(나중에)
+
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -100,7 +100,6 @@ public class Fragment5 extends Fragment {
                 popupmenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {
-                        //TODO 벨 버튼 클릭 후 이벤트
                         switch(item.getItemId()){
                             case R.id.action_menu2:
                                 Intent intent = new Intent(getActivity(),  AdminActivity.class);
@@ -114,8 +113,7 @@ public class Fragment5 extends Fragment {
                 popupmenu.show();
             }
         });
-
-        //로그아웃
+        //To logout button
         logoutbtn.setOnClickListener(new View.OnClickListener(){
 
             @Override
@@ -124,7 +122,7 @@ public class Fragment5 extends Fragment {
             }
         });
 
-        //탈퇴하기
+        //To Withdrawal
         withdrawbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -133,7 +131,7 @@ public class Fragment5 extends Fragment {
         });
         profilebtn.setOnClickListener(new View.OnClickListener(){
 
-            //TODO 프로필 수정
+            //To Modify Profile
             @Override
             public void onClick(View v) {
                 LayoutInflater inflater = getLayoutInflater();
@@ -201,6 +199,7 @@ public class Fragment5 extends Fragment {
 
             }
         });
+        //To see my post
         mypostbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -208,7 +207,7 @@ public class Fragment5 extends Fragment {
                 startActivity(intent);
             }
         });
-
+        //To see mylike
         mylikebtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -216,7 +215,7 @@ public class Fragment5 extends Fragment {
                 startActivity(intent);
             }
         });
-
+        //To see my comment
         mycommentbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -245,7 +244,7 @@ public class Fragment5 extends Fragment {
         return 0;
     }
 
-    //회원정보를 보여주는 showInfo 메서드
+
     private void showInfo(TextView nameView, TextView emailView, TextView nickNameView){
         // 현재 로그인이 되어있는 사용자를 가져옴
 //        final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();

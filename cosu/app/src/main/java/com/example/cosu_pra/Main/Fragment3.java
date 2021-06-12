@@ -91,7 +91,7 @@ public class Fragment3 extends Fragment {
             }
         });
 
-        plus_btn = v.findViewById(R.id.plus_btn);
+        plus_btn = (FloatingActionButton)v. findViewById(R.id.plus_btn);
         plus_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
